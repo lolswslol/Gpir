@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
             this.messageClass = 'alert alert-success';
             setTimeout(()=>{
               this.router.navigate(['/home'])
-            },2000)
+            },3000)
           }
         },
             (error)=>{

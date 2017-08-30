@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, RequestOptions, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/map';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthenticationService {
@@ -15,7 +16,7 @@ export class AuthenticationService {
   options: RequestOptions;
 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private router: Router) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let currentToken = JSON.parse(localStorage.getItem('currentToken'));
 
@@ -65,8 +66,10 @@ export class AuthenticationService {
     this.token = null;
     this.username = null;
     this.role = null;
+    this.isLogged = false;
     localStorage.removeItem('currentToken');
     localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn():Observable<boolean>{
@@ -88,6 +91,9 @@ export class AuthenticationService {
     return this.http.get(this.domain+'api/me',options)
         .map(res=>{
           return res.json();
+        })
+        .catch((error)=>{
+          return Observable.throw(error);
         })
         ;
 
