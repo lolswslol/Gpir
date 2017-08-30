@@ -29,6 +29,21 @@ export class AuthenticationService {
     }
   }
 
+  loadToken(){
+    this.token = JSON.parse(localStorage.getItem('currentToken')).token ;
+  }
+
+  createAuthenticationHeaders() {
+    this.loadToken();
+    this.options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'X-Authorization':'Bearer '+ this.token,
+        'Cache-Control':'no-cache'
+      })
+    });
+  }
+
 
   login(user):Observable<boolean>{
 
@@ -73,22 +88,15 @@ export class AuthenticationService {
   }
 
   isLoggedIn():Observable<boolean>{
-    /*this.options = new RequestOptions({
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'X-Authorization':'Bearer '+ JSON.parse(localStorage.getItem('currentToken')).token,
-        'Cache-Control':'no-cache'
-      })
-    });*/
 
-    let headers= new Headers({'Content-Type': 'application/json'});
+    /*let headers= new Headers({'Content-Type': 'application/json'});
     headers.append('X-Authorization','Bearer '+ this.token || JSON.parse(localStorage.getItem('currentToken')).token);
     headers.append('Cache-Control','no-cache');
-    let options = new RequestOptions({ headers: headers });
+    let options = new RequestOptions({ headers: headers });*/
 
 
-
-    return this.http.get(this.domain+'api/me',options)
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain+'api/me',this.options)
         .map(res=>{
           return res.json();
         })

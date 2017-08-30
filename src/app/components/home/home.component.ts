@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
+import {ProjectService} from "../../services/project.service";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,12 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService) { }
+  projects: Array<Object> = new Array();
+
+  constructor(private authenticationService: AuthenticationService, private projectService: ProjectService) { }
 
   ngOnInit() {
+    this.projectService.getAllProjects().subscribe(data=>{this.projects=data;console.log(this.projects)});
   }
 
 logout(){

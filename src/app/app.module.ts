@@ -11,6 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from "./guards/auth.guard";
 import { NoAuthGuard } from "./guards/noAuth.guard";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProjectService } from "./services/project.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ReactiveFormsModule,
     HttpModule,
   ],
-  providers: [AuthenticationService, AuthGuard, NoAuthGuard],
+  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

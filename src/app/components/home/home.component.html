@@ -5,7 +5,7 @@
         <h3 class="panel-title">Список проектов</h3>
       </div>
       <div class="panel-body">
-        Panel content
+        <p class="text-primary" *ngFor="let project of projects; let i = index"><small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong></p>
       </div>
     </div>
   </div>
