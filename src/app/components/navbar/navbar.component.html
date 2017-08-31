@@ -22,3 +22,13 @@
     <!--/.nav-collapse -->
   </div>
 </nav>
+<div *ngIf="authenticationService.isLogged" class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <ul class="breadcrumb">
+        <li class="active">Название проекта: <strong>{{projectService.currentProjectName}}</strong> </li>
+      </ul>
+    </div>
+  </div>
+</div>
+

@@ -12,13 +12,18 @@ import { AuthGuard } from "./guards/auth.guard";
 import { NoAuthGuard } from "./guards/noAuth.guard";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProjectService } from "./services/project.service";
+import { SelectProjectDirective } from './directives/select-project.directive';
+//PrimeNG modules
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    SelectProjectDirective,
+
   ],
   imports: [
     BrowserModule,

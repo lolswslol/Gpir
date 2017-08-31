@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "./services/authentication.service";
 import {Router} from "@angular/router";
+import {ProjectService} from "./services/project.service";
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,12 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 
-  constructor(private authenticationService: AuthenticationService, private router: Router){
+  constructor(private authenticationService: AuthenticationService, private projectService: ProjectService, private router: Router){
     this.authenticationService.isLoggedIn().subscribe(data=>{
       this.authenticationService.isLogged = data;
     },
       (err)=>{
+      this.projectService.clearCurrentProject();
       this.authenticationService.isLogged = false;
       this.router.navigate(['/login']);
       },

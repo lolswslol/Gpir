@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="row">
     <div class="panel panel-primary">
@@ -5,11 +6,14 @@
         <h3 class="panel-title">Список проектов</h3>
       </div>
       <div class="panel-body">
-        <p class="text-primary" *ngFor="let project of projects; let i = index"><small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong></p>
+        <p appSelectProject [project]="project" class="text-primary" *ngFor="let project of projects; let i = index" ><small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong></p>
       </div>
     </div>
   </div>
 </div>
+
+
+
 
 
 

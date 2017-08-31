@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import {Http, RequestOptions, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/map';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import { domain } from '../config/config';
+
 
 @Injectable()
 export class AuthenticationService {
@@ -20,17 +22,22 @@ export class AuthenticationService {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let currentToken = JSON.parse(localStorage.getItem('currentToken'));
 
-    this.token = currentToken && currentToken.token;
-    this.username = currentUser && currentUser.username;
-    this.role = currentUser && currentUser.role;
 
-    if(localStorage.getItem('currentUser')&&localStorage.getItem('currentToken')){
+
+    if(localStorage.getItem('currentUser') && localStorage.getItem('currentToken')){
       this.isLogged = true;
+      this.token = currentToken && currentToken.token;
+      this.username = currentUser && currentUser.username;
+      this.role = currentUser && currentUser.role;
+    }else {
+      this.token = '1';
+      this.username = '1';
+      this.role = '1';
     }
   }
 
   loadToken(){
-    this.token = JSON.parse(localStorage.getItem('currentToken')).token ;
+    this.token = JSON.parse(localStorage.getItem('currentToken')).token;
   }
 
   createAuthenticationHeaders() {
@@ -88,13 +95,6 @@ export class AuthenticationService {
   }
 
   isLoggedIn():Observable<boolean>{
-
-    /*let headers= new Headers({'Content-Type': 'application/json'});
-    headers.append('X-Authorization','Bearer '+ this.token || JSON.parse(localStorage.getItem('currentToken')).token);
-    headers.append('Cache-Control','no-cache');
-    let options = new RequestOptions({ headers: headers });*/
-
-
     this.createAuthenticationHeaders();
     return this.http.get(this.domain+'api/me',this.options)
         .map(res=>{
@@ -104,7 +104,6 @@ export class AuthenticationService {
           return Observable.throw(error);
         })
         ;
-
   }
 
 

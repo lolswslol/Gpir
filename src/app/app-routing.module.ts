@@ -6,10 +6,10 @@ import {AuthGuard} from "./guards/auth.guard";
 import { NoAuthGuard } from "./guards/noAuth.guard";
 
 const appRoutes=[
-    {path:"",component: HomeComponent},
+    {path:"",component: HomeComponent, canActivate: [AuthGuard]},
     {path:"login",component: LoginComponent,},
     {path:"home",component: HomeComponent, canActivate: [AuthGuard]},
-    {path:"**",component: HomeComponent},
+    {path:"**",component: HomeComponent, canActivate: [AuthGuard]},
 
 ];
 

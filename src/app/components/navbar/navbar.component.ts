@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "../../services/authentication.service";
+import { ProjectService } from "../../services/project.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,7 @@ export class NavbarComponent implements OnInit {
 
  isLogged: boolean = false;
 
-  constructor(private authenticationService: AuthenticationService){
+  constructor(private authenticationService: AuthenticationService, private projectService: ProjectService){
   }
 
   ngOnInit() {
@@ -19,5 +20,6 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     this.authenticationService.logout();
+    this.projectService.clearCurrentProject();
   }
 }
