@@ -9,7 +9,7 @@ import { domain } from '../config/config';
 @Injectable()
 export class AuthenticationService {
 
-  domain = 'http://80.94.166.152:9966/';
+  domain = domain;
   token: String;
   username: String;
   role: String;
@@ -30,9 +30,10 @@ export class AuthenticationService {
       this.username = currentUser && currentUser.username;
       this.role = currentUser && currentUser.role;
     }else {
-      this.token = '1';
-      this.username = '1';
-      this.role = '1';
+      this.isLogged = false;
+      this.token = null;
+      this.username = null;
+      this.role = null;
     }
   }
 

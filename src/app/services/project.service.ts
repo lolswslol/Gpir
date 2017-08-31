@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
 import {AuthenticationService} from "./authentication.service";
 import {Observable} from "rxjs";
+import { domain } from '../config/config';
 
 @Injectable()
 export class ProjectService {
 
+  domain = domain;
   currentProjectName: String;
   currentProjectId: Number;
 
@@ -17,7 +19,7 @@ export class ProjectService {
 
   getAllProjects(){
     this.authenticationService.createAuthenticationHeaders();
-    return this.http.get('http://192.168.11.93:9966/api/projects',this.authenticationService.options)
+    return this.http.get(this.domain+'api/projects',this.authenticationService.options)
       .map(res=>res.json())
       .catch((err)=>{
         return Observable.throw(err);
