@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, HostListener, DoCheck } from '@angular/core';
+import {Directive, ElementRef, Input, HostListener, DoCheck, Output, EventEmitter} from '@angular/core';
 import { ProjectService } from "../services/project.service";
 
 @Directive({
@@ -10,12 +10,14 @@ export class SelectProjectDirective implements DoCheck{
 
   }
 
+  @Output() choose = new EventEmitter();
   @Input() project;
 
 
   @HostListener('click') onMouseClick(){
     this.changeAppearance();
     this.projectService.chooseProject(this.project);
+    this.choose.emit(this.project.nameProject);
   }
 
   private changeAppearance(){
@@ -24,7 +26,7 @@ export class SelectProjectDirective implements DoCheck{
 
   ngDoCheck(){
     if(this.project.id === this.projectService.currentProjectId){
-      this.el.nativeElement.className = 'text-warning';
+      this.el.nativeElement.className = 'text-success';
     }else {
       this.el.nativeElement.className = 'text-primary';
     }

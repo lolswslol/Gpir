@@ -1,3 +1,12 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      <div [ngClass]="messageClass" *ngIf="message">
+        <span *ngIf="message" class="text-primary message-success">Выбран проект:</span>&nbsp;&nbsp;&nbsp;{{message}}</div>
+    </div>
+  </div>
+</div>
+
 
 <div class="container">
   <div class="row">
@@ -6,11 +15,27 @@
         <h3 class="panel-title">Список проектов</h3>
       </div>
       <div class="panel-body">
-        <p appSelectProject [project]="project" class="text-primary" *ngFor="let project of projects; let i = index" ><small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong></p>
+        <p appSelectProject [project]="project" class="text-primary" *ngFor="let project of projects; let i = index" (choose)="onChoose($event)" >
+          <small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong>
+        </p>
       </div>
     </div>
   </div>
 </div>
+
+
+<div *ngIf="projectService.currentProjectId" class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 text-center">
+
+      <a href="#" class="btn btn-default btn-form">к плановым формам &rarr;</a>
+      <a href="#" class="btn btn-default btn-form">к квартальным формам &rarr;</a>
+
+
+    </div>
+  </div>
+</div>
+
 
 
 

@@ -11,7 +11,7 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-left">
-        <li *ngIf="authenticationService.isLogged"><a>Выбор проекта</a></li>
+        <li *ngIf="authenticationService.isLogged"><a [routerLink]="['/home']">Выбор проекта</a></li>
         <li *ngIf="authenticationService.isLogged"><a>Отчеты</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -22,13 +22,5 @@
     <!--/.nav-collapse -->
   </div>
 </nav>
-<div *ngIf="authenticationService.isLogged" class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <ul class="breadcrumb">
-        <li class="active">Название проекта: <strong>{{projectService.currentProjectName}}</strong> </li>
-      </ul>
-    </div>
-  </div>
-</div>
+
 

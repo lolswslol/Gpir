@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
             this.message = 'Не правильное имя пользователя или пароль';
             this.messageClass = 'alert alert-danger';
             this.enableForm();
+            this.processing = false;
             },
             ()=>{})
 

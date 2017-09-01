@@ -38,7 +38,8 @@ export class AuthenticationService {
   }
 
   loadToken(){
-    this.token = JSON.parse(localStorage.getItem('currentToken')).token;
+   let token = JSON.parse(localStorage.getItem('currentToken'));
+   this.token = token && token.token;
   }
 
   createAuthenticationHeaders() {
