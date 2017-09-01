@@ -13,6 +13,7 @@ import { NoAuthGuard } from "./guards/noAuth.guard";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProjectService } from "./services/project.service";
 import { SelectProjectDirective } from './directives/select-project.directive';
+import { ReportComponent } from './components/report/report.component';
 //PrimeNG modules
 
 
@@ -23,6 +24,7 @@ import { SelectProjectDirective } from './directives/select-project.directive';
     HomeComponent,
     NavbarComponent,
     SelectProjectDirective,
+    ReportComponent,
 
   ],
   imports: [

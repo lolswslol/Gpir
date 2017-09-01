@@ -12,7 +12,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-left">
         <li *ngIf="authenticationService.isLogged"><a [routerLink]="['/home']">Выбор проекта</a></li>
-        <li *ngIf="authenticationService.isLogged"><a>Отчеты</a></li>
+        <li *ngIf="authenticationService.isLogged"><a [routerLink]="['/report']">Отчеты</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!authenticationService.isLogged"><a routerLink="/login">Войти</a></li>
