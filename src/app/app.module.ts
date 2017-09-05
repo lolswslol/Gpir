@@ -14,6 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProjectService } from "./services/project.service";
 import { SelectProjectDirective } from './directives/select-project.directive';
 import { ReportComponent } from './components/report/report.component';
+import { ProjectGuard } from "./guards/project.guard";
 //PrimeNG modules
 
 
@@ -33,7 +34,7 @@ import { ReportComponent } from './components/report/report.component';
     ReactiveFormsModule,
     HttpModule,
   ],
-  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard],
+  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

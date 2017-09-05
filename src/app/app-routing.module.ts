@@ -5,12 +5,13 @@ import { HomeComponent } from "./components/home/home.component";
 import {AuthGuard} from "./guards/auth.guard";
 import { NoAuthGuard } from "./guards/noAuth.guard";
 import {ReportComponent} from "./components/report/report.component";
+import {ProjectGuard} from "./guards/project.guard";
 
 const appRoutes=[
     {path:"",component: HomeComponent, canActivate: [AuthGuard]},
     {path:"login",component: LoginComponent,},
     {path:"home",component: HomeComponent, canActivate: [AuthGuard]},
-    {path:"report",component: ReportComponent, canActivate: [AuthGuard]},
+    {path:"report",component: ReportComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"**",component: HomeComponent, canActivate: [AuthGuard]},
 
 ];

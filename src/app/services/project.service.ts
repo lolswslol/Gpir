@@ -42,4 +42,10 @@ export class ProjectService {
     localStorage.removeItem('currentProject');
   }
 
+  isProjectActive(){
+    if(this.currentProjectId && this.currentProjectName){
+      return true
+    }else return false
+  }
+
 }
