@@ -1,0 +1,61 @@
+<div class="container">
+  <div [ngClass]="messageClass">{{message}}</div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Информация о проекте</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped table-hover table-bordered">
+        <tbody>
+        <tr>
+          <td>Наименование инновационного проекта</td>
+          <td>
+            <div class="form-group">
+            <input appInputValidation (onValidation)="validate($event)" [disabled]="processing" class="form-control input-sm" type="text" [(ngModel)]="model.name">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Регистрационный номер проекта</td>
+          <td><input [disabled]="processing" class="form-control input-sm" type="text" [(ngModel)]="model.shifr"></td>
+        </tr>
+        <tr>
+          <td>Уровень проекта по технологическому укладу</td>
+          <td>
+            <select [disabled]="processing" class="form-control input-sm" [(ngModel)]="model.tech">
+              <option *ngFor="let tech of model.teches" [ngValue]="tech.id">{{tech.name}}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Уровень реализуемой продуктовой инновации</td>
+          <td>
+            <select [disabled]="processing" class="form-control input-sm" [(ngModel)]="model.productInnovation">
+              <option *ngFor="let product of model.productInnovations" [ngValue]="product.id">{{product.name}}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Уровень реализуемой процессной инновации</td>
+          <td>
+            <select [disabled]="processing" class="form-control input-sm" [(ngModel)]="model.processInnovation">
+              <option *ngFor="let process of model.processInnovations" [ngValue]="process.id">{{process.name}}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Год начала реализации проекта</td>
+          <td><input [disabled]="processing" class="form-control input-sm" type="text" [(ngModel)]="model.yearStart"></td>
+        </tr>
+        <tr>
+        <tr>
+          <td>Год завершения реализации проекта</td>
+          <td><input [disabled]="processing" class="form-control input-sm" type="text" [(ngModel)]="model.yearEnd"></td>
+        </tr>
+        <tr>
+        </tbody>
+      </table>
+      <button [disabled]="!valid || processing" class="btn btn-primary" (click)="submit()">Сохранить</button>
+    </div>
+  </div>
+</div>

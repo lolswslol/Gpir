@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, HostListener, DoCheck, Output, EventEmitter} from '@angular/core';
+import { Directive, ElementRef, Input, HostListener, DoCheck, Output, EventEmitter} from '@angular/core';
 import { ProjectService } from "../services/project.service";
 
 @Directive({
@@ -15,13 +15,8 @@ export class SelectProjectDirective implements DoCheck{
 
 
   @HostListener('click') onMouseClick(){
-    this.changeAppearance();
     this.projectService.chooseProject(this.project);
     this.choose.emit(this.project.nameProject);
-  }
-
-  private changeAppearance(){
-
   }
 
   ngDoCheck(){

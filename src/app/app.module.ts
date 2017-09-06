@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { AuthenticationService } from "./services/authentication.service";
-import { ReactiveFormsModule } from "@angular/forms";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import { HttpModule} from "@angular/http";
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from "./guards/auth.guard";
@@ -15,6 +15,8 @@ import { ProjectService } from "./services/project.service";
 import { SelectProjectDirective } from './directives/select-project.directive';
 import { ReportComponent } from './components/report/report.component';
 import { ProjectGuard } from "./guards/project.guard";
+import { CustomersProjectInfoComponent } from './components/customers-forms-dir/customers-project-info/customers-project-info.component';
+import { InputValidationDirective } from "./directives/input-validation.directive";
 //PrimeNG modules
 
 
@@ -25,7 +27,9 @@ import { ProjectGuard } from "./guards/project.guard";
     HomeComponent,
     NavbarComponent,
     SelectProjectDirective,
+    InputValidationDirective,
     ReportComponent,
+    CustomersProjectInfoComponent,
 
   ],
   imports: [
@@ -33,6 +37,7 @@ import { ProjectGuard } from "./guards/project.guard";
     AppRoutingModule,
     ReactiveFormsModule,
     HttpModule,
+    FormsModule,
   ],
   providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard],
   bootstrap: [AppComponent]
