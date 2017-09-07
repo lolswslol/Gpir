@@ -17,6 +17,8 @@ import { ReportComponent } from './components/report/report.component';
 import { ProjectGuard } from "./guards/project.guard";
 import { CustomersProjectInfoComponent } from './components/customers-forms-dir/customers-project-info/customers-project-info.component';
 import { InputValidationDirective } from "./directives/input-validation.directive";
+import { CustomersExecutorsInfoComponent } from './components/customers-forms-dir/customers-executors-info/customers-executors-info.component';
+import { CustomersPlannedDateComponent } from './components/customers-forms-dir/customers-planned-date/customers-planned-date.component';
 //PrimeNG modules
 
 
@@ -30,6 +32,8 @@ import { InputValidationDirective } from "./directives/input-validation.directiv
     InputValidationDirective,
     ReportComponent,
     CustomersProjectInfoComponent,
+    CustomersExecutorsInfoComponent,
+    CustomersPlannedDateComponent,
 
   ],
   imports: [

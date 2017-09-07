@@ -17,6 +17,12 @@ export class CustomersProjectInfoComponent implements OnInit {
   messageClass;
   processing = false;
   valid = true;
+  validationMap = new Map();
+  //RegExp for custom validation directives
+  anyRegExp = /^[а-яА-ЯёЁa-zA-Z0-9\s]+$/;
+  numbericRegExp = /^\d+$/;
+  yearRegExp = /^(19|20)\d{2}$/;
+
 
 
   constructor(private http: Http, private authenticationService: AuthenticationService, private projectService: ProjectService) { }
@@ -26,7 +32,10 @@ export class CustomersProjectInfoComponent implements OnInit {
     this.http.get(this.domain+'api/project_info/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe((data)=>{this.model = data;
-                          console.log(this.model)},
+                            for(let key in data){
+                              this.validationMap.set(key,true)
+                            }
+                          },
                   (err)=>{this.message = 'Произошла ошибка загрузки проекта. Перезагрузите страницу.';
                           this.messageClass = 'alert alert-danger'},
                   ()=>{})
@@ -66,7 +75,20 @@ export class CustomersProjectInfoComponent implements OnInit {
   }
 
   validate(event){
-    this.valid = event;
+    this.valid = true;
+    this.validationMap.delete(event.name);
+    this.validationMap.set(event.name,event.value);
+    this.validationMap.forEach((s)=>{
+      if(!s){
+        this.valid = false;
+        this.message = 'Не вверный ввод данных в поле';
+        this.messageClass = 'alert alert-danger';
+        setTimeout(()=>{
+          this.message = null;
+          this.messageClass = null;
+        },2000)
+      }
+    });
   }
 
 }

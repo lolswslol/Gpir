@@ -9,17 +9,20 @@ export class InputValidationDirective{
   constructor(private el: ElementRef){
 
   }
-
-  @Output() onValidation = new EventEmitter();
+  @Input() index;
+  @Input() fieldName:String;
+  @Input() regExp;
+  @Output() onValidation = new EventEmitter<Object>();
 
   @HostListener('keyup') onKeyPress(){
-    let regExp = /^[а-яА-ЯёЁa-zA-Z0-9\s]+$/;
-    if(!this.el.nativeElement.value.match(regExp)){
+    if(!this.el.nativeElement.value.match(this.regExp)){
+      let event = {name:this.fieldName,value: false,index:this.index};
       this.el.nativeElement.parentElement.className = 'form-group-sm has-error';
-      this.onValidation.emit(false);
+      this.onValidation.emit(event);
     }else{
       this.el.nativeElement.parentElement.className = 'form-group-sm';
-      this.onValidation.emit(true);
+      let event = {name:this.fieldName,value: true,index:this.index};
+      this.onValidation.emit(event);
     }
   }
 }

@@ -7,6 +7,8 @@ import { NoAuthGuard } from "./guards/noAuth.guard";
 import {ReportComponent} from "./components/report/report.component";
 import {ProjectGuard} from "./guards/project.guard";
 import { CustomersProjectInfoComponent } from "./components/customers-forms-dir/customers-project-info/customers-project-info.component";
+import { CustomersExecutorsInfoComponent } from "./components/customers-forms-dir/customers-executors-info/customers-executors-info.component";
+import { CustomersPlannedDateComponent } from "./components/customers-forms-dir/customers-planned-date/customers-planned-date.component";
 
 const appRoutes=[
     {path:"",component: HomeComponent, canActivate: [AuthGuard]},
@@ -15,6 +17,8 @@ const appRoutes=[
     {path:"report",component: ReportComponent, canActivate: [AuthGuard,ProjectGuard]},
  /* Customers routes*/
     {path:"customers-project-info",component: CustomersProjectInfoComponent, canActivate: [AuthGuard,ProjectGuard]},
+    {path:"customers-executors-info",component: CustomersExecutorsInfoComponent, canActivate: [AuthGuard,ProjectGuard]},
+    {path:"customers-planned-date",component: CustomersPlannedDateComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"**",component: HomeComponent, canActivate: [AuthGuard]},
 
 ];
