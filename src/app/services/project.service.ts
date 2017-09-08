@@ -11,13 +11,13 @@ export class ProjectService {
   currentProjectName: String;
   currentProjectId: Number;
   //test params
-  readable;
+  writable;
 
   constructor(private http: Http, private authenticationService: AuthenticationService) {
     let currentProject = JSON.parse(localStorage.getItem('currentProject'));
     this.currentProjectName = currentProject && currentProject.name;
     this.currentProjectId = currentProject && currentProject.id;
-    this.readable = currentProject && currentProject.readable || true;
+    this.writable = currentProject && currentProject.writable;
   }
 
   getAllProjects(){
@@ -33,18 +33,18 @@ export class ProjectService {
     let project = {
       name: apiProject.nameProject,
       id: apiProject.id,
-      readable: apiProject.readable
+      writable: apiProject.writable
     };
     this.currentProjectId = project.id;
     this.currentProjectName = project.name;
-    this.readable = project.readable;
-    localStorage.setItem('currentProject',JSON.stringify({name: project.name, id: project.id, readable: project.readable}))
+    this.writable = project.writable;
+    localStorage.setItem('currentProject',JSON.stringify({name: project.name, id: project.id, writable: project.writable}))
   }
 
   clearCurrentProject(){
     this.currentProjectId = null;
     this.currentProjectName = null;
-    this.readable = true;
+    this.writable = true;
     localStorage.removeItem('currentProject');
   }
 
