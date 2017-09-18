@@ -10,11 +10,13 @@ import { CustomersProjectInfoComponent } from "./components/customers-forms-dir/
 import { CustomersExecutorsInfoComponent } from "./components/customers-forms-dir/customers-executors-info/customers-executors-info.component";
 import { CustomersPlannedDateComponent } from "./components/customers-forms-dir/customers-planned-date/customers-planned-date.component";
 import { ProjectProfileComponent } from "./components/project-profile/project-profile.component";
+import { EntryPointComponent } from "./components/entry-point/entry-point.component";
 
 const appRoutes=[
     {path:"",component: HomeComponent, canActivate: [AuthGuard]},
     {path:"login",component: LoginComponent,},
     {path:"home",component: HomeComponent, canActivate: [AuthGuard]},
+    {path:"entry-point",component: EntryPointComponent, canActivate: [AuthGuard]},
     {path:"report",component: ReportComponent, canActivate: [AuthGuard,ProjectGuard]},
  /* Customers routes*/
     {path:"customers-project-info",component: CustomersProjectInfoComponent, canActivate: [AuthGuard,ProjectGuard]},

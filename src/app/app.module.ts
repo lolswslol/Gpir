@@ -20,9 +20,12 @@ import { InputValidationDirective } from "./directives/input-validation.directiv
 import { CustomersExecutorsInfoComponent } from './components/customers-forms-dir/customers-executors-info/customers-executors-info.component';
 import { CustomersPlannedDateComponent } from './components/customers-forms-dir/customers-planned-date/customers-planned-date.component';
 import { ProjectProfileComponent } from './components/project-profile/project-profile.component';
+import { EntryPointComponent } from './components/entry-point/entry-point.component';
 //PrimeNG modules
 import { DialogModule } from 'primeng/primeng';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+
 
 
 @NgModule({
@@ -38,6 +41,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     CustomersExecutorsInfoComponent,
     CustomersPlannedDateComponent,
     ProjectProfileComponent,
+    EntryPointComponent,
 
   ],
   imports: [
@@ -49,7 +53,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     DialogModule,
     BrowserAnimationsModule
   ],
-  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard],
+  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

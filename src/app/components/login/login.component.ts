@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
             this.message = 'Вы успешно вошли под своим аккаунтом';
             this.messageClass = 'alert alert-success';
             setTimeout(()=>{
-              this.router.navigate(['/home'])
+              this.router.navigate(['/entry-point'])
             },3000)
           }
         },
