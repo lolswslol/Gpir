@@ -17,9 +17,9 @@
         <tbody>
         <tr *ngFor="let model of model; let i = index">
           <td>{{model.name}}</td>
-          <td><input appInputValidation [fieldName]="'value'" [index]="i" [regExp]="anyRegExp" (onValidation)="validate($event)" type="text" class="form-control input-sm" [(ngModel)]="model.value"></td>
-          <td><input appInputValidation [fieldName]="'rdate'" [index]="i" [regExp]="anyRegExp" (onValidation)="validate($event)" type="text" class="form-control input-sm" [(ngModel)]="model.rdate"></td>
-          <td><input appInputValidation [fieldName]="'fdate'" [index]="i" [regExp]="anyRegExp" (onValidation)="validate($event)" type="text" class="form-control input-sm" [(ngModel)]="model.fdate"></td>
+          <td><input [disabled]="processing || !projectService.writable" appInputValidation [fieldName]="'value'" [index]="i" [regExp]="anyRegExp" (onValidation)="validate($event)" type="text" class="form-control input-sm" [(ngModel)]="model.value"></td>
+          <td><input [disabled]="processing || !projectService.writable" appInputValidation [fieldName]="'rdate'" [index]="i" [regExp]="anyRegExp" (onValidation)="validate($event)" type="text" class="form-control input-sm" [(ngModel)]="model.rdate"></td>
+          <td><input [disabled]="processing || !projectService.writable" appInputValidation [fieldName]="'fdate'" [index]="i" [regExp]="anyRegExp" (onValidation)="validate($event)" type="text" class="form-control input-sm" [(ngModel)]="model.fdate"></td>
         </tr>
         </tbody>
       </table>

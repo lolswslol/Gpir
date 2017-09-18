@@ -19,7 +19,10 @@ import { CustomersProjectInfoComponent } from './components/customers-forms-dir/
 import { InputValidationDirective } from "./directives/input-validation.directive";
 import { CustomersExecutorsInfoComponent } from './components/customers-forms-dir/customers-executors-info/customers-executors-info.component';
 import { CustomersPlannedDateComponent } from './components/customers-forms-dir/customers-planned-date/customers-planned-date.component';
+import { ProjectProfileComponent } from './components/project-profile/project-profile.component';
 //PrimeNG modules
+import { DialogModule } from 'primeng/primeng';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -34,6 +37,7 @@ import { CustomersPlannedDateComponent } from './components/customers-forms-dir/
     CustomersProjectInfoComponent,
     CustomersExecutorsInfoComponent,
     CustomersPlannedDateComponent,
+    ProjectProfileComponent,
 
   ],
   imports: [
@@ -42,6 +46,8 @@ import { CustomersPlannedDateComponent } from './components/customers-forms-dir/
     ReactiveFormsModule,
     HttpModule,
     FormsModule,
+    DialogModule,
+    BrowserAnimationsModule
   ],
   providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard],
   bootstrap: [AppComponent]
