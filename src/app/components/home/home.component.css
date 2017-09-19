@@ -1,3 +1,12 @@
+div /deep/ .ui-accordion-content{
+  all: inherit;
+}
+div /deep/ .ui-accordion-header{
+ color: inherit;
+ background: inherit;
+}
+
+
 .message-success{
   color: aliceblue;
   text-decoration: underline;
@@ -8,3 +17,9 @@
   margin: 20px;
   padding: 20px;
 }
+
+.no-margins{
+  margin: 0;
+}
+
+

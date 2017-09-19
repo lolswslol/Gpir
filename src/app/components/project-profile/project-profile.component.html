@@ -6,9 +6,9 @@
     </div>
   </div>
 
-  <div class="panel panel-primary">
+  <div *ngIf="authenticationService.role === 'EXECUTOR' || authenticationService.role === 'CUSTOMER'" class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title">Panel primary</h3>
+      <h3 class="panel-title">Список проектов</h3>
     </div>
     <div class="panel-body">
       <ul class="list-group">
@@ -23,6 +23,26 @@
       </ul>
     </div>
   </div>
+
+  <div *ngIf="authenticationService.role === 'GKNT' || authenticationService.role === 'BELISA'" class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Список проектов</h3>
+    </div>
+    <div class="panel-body">
+      <ul class="list-group">
+        <li *ngFor="let project of projects" class="list-group-item">
+          {{project[1].nameProject}}
+          <span *ngIf="!project.writable" class="text-warning">&nbsp;[Находится на проверке]</span>
+          <span *ngIf="project.writable" class="text-success">&nbsp;[Доступен для заполнения]</span>
+          <a class="badge alert-warning" (click)="sendTo(project.id)"><span *ngIf="project.writable">Отправить на проверку</span></a>
+          <a class="badge alert-danger"><span *ngIf="project.writable">Вернуть на доработку</span></a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
 </div>
 
 <p-dialog modal="true" header="Title" [(visible)]="display">

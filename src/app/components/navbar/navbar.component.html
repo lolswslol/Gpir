@@ -15,13 +15,16 @@
         <li *ngIf="authenticationService.isLogged"><a [routerLink]="['/report']">Отчеты</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="authenticationService.isLogged"><a routerLink="/project-profile">Управление проектом</a></li>
+        <!--<li *ngIf="authenticationService.isLogged"><a routerLink="/project-profile">Управление проектом</a></li>-->
         <li *ngIf="!authenticationService.isLogged"><a routerLink="/login">Войти</a></li>
         <li *ngIf="authenticationService.isLogged"><a (click)="logout()">Выйти</a></li>
 
       </ul>
     </div>
     <!--/.nav-collapse -->
+    <div *ngIf="authenticationService.isLogged" class="well well-sm">
+      <strong>Выбран проект:</strong>&nbsp;&nbsp;{{projectService.currentProjectName}}
+    </div>
   </div>
 </nav>
 

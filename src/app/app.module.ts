@@ -25,6 +25,7 @@ import { EntryPointComponent } from './components/entry-point/entry-point.compon
 import { DialogModule } from 'primeng/primeng';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { AccordionModule } from 'primeng/primeng';
 
 
 
@@ -51,7 +52,9 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     HttpModule,
     FormsModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AccordionModule
+
   ],
   providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from "../../services/project.service";
+import { AuthenticationService } from "../../services/authentication.service";
+
 
 
 @Component({
@@ -12,14 +14,23 @@ export class HomeComponent implements OnInit {
   projects: Array<Object> = [];
   message;
   messageClass;
+  customersListIndex = null;
 
 
-  constructor(private projectService: ProjectService) { }
+
+
+
+  constructor(private projectService: ProjectService, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.projectService.getAllProjects()
       .subscribe(data=>{
-        this.projects=data;
+        console.log(data);
+        if(this.authenticationService.role === 'EXECUTOR' || this.authenticationService.role === 'CUSTOMER'){
+          this.projects = data;
+        }else {
+         this.projects = Object.entries(data);
+        }
         if(this.projectService.currentProjectId){
           this.onChoose(this.projectService.currentProjectName);
         }
@@ -31,9 +42,21 @@ export class HomeComponent implements OnInit {
         ()=>{});
   }
 
-  onChoose($event){
-    this.message = $event;
-    this.messageClass = 'alert alert-success';
+  onChoose(project){
+    this.projectService.chooseProject(project);
+  }
+
+  onCustomerChoose($event){
+
+  }
+
+  selectCustomer(i){
+    if(i!=this.customersListIndex){
+      this.customersListIndex = i;
+    }else {
+      this.customersListIndex = null;
+    }
+
   }
 
 

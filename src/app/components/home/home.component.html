@@ -8,20 +8,64 @@
 </div>
 
 
-<div class="container">
+<div *ngIf="authenticationService.role === 'EXECUTOR' || authenticationService.role ==='CUSTOMER'" class="container">
   <div class="row">
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Список проектов</h3>
       </div>
       <div class="panel-body">
-        <p appSelectProject [project]="project" class="text-primary" *ngFor="let project of projects; let i = index" (choose)="onChoose($event)" >
+        <p appSelectProject [project]="project" class="text-primary" *ngFor="let project of projects; let i = index" (choose)="onCustomerChoose($event)" >
           <small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong>
         </p>
       </div>
     </div>
   </div>
 </div>
+
+<!--<div *ngIf="authenticationService.role == 'GKNT' || authenticationService.role == 'BELISA'" class="container">
+  <div class="row">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Список проектов</h3>
+      </div>
+      <div class="panel-body">
+        <p-accordion *ngFor="let customer of projects">
+          <p-accordionTab [header] = customer[0]>
+            <p appSelectProject  [project]="project" (choose)="onChoose($event)" *ngFor="let project of customer[1];let i = index"><small>{{i+1}}</small>.<strong>{{project.nameProject}}</strong></p>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div *ngFor="let customer of projects;let i = index" class="panel panel-default no-margins">
+      <div class="panel-heading" (click)="selectCustomer(i)">
+        <a style="all:inherit" routerLink="">{{customer[0]}}</a>
+      </div>
+      <div *ngIf="i===customersListIndex" class="panel-body">
+        <a *ngFor="let project of customer[1]" routerLink="">{{project.nameProject}}</a>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<div *ngIf="authenticationService.role == 'GKNT' || authenticationService.role == 'BELISA'" class="container">
+  <div class="row">
+    <div *ngFor="let customer of projects;let i = index" class="list-group no-margins">
+      <a routerLink=""  (click)="selectCustomer(i)" class="list-group-item active">{{customer[0]}}</a>
+      <div *ngIf="i===customersListIndex">
+      <a (click)="onChoose(project)"  class="list-group-item" *ngFor="let project of customer[1]" routerLink="">{{project.nameProject}}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 <div *ngIf="projectService.currentProjectId" class="container">
@@ -34,6 +78,7 @@
     </div>
   </div>
 </div>
+
 
 
 

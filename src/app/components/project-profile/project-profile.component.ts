@@ -21,14 +21,20 @@ export class ProjectProfileComponent implements OnInit {
   ngOnInit() {
     this.projectService.getAllProjects()
       .subscribe(data=>{
-        console.log(data);
-          this.projects=data;
+          console.log(data);
+          if(this.authenticationService.role === 'EXECUTOR' || this.authenticationService.role === 'CUSTOMER'){
+            this.projects = data;
+          }else {
+            this.projects = Object.entries(data);
+          }
         },
         (err)=>{
           this.message = 'Произошла ошибка загрузки проектов, попробуйте перезагрузить страницу';
           this.messageClass = 'alert alert-danger';
         },
         ()=>{});
+
+
   }
 
   display: boolean = false;
