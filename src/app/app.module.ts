@@ -26,6 +26,7 @@ import { DialogModule } from 'primeng/primeng';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
+import { ChangeBackgroundDirective } from './directives/change-background.directive';
 
 
 
@@ -43,6 +44,7 @@ import { AccordionModule } from 'primeng/primeng';
     CustomersPlannedDateComponent,
     ProjectProfileComponent,
     EntryPointComponent,
+    ChangeBackgroundDirective,
 
   ],
   imports: [

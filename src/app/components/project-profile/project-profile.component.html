@@ -1,54 +1,19 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-md-offset-3 text-center">
-      <div [ngClass]="messageClass" *ngIf="message">
-        <span *ngIf="message" class="text-primary message-success">Выбран проект:</span>&nbsp;&nbsp;&nbsp;{{message}}</div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Управление проектом</h3>
+      </div>
+      <div class="panel-body">
+        <div class="well well-lg">
+          <strong>Название проекта: </strong>
+          {{projectService.currentProjectName}}
+          <div>
+            <button class="btn btn-success confirm-btn" (click)="confirmProject()">принять</button>
+            <button *ngIf="authenticationService.role!='EXECUTOR'" class="btn btn-danger confirm-btn" (click)="confirmProject()">отклонить</button>
+          </div>
+        </div>
     </div>
   </div>
-
-  <div *ngIf="authenticationService.role === 'EXECUTOR' || authenticationService.role === 'CUSTOMER'" class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Список проектов</h3>
-    </div>
-    <div class="panel-body">
-      <ul class="list-group">
-        <li *ngFor="let project of projects" class="list-group-item">
-          {{project.nameProject}}
-          <span *ngIf="!project.writable" class="text-warning">&nbsp;[Находится на проверке]</span>
-          <span *ngIf="project.writable" class="text-success">&nbsp;[Доступен для заполнения]</span>
-          <a class="badge alert-warning" (click)="sendTo(project.id)"><span *ngIf="project.writable">Отправить на проверку</span></a>
-          <a class="badge alert-danger"><span *ngIf="project.writable">Вернуть на доработку</span></a>
-
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div *ngIf="authenticationService.role === 'GKNT' || authenticationService.role === 'BELISA'" class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Список проектов</h3>
-    </div>
-    <div class="panel-body">
-      <ul class="list-group">
-        <li *ngFor="let project of projects" class="list-group-item">
-          {{project[1].nameProject}}
-          <span *ngIf="!project.writable" class="text-warning">&nbsp;[Находится на проверке]</span>
-          <span *ngIf="project.writable" class="text-success">&nbsp;[Доступен для заполнения]</span>
-          <a class="badge alert-warning" (click)="sendTo(project.id)"><span *ngIf="project.writable">Отправить на проверку</span></a>
-          <a class="badge alert-danger"><span *ngIf="project.writable">Вернуть на доработку</span></a>
-
-        </li>
-      </ul>
-    </div>
-  </div>
-
-
 </div>
-
-<p-dialog modal="true" header="Title" [(visible)]="display">
-  Content
-</p-dialog>
-
-<button type="text" (click)="showDialog()" pButton icon="fa-external-link-square" label="Show">Show</button>
-
 

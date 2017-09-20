@@ -22,7 +22,7 @@ const appRoutes=[
     {path:"customers-project-info",component: CustomersProjectInfoComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"customers-executors-info",component: CustomersExecutorsInfoComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"customers-planned-date",component: CustomersPlannedDateComponent, canActivate: [AuthGuard,ProjectGuard]},
-    {path:"project-profile",component: ProjectProfileComponent, canActivate: [AuthGuard]},
+    {path:"project-profile",component: ProjectProfileComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"**",component: HomeComponent, canActivate: [AuthGuard]},
 
 ];

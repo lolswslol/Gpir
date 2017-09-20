@@ -56,10 +56,16 @@
 
 <div *ngIf="authenticationService.role == 'GKNT' || authenticationService.role == 'BELISA'" class="container">
   <div class="row">
-    <div *ngFor="let customer of projects;let i = index" class="list-group no-margins">
-      <a routerLink=""  (click)="selectCustomer(i)" class="list-group-item active">{{customer[0]}}</a>
-      <div *ngIf="i===customersListIndex">
-      <a (click)="onChoose(project)"  class="list-group-item" *ngFor="let project of customer[1]" routerLink="">{{project.nameProject}}</a>
+    <div *ngFor="let customer of projects;let i = index" class="list-group no-margins" style="cursor: pointer">
+      <a class="list-group-item active" (click)="selectCustomer(i)" >{{customer.customer}}<span appChangeBackground [color]="customer.statusColor" class="badge fa fa-check"> </span></a>
+      <div [@enterAnimation] *ngIf="i===customersListIndex">
+        <div *ngFor="let project of customer.projectModels">
+          <a (click)="onChoose(project)"  class="list-group-item">
+          {{project.nameProject}}<span appChangeBackground [color]="project.statusColor" class="badge badge fa fa-check"> </span>
+          </a>
+        </div>
+
+
       </div>
     </div>
   </div>
