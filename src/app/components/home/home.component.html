@@ -15,7 +15,7 @@
         <h3 class="panel-title">Список проектов</h3>
       </div>
       <div class="panel-body">
-        <p appSelectProject [project]="project" class="text-primary" *ngFor="let project of projects; let i = index" (choose)="onCustomerChoose($event)" >
+        <p appSelectProject [project]="project" class="text-primary" style="cursor: pointer" *ngFor="let project of projects; let i = index" (choose)="onCustomerChoose($event)" >
           <small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong>
         </p>
       </div>

@@ -46,9 +46,6 @@ export class HomeComponent implements OnInit {
         }else {
          this.projects = data;
         }
-        if(this.projectService.currentProjectId){
-          this.onChoose(this.projectService.currentProjectName);
-        }
       },
         (err)=>{
         this.message = 'Произошла ошибка загрузки проектов, попробуйте перезагрузить страницу';

@@ -1,18 +1,38 @@
 <div class="container">
   <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <div [ngClass]="messageClass">{{message}}</div>
+    </div>
+  </div>
+  <div class="row">
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Управление проектом</h3>
       </div>
       <div class="panel-body">
-        <div class="well well-lg">
-          <strong>Название проекта: </strong>
-          {{projectService.currentProjectName}}
-          <div>
-            <button class="btn btn-success confirm-btn" (click)="confirmProject()">принять</button>
-            <button *ngIf="authenticationService.role!='EXECUTOR'" class="btn btn-danger confirm-btn" (click)="confirmProject()">отклонить</button>
-          </div>
+        <div class="list-group">
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">Название проекта</h4>
+            <p class="list-group-item-text">{{project?.name}}</p>
+          </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">Заказчик</h4>
+            <p class="list-group-item-text">{{project?.customer}}</p>
+          </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">Исполнитель</h4>
+            <p class="list-group-item-text">{{project?.executor}}</p>
+          </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">Стадия рассмотрения</h4>
+            <p class="list-group-item-text">Проект на данный момент находится {{project?.role | appRolePipe}}</p>
+          </a>
         </div>
+        <div *ngIf="authenticationService.role === project?.role && !confirmed">
+          <button [disabled]="processing" class="btn btn-success" (click)="confirmProject()">Принять проект</button>
+          <button *ngIf="authenticationService.role!='EXECUTOR'" [disabled]="processing" class="btn btn-danger" (click)="rejectProject()">Отклонить проект</button>
+        </div>
+
     </div>
   </div>
 </div>

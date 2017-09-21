@@ -27,6 +27,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
 import { ChangeBackgroundDirective } from './directives/change-background.directive';
+//Pipes
+import { RolePipe } from "./pipes/role.pipe";
 
 
 
@@ -45,6 +47,7 @@ import { ChangeBackgroundDirective } from './directives/change-background.direct
     ProjectProfileComponent,
     EntryPointComponent,
     ChangeBackgroundDirective,
+    RolePipe
 
   ],
   imports: [

@@ -29,6 +29,15 @@ export class ProjectService {
       });
   }
 
+  getSingleProject(id){
+    this.authenticationService.createAuthenticationHeaders();
+    return this.http.get(this.domain+'api/project_info_submit/'+id,this.authenticationService.options)
+      .map(res=>res.json())
+      .catch((err)=>{
+        return Observable.throw(err)
+      })
+  }
+
   chooseProject(apiProject){
     let project = {
       name: apiProject.nameProject,
