@@ -11,6 +11,8 @@ import { CustomersExecutorsInfoComponent } from "./components/customers-forms-di
 import { CustomersPlannedDateComponent } from "./components/customers-forms-dir/customers-planned-date/customers-planned-date.component";
 import { ProjectProfileComponent } from "./components/project-profile/project-profile.component";
 import { EntryPointComponent } from "./components/entry-point/entry-point.component";
+import { CreateProjectComponent } from "./components/create-project/create-project.component";
+import {GkntGuard} from "./guards/gknt.guard";
 
 const appRoutes=[
     {path:"",component: HomeComponent, canActivate: [AuthGuard]},
@@ -23,6 +25,7 @@ const appRoutes=[
     {path:"customers-executors-info",component: CustomersExecutorsInfoComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"customers-planned-date",component: CustomersPlannedDateComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"project-profile",component: ProjectProfileComponent, canActivate: [AuthGuard,ProjectGuard]},
+    {path:"create-project",component: CreateProjectComponent, canActivate: [AuthGuard,GkntGuard]},
     {path:"**",component: HomeComponent, canActivate: [AuthGuard]},
 
 ];

@@ -1,0 +1,70 @@
+<div class="container">
+  <div [ngClass]="messageClass">{{message}}</div>
+  <div class="row">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Создание нового инновационного проекта</h3>
+      </div>
+      <div class="panel-body form-horizontal">
+            <div class="form-group">
+              <label for="inputName" class="col-lg-4 control-label ">Наименование инновационного проекта</label>
+              <div class="col-lg-8">
+                <input appCreateProjectValidation [fieldName]="'inputName'" [regExp]="anyRegExp" [parentClass]="'col-lg-8'" (onInputValidation)="validate($event)" [(ngModel)]="model.projectName" type="text" class="form-control" id="inputName" placeholder="*наименование инновационного проекта ">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputExecutor" class="col-lg-4 control-label ">Дата включения в ГПИР</label>
+              <div class="col-lg-8">
+                <input appCreateProjectValidation [fieldName]="'inputExecutor'" [regExp]="dateRegExp" [parentClass]="'col-lg-8'" (onInputValidation)="validate($event)" [(ngModel)]="model.gpirEnter" type="text" class="form-control " id="inputExecutor" placeholder="*дата включения в ГПИР">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="selectExecutor" class="col-lg-4 control-label ">Наименование организации исполнителя</label>
+              <div class="col-lg-8">
+                <select appCreateProjectValidation [fieldName]="'selectExecutor'" [parentClass]="'col-lg-8'" (onSelectValidation)="validate($event)" [(ngModel)]="model.executorName" class="form-control " id="selectExecutor">
+                  <option *ngFor="let option of listOfExecutors" [ngValue]="option.id">{{option.fullName}}</option>
+                </select>
+              </div>
+            </div>
+            <div *ngFor="let coExecutor of coExecutors;let i = index" class="form-group">
+              <label for="selectCoExecutor" class="col-lg-4 control-label ">Наименование организации соисполнителя</label>
+              <div class="col-lg-8">
+                <select [(ngModel)]="coExecutor.executorName" class="form-control " id="selectCoExecutor">
+                  <option *ngFor="let option of listOfExecutors" [ngValue]="option.id">{{option.fullName}}</option>
+                </select>
+                <span class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="removeCoExecutor(i)">Удалить</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-8 col-lg-offset-4">
+                <span class="fa fa-plus-circle cursor" aria-hidden="true" (click)="addCoExecutor()"><strong>&nbsp;Добавить соисполнителя</strong></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="selectCustomer" class="col-lg-4 control-label ">Наименование организации заказчика</label>
+              <div class="col-lg-8">
+                <select appCreateProjectValidation [fieldName]="'selectCustomer'" [parentClass]="'col-lg-8'" (onSelectValidation)="validate($event)" [(ngModel)]="model.customerName" class="form-control " id="selectCustomer">
+                  <option *ngFor="let option of listOfCustomers" [ngValue]="option.id">{{option.fullName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="selectProjectType" class="col-lg-4 control-label">Тип проекта</label>
+              <div class="col-lg-8">
+                <select appCreateProjectValidation [fieldName]="'selectProjectType'" [parentClass]="'col-lg-8'" (onSelectValidation)="validate($event)" [(ngModel)]="model.projectType" class="form-control" id="selectProjectType">
+                  <option>Новый</option>
+                  <option>Переходящий</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-8 col-lg-offset-4">
+                <button [disabled]="processing || !valid" class="btn btn-primary" (click)="submit()">Создать</button>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

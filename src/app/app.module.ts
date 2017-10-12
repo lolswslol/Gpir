@@ -21,14 +21,18 @@ import { CustomersExecutorsInfoComponent } from './components/customers-forms-di
 import { CustomersPlannedDateComponent } from './components/customers-forms-dir/customers-planned-date/customers-planned-date.component';
 import { ProjectProfileComponent } from './components/project-profile/project-profile.component';
 import { EntryPointComponent } from './components/entry-point/entry-point.component';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
 //PrimeNG modules
 import { DialogModule } from 'primeng/primeng';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
 import { ChangeBackgroundDirective } from './directives/change-background.directive';
 //Pipes
 import { RolePipe } from "./pipes/role.pipe";
+import {CreateProjectValidationDirective} from "./components/create-project/create-project-validation.directive";
+import {GkntGuard} from "./guards/gknt.guard";
+
 
 
 
@@ -47,7 +51,9 @@ import { RolePipe } from "./pipes/role.pipe";
     ProjectProfileComponent,
     EntryPointComponent,
     ChangeBackgroundDirective,
-    RolePipe
+    CreateProjectValidationDirective,
+    RolePipe,
+    CreateProjectComponent
 
   ],
   imports: [
@@ -61,7 +67,7 @@ import { RolePipe } from "./pipes/role.pipe";
     AccordionModule
 
   ],
-  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, GkntGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
