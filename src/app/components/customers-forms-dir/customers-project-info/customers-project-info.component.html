@@ -55,7 +55,7 @@
         <tr>
         </tbody>
       </table>
-      <button [disabled]="!valid || processing" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button *ngIf="projectService.writable" [disabled]="!valid || processing" class="btn btn-primary" (click)="submit()">Сохранить</button>
     </div>
   </div>
 </div>

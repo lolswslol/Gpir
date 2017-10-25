@@ -74,21 +74,21 @@ export class CustomersProjectInfoComponent implements OnInit {
         })
   }
 
-  validate(event){
+  validate($event){
     this.valid = true;
-    this.validationMap.delete(event.name);
-    this.validationMap.set(event.name,event.value);
+    if(!$event.value){
+      this.message = 'Не вверный ввод данных в поле';
+      this.messageClass = 'alert alert-danger';
+    }else {
+      this.message = null;
+      this.messageClass = null;
+    }
+    this.validationMap.delete($event.name);
+    this.validationMap.set($event.name, $event.value);
     this.validationMap.forEach((s)=>{
       if(!s){
         this.valid = false;
-        this.message = 'Не вверный ввод данных в поле';
-        this.messageClass = 'alert alert-danger';
-        setTimeout(()=>{
-          this.message = null;
-          this.messageClass = null;
-        },2000)
       }
     });
   }
-
 }

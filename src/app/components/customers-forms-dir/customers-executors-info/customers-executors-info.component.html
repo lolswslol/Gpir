@@ -1,3 +1,172 @@
-<p>
-  customers-executors-info works!
-</p>
+<div class="container">
+  <div [ngClass]="messageClass">{{message}}</div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Информация о заказчике и исполнителе проекта</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped table-hover table-bordered">
+        <tbody>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Наименование заказчика
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <select [disabled]="authenticationService.role !='GKNT' || processing" [(ngModel)]="model.customerId" class="form-control input-sm">
+                  <option *ngFor="let option of listOfCustomers" [ngValue]="option.id">{{option.fullName}}</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Наименование(полное) организации, реализующей проект
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <select [disabled]="authenticationService.role != 'GKNT' || processing" [(ngModel)]="executorModel.id" class="form-control input-sm" (change)="changeExecutor(executorModel.id)">
+                  <option *ngFor="let option of listOfExecutors" [ngValue]="option.id">{{option.fullName}}</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        <tr>
+          <td class="col-lg-4">
+            <div class="form-group">
+              Наименование(краткое) организации, реализующей проект
+            </div>
+          </td>
+          <td class="col-lg-8">
+            <div class="form-group">
+              <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.shortName">
+            </div>
+          </td>
+        </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Почтовый адресс организации(юридический)
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.addressJurid">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Почтовый адресс организации(фактический)
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.addressFact">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Ответственный от организации, реализующей проект
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="model.responsibleOrg">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Код ОКПО
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.okpo">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Код в ГР(ОКЮЛП)
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.okulp">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Учетный номер платильщика
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.unp">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Основной вид экономической деятельности по ОКЭД 005-2011(три знака)
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.oked">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-lg-4">
+              <div class="form-group">
+                Форма собственности организации, реализующей проект
+              </div>
+            </td>
+            <td class="col-lg-8">
+              <div class="form-group">
+                <select [disabled]="!projectService.writable || processing" [(ngModel)]="model.okfsId" class="form-control input-sm">
+                  <option *ngFor="let option of listOfOkfs" [ngValue]="option.id">{{option.name}}</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        <tr *ngFor="let coExecutor of model.coExecutors;let i = index" class="form-group">
+          <td class="col-lg-2">
+            <div class="form-group">
+              Наименование организации соисполнителя
+            </div>
+          </td>
+          <td class="col-lg-8">
+            <select [disabled]="!projectService.writable || processing" [(ngModel)]="coExecutor.executorName" class="form-control " id="selectCoExecutor">
+              <option *ngFor="let option of listOfExecutors" [ngValue]="option.id">{{option.fullName}}</option>
+            </select>
+            <span *ngIf="authenticationService.role === 'GKNT'" class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="removeCoExecutor(i)">Удалить</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="authenticationService.role === 'GKNT'" class="form-group">
+        <div class="col-lg-8 col-lg-offset-4">
+          <span class="fa fa-plus-circle cursor" aria-hidden="true" (click)="addCoExecutor()"><strong>&nbsp;Добавить соисполнителя</strong></span>
+        </div>
+      </div>
+      <button *ngIf="projectService.writable" [disabled]="processing" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button   class="btn btn-primary" (click)="check()">Check</button>
+    </div>
+  </div>
+</div>

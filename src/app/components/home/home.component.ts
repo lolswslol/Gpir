@@ -41,8 +41,10 @@ export class HomeComponent implements OnInit {
     this.projectService.getAllProjects()
       .subscribe(data=>{
         if(this.authenticationService.role === 'EXECUTOR' || this.authenticationService.role === 'CUSTOMER'){
+          console.log(data);
           this.projects = data;
         }else {
+          console.log(data);
          this.projects = data;
         }
       },

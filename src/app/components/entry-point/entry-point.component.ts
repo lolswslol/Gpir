@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from "../../services/authentication.service";
+import {ProjectService} from "../../services/project.service";
 
 @Component({
   selector: 'app-entry-point',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EntryPointComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService, private projectService: ProjectService) { }
 
   ngOnInit() {
   }

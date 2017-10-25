@@ -12,12 +12,14 @@ export class ProjectService {
   currentProjectId: Number;
   //test params
   writable;
+  projectNew;
 
   constructor(private http: Http, private authenticationService: AuthenticationService) {
     let currentProject = JSON.parse(localStorage.getItem('currentProject'));
     this.currentProjectName = currentProject && currentProject.name;
     this.currentProjectId = currentProject && currentProject.id;
     this.writable = currentProject && currentProject.writable;
+    this.projectNew = currentProject && currentProject.projectNew;
   }
 
   getAllProjects(){
@@ -42,18 +44,21 @@ export class ProjectService {
     let project = {
       name: apiProject.nameProject,
       id: apiProject.id,
-      writable: apiProject.writable
+      writable: apiProject.writable,
+      projectNew: apiProject.projectNew
     };
     this.currentProjectId = project.id;
     this.currentProjectName = project.name;
     this.writable = project.writable;
-    localStorage.setItem('currentProject',JSON.stringify({name: project.name, id: project.id, writable: project.writable}))
+    this.projectNew = project.projectNew;
+    localStorage.setItem('currentProject',JSON.stringify({name: project.name, id: project.id, writable: project.writable, projectNew: project.projectNew}))
   }
 
   clearCurrentProject(){
     this.currentProjectId = null;
     this.currentProjectName = null;
-    this.writable = true;
+    this.writable = null;
+    this.projectNew = null;
     localStorage.removeItem('currentProject');
   }
 
@@ -61,6 +66,13 @@ export class ProjectService {
     if(this.currentProjectId && this.currentProjectName){
       return true
     }else return false
+  }
+
+  setWritableProject(){
+    this.writable = !this.writable;
+    let currentProject = JSON.parse(localStorage.getItem('currentProject'));
+    currentProject.writable = !currentProject.writable;
+    localStorage.setItem('currentProject',JSON.stringify(currentProject));
   }
 
 }

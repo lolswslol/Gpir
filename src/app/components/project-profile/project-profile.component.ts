@@ -50,7 +50,9 @@ export class ProjectProfileComponent implements OnInit {
         this.processing = true;
         this.confirmed = false;
         },
-        ()=>{})
+        ()=>{
+        this.projectService.setWritableProject();
+        })
   }
 
   rejectProject(){
@@ -68,7 +70,9 @@ export class ProjectProfileComponent implements OnInit {
           this.processing = true;
           this.confirmed = false;
         },
-        ()=>{})
+        ()=>{
+          this.projectService.setWritableProject();
+        })
   }
 
 
