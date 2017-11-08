@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { AuthenticationService } from "./services/authentication.service";
-import {ReactiveFormsModule, FormsModule} from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpModule} from "@angular/http";
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from "./guards/auth.guard";
@@ -28,10 +28,15 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
 import { ChangeBackgroundDirective } from './directives/change-background.directive';
+import { InputTextModule } from 'primeng/primeng';
+
 //Pipes
 import { RolePipe } from "./pipes/role.pipe";
-import {CreateProjectValidationDirective} from "./components/create-project/create-project-validation.directive";
-import {GkntGuard} from "./guards/gknt.guard";
+import { CreateProjectValidationDirective } from "./components/create-project/create-project-validation.directive";
+import { GkntGuard } from "./guards/gknt.guard";
+import { CustomersTermsComponent } from './components/customers-forms-dir/customers-terms/customers-terms/customers-terms.component';
+import { CustomersTermsInputComponent } from "./components/customers-forms-dir/customers-terms/customers-terms/customers-terms-input/customers-terms-input.component";
+
 
 
 
@@ -53,7 +58,9 @@ import {GkntGuard} from "./guards/gknt.guard";
     ChangeBackgroundDirective,
     CreateProjectValidationDirective,
     RolePipe,
-    CreateProjectComponent
+    CreateProjectComponent,
+    CustomersTermsComponent,
+    CustomersTermsInputComponent
 
   ],
   imports: [
@@ -64,7 +71,7 @@ import {GkntGuard} from "./guards/gknt.guard";
     FormsModule,
     DialogModule,
     BrowserAnimationsModule,
-    AccordionModule
+    AccordionModule,
 
   ],
   providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, GkntGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],

@@ -58,7 +58,6 @@ export class CustomersExecutorsInfoComponent implements OnInit {
     this.http.get(this.domain+'api/okfs',this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log('okfs',data);
           this.listOfOkfs = data;
         },
         (err)=>{
@@ -79,7 +78,6 @@ export class CustomersExecutorsInfoComponent implements OnInit {
     this.http.get(this.domain+'api/executors_info/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log('Loading',data);
         this.model = data;
         this.id = data.id;
       },
@@ -90,14 +88,16 @@ export class CustomersExecutorsInfoComponent implements OnInit {
         ()=>{this.http.get(this.domain+'api/executor/'+this.id,this.authenticationService.options)
           .map(res=>res.json())
           .subscribe((data)=>{
-          console.log('xzdata',data);
           this.executorModel = data;
-          })});
+          },
+            (err)=>{
+              this.message = 'Произошла ошибка. Перезагрузите страницу.';
+              this.messageClass = 'alert alert-danger'
+            },
+            ()=>{})});
   }
 
-  check(){
-    console.log(this.projectService.writable);
-  }
+
 
   changeExecutor(id){
    this.processing = true;
