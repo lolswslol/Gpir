@@ -4,7 +4,7 @@
     <div class="panel-heading">
       <h3 class="panel-title">Плановые сроки завершения этапов(стадий) прохождения инновационного проекта</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" >
       <table class="table table-striped table-hover table-bordered">
         <thead>
           <tr>
@@ -13,11 +13,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let model of model">
+          <tr *ngFor="let model of model;let i = index">
             <td>{{model.name}}</td>
             <td>
               <div class="form-group">
-                <app-customers-terms-input [(value)]="model.value"></app-customers-terms-input>
+                <app-customers-terms-input [fieldName]="i"  [(value)]="model.value" (click)="editData(i,model.name,model.value)" (validationEvent)="validate($event)"></app-customers-terms-input>
                   <!--<input class="form-control input-sm" type="text" [(ngModel)]="model.value">-->
               </div>
             </td>
@@ -27,22 +27,85 @@
       <table *ngIf="commentModel.length > 0" class="table table-striped table-hover table-bordered">
         <thead>
         <tr>
-          <th>Плановые этапы</th>
-          <th>Плановая дата(мм.гггг)</th>
+          <th>Наименование этапа</th>
+          <th>Пред. дата(мм/гггг)</th>
+          <th>Новая дата(мм/гггг)</th>
+          <th>Документ</th>
+          <th>Дата утверждения</th>
+          <th>Причина изменения</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let model of model">
-          <td>{{model.name}}</td>
+        <tr *ngFor="let commentModel of commentModel">
+          <td>
+           {{commentModel.dictionaryName}}
+          </td>
+          <td class="fixed-date">
+            <div class="form-group">
+              <input disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.oldVal">
+            </div>
+          </td>
+          <td class="fixed-date">
+            <div class="form-group">
+              <input disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.newVal">
+            </div>
+          </td>
           <td>
             <div class="form-group">
-              <input class="form-control input-sm" type="text" [(ngModel)]="model.value">
+              <textarea disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.documentName"></textarea>
+            </div>
+          </td>
+          <td class="fixed-date">
+            <div class="form-group">
+              <input disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.date">
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <textarea disabled class="form-control input-sm" [(ngModel)]="commentModel.description"></textarea>
             </div>
           </td>
         </tr>
         </tbody>
       </table>
-      <button class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button class="btn btn-primary" (click)="check()">Check</button>
     </div>
   </div>
 </div>
+<p-dialog header="Внесение изменений плановых отчетов" [(visible)]="display" modal="modal" width="700" [responsive]="true">
+  <form class="form-horizontal">
+    <fieldset>
+      <legend>{{modalWindowObject.name}}</legend>
+      <div class="form-group">
+        <label for="newDate" class="col-lg-2 control-label">Новая дата</label>
+        <div class="col-lg-10">
+          <input [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*мм/гггг">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="documentName" class="col-lg-2 control-label">Название документа</label>
+        <div class="col-lg-10">
+          <textarea [(ngModel)]="modalCommentObject.documentName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentName" placeholder="*название документа"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="documentDate" class="col-lg-2 control-label">Дата утверждения</label>
+        <div class="col-lg-10">
+          <input [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*мм/гггг">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reason" class="col-lg-2 control-label">Причина изменения</label>
+        <div class="col-lg-10">
+          <textarea [(ngModel)]="modalCommentObject.description" [ngModelOptions]="{standalone: true}" class="form-control" rows="3" id="reason" placeholder="*причина изменения"></textarea>
+          <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <p-footer>
+    <button type="button" (click)="addComment()">Да</button>
+    <button type="button" (click)="rejectEditing()">Нет</button>
+  </p-footer>
+</p-dialog>

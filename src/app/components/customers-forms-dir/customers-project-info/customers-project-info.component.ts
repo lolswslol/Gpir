@@ -77,7 +77,7 @@ export class CustomersProjectInfoComponent implements OnInit {
   validate($event){
     this.valid = true;
     if(!$event.value){
-      this.message = 'Не вверный ввод данных в поле';
+      this.message = 'Не верный ввод данных в поле';
       this.messageClass = 'alert alert-danger';
     }else {
       this.message = null;

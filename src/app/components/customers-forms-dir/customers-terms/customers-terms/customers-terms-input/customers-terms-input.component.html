@@ -1,4 +1,3 @@
-<div><input [disabled]="disabled" class="form-control input-sm" type="text" [ngModel]="value" (ngModelChange)="change($event)">
-
+<input appInputValidation [fieldName]="fieldName" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="disabled" class="form-control input-sm" type="text" [ngModel]="value" (ngModelChange)="change($event)"> <!--(click)="emitClick()"-->
   <span class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="disableDate()">{{name}}</span>
-</div>
+
