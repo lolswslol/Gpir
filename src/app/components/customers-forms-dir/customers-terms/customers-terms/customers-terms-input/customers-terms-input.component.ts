@@ -14,6 +14,7 @@ export class CustomersTermsInputComponent {
   @Input() value;
   @Output() changedInput = new  EventEmitter();
   @Output() validationEvent = new EventEmitter();
+  @Output() focused = new EventEmitter();
   /*@Output() clickEvent = new EventEmitter();*/
 
 
@@ -53,6 +54,10 @@ export class CustomersTermsInputComponent {
   validate($event){
     console.log($event);
     this.validationEvent.emit($event);
+  }
+
+  focus(){
+    this.focused.emit()
   }
 
   /*emitClick(){

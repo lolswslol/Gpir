@@ -3,7 +3,7 @@ import { Http } from "@angular/http";
 import { domain } from '../../../../config/config';
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { ProjectService } from "../../../../services/project.service";
-import { DialogModule } from 'primeng/primeng';
+
 
 @Component({
   selector: 'app-customers-terms',
@@ -16,6 +16,7 @@ export class CustomersTermsComponent implements OnInit {
 
   processing = false;
   valid = true;
+  modalValid = false;
   domain = domain;
   model;
   commentModel=[];
@@ -25,6 +26,10 @@ export class CustomersTermsComponent implements OnInit {
   modalWindowObject={};
   modalCommentObject = {};
   validationMap = new Map();
+  yearRegExp = /(0[1-9]|1[012])[/](19|20)\d{2}$/;
+  fullYearRegExp = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+  fieldRegExp = /^[A-Za-zА-Яа-я0-9\-_]{1,90}$/;
+  modalValidationMap = new Map();
 
 
   ngOnInit() {
@@ -33,7 +38,7 @@ export class CustomersTermsComponent implements OnInit {
     this.http.get(this.domain+'api/plan_stage/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log(data.stages);
+        console.log(data);
         this.model = data.stages;
           for(let key in data.stages){
             this.validationMap.set(key,true)
@@ -56,15 +61,17 @@ export class CustomersTermsComponent implements OnInit {
           this.messageClass = 'alert alert-danger';
         },
         ()=>{});
+
   }
 
   check(){
-    console.log(this.valid);
+    console.log(this.commentModel);
   }
 
   editData(id, name, value){
+    this.createModalValidationMap();
+    this.modalValid = false;
     if(this.projectService.projectNew === false){
-      this.processing = true;
       this.modalCommentObject = {
         dictionaryName: name,
         oldVal: value,
@@ -75,24 +82,25 @@ export class CustomersTermsComponent implements OnInit {
   }
 
   rejectEditing(){
-    this.processing = false;
     this.modalWindowObject = {};
+    this.modalValidationMap.clear();
     this.display = false;
+    this.message = '';
+    this.messageClass = null;
   }
 
   addComment(){
     console.log(this.modalCommentObject);
     this.commentModel.push(this.modalCommentObject);
-    this.changeNewValue(this.modalCommentObject);
+    this.changeNewValue(this.model,this.modalCommentObject);
     this.display = false;
   }
 
-  changeNewValue(obj){
-    this.model[obj.localId].value = obj.newVal;
+  changeNewValue(model,obj){
+    model[obj.localId].value = obj.newVal;
   }
 
   validate($event){
-    console.log($event);
     this.valid = true;
     if(!$event.value){
       this.message = 'Не верный ввод данных в поле';
@@ -108,6 +116,72 @@ export class CustomersTermsComponent implements OnInit {
         this.valid = false;
       }
     });
+  }
+
+  createModalValidationMap(){
+    this.modalValidationMap.set('newDate',false);
+    this.modalValidationMap.set('documentName',false);
+    this.modalValidationMap.set('documentDate',false);
+    this.modalValidationMap.set('reason',false);
+  }
+
+  modalValidate($event){
+    this.modalValid = true;
+    if(!$event.value){
+      this.message = 'Не верный ввод данных в поле';
+      this.messageClass = 'alert alert-danger';
+    }else {
+      this.message = null;
+      this.messageClass = null;
+    }
+    this.modalValidationMap.delete($event.name);
+    this.modalValidationMap.set($event.name, $event.value);
+    this.modalValidationMap.forEach((s)=>{
+      if(!s){
+        this.modalValid = false;
+      }
+    });
+  }
+
+  modalSave(){
+    let model = JSON.parse(JSON.stringify(this.model));
+    let commentModel = this.commentModel.concat([]);
+    commentModel.push(this.modalCommentObject);
+    this.changeNewValue(model,this.modalCommentObject);
+    console.log(this.modalCommentObject);
+    console.log(commentModel);
+    let body = {id: this.projectService.currentProjectId, stages: model, comments: commentModel};
+    console.log(body);
+
+
+    this.http.post(this.domain+'api/plan_stage/'+ this.projectService.currentProjectId, JSON.stringify({id: this.projectService.currentProjectId, stages: model, comments: commentModel}), this.authenticationService.options)
+      .subscribe(data=>{
+          console.log('saved');
+        },
+        (err)=>{
+          console.log(err);
+          this.message = 'Ошибка при сохранении. Перезагрузите страницу';
+          this.messageClass = 'alert alert-danger';
+        },
+        ()=>{
+        this.model = model;
+        this.commentModel = commentModel;
+        this.display = false;
+        });
+
+  }
+
+  submit(){
+    this.http.post(this.domain+'api/plan_stage/'+ this.projectService.currentProjectId, JSON.stringify({id: this.projectService.currentProjectId, stages: this.model, comments: this.commentModel}), this.authenticationService.options)
+      .subscribe(data=>{
+          console.log('saved');
+        },
+        (err)=>{
+        console.log(err);
+          this.message = 'Ошибка при сохранении. Перезагрузите страницу';
+          this.messageClass = 'alert alert-danger';
+        },
+        ()=>{});
   }
 
 }

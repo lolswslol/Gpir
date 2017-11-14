@@ -17,7 +17,7 @@
             <td>{{model.name}}</td>
             <td>
               <div class="form-group">
-                <app-customers-terms-input [fieldName]="i"  [(value)]="model.value" (click)="editData(i,model.name,model.value)" (validationEvent)="validate($event)"></app-customers-terms-input>
+                <app-customers-terms-input [fieldName]="i"  [(value)]="model.value" (focused)="editData(i,model.name,model.value)" (validationEvent)="validate($event)" (changedInput)="model.value=$event"></app-customers-terms-input>
                   <!--<input class="form-control input-sm" type="text" [(ngModel)]="model.value">-->
               </div>
             </td>
@@ -73,39 +73,39 @@
     </div>
   </div>
 </div>
-<p-dialog header="Внесение изменений плановых отчетов" [(visible)]="display" modal="modal" width="700" [responsive]="true">
+<p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
   <form class="form-horizontal">
     <fieldset>
       <legend>{{modalWindowObject.name}}</legend>
       <div class="form-group">
         <label for="newDate" class="col-lg-2 control-label">Новая дата</label>
         <div class="col-lg-10">
-          <input [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*мм/гггг">
+          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="yearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*мм/гггг">
         </div>
       </div>
       <div class="form-group">
         <label for="documentName" class="col-lg-2 control-label">Название документа</label>
         <div class="col-lg-10">
-          <textarea [(ngModel)]="modalCommentObject.documentName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentName" placeholder="*название документа"></textarea>
+          <textarea appModalInputValidation [fieldName]="'documentName'" [regExp]="fieldRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.documentName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentName" placeholder="*название документа"></textarea>
         </div>
       </div>
       <div class="form-group">
         <label for="documentDate" class="col-lg-2 control-label">Дата утверждения</label>
         <div class="col-lg-10">
-          <input [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*мм/гггг">
+          <input appModalInputValidation [fieldName]="'documentDate'" [regExp]="fullYearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*мм/гггг">
         </div>
       </div>
       <div class="form-group">
         <label for="reason" class="col-lg-2 control-label">Причина изменения</label>
         <div class="col-lg-10">
-          <textarea [(ngModel)]="modalCommentObject.description" [ngModelOptions]="{standalone: true}" class="form-control" rows="3" id="reason" placeholder="*причина изменения"></textarea>
+          <textarea appModalInputValidation [fieldName]="'reason'" [regExp]="fieldRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.description" [ngModelOptions]="{standalone: true}" class="form-control" rows="3" id="reason" placeholder="*причина изменения"></textarea>
           <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
         </div>
       </div>
     </fieldset>
   </form>
   <p-footer>
-    <button type="button" (click)="addComment()">Да</button>
-    <button type="button" (click)="rejectEditing()">Нет</button>
+    <button class="btn btn-primary btn-sm" type="button" [disabled]="!modalValid" (click)="modalSave()">Да</button>
+    <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
   </p-footer>
 </p-dialog>

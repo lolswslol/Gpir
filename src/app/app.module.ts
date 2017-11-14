@@ -36,6 +36,7 @@ import { CreateProjectValidationDirective } from "./components/create-project/cr
 import { GkntGuard } from "./guards/gknt.guard";
 import { CustomersTermsComponent } from './components/customers-forms-dir/customers-terms/customers-terms/customers-terms.component';
 import { CustomersTermsInputComponent } from "./components/customers-forms-dir/customers-terms/customers-terms/customers-terms-input/customers-terms-input.component";
+import { ModalInputValidationDirective } from './directives/modal-input-validation.directive';
 
 
 
@@ -60,7 +61,8 @@ import { CustomersTermsInputComponent } from "./components/customers-forms-dir/c
     RolePipe,
     CreateProjectComponent,
     CustomersTermsComponent,
-    CustomersTermsInputComponent
+    CustomersTermsInputComponent,
+    ModalInputValidationDirective
 
   ],
   imports: [
