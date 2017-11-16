@@ -35,7 +35,6 @@ import { RolePipe } from "./pipes/role.pipe";
 import { CreateProjectValidationDirective } from "./components/create-project/create-project-validation.directive";
 import { GkntGuard } from "./guards/gknt.guard";
 import { CustomersTermsComponent } from './components/customers-forms-dir/customers-terms/customers-terms/customers-terms.component';
-import { CustomersTermsInputComponent } from "./components/customers-forms-dir/customers-terms/customers-terms/customers-terms-input/customers-terms-input.component";
 import { ModalInputValidationDirective } from './directives/modal-input-validation.directive';
 import { ButtonDatePipe } from './pipes/button-date.pipe';
 
@@ -62,7 +61,6 @@ import { ButtonDatePipe } from './pipes/button-date.pipe';
     RolePipe,
     CreateProjectComponent,
     CustomersTermsComponent,
-    CustomersTermsInputComponent,
     ModalInputValidationDirective,
     ButtonDatePipe
 

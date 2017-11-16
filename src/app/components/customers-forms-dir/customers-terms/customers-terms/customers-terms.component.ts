@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Http, Response} from "@angular/http";
+import { Http } from "@angular/http";
 import { domain } from '../../../../config/config';
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { ProjectService } from "../../../../services/project.service";
@@ -143,7 +143,7 @@ export class CustomersTermsComponent implements OnInit {
 
 //intercept event of editing confirmed planed data with opening new modal window for editing.
   editData(id, name, value): void{
-    if(this.projectService.projectNew === false){
+    if(this.projectService.projectNew === false && this.projectService.writable === true){
       this.createModalValidationMap();
       this.modalValid = false;
       this.modalCommentObject = {
@@ -227,7 +227,4 @@ export class CustomersTermsComponent implements OnInit {
   }
   //--> END OF MODAL WINDOW METHODS
 
-  check(){
-    console.log(this.projectService.projectNew);
-  }
 }
