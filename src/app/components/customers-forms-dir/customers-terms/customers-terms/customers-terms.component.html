@@ -16,9 +16,13 @@
           <tr *ngFor="let model of model;let i = index">
             <td>{{model.name}}</td>
             <td>
-              <div class="form-group">
-                <app-customers-terms-input [fieldName]="i"  [(value)]="model.value" (focused)="editData(i,model.name,model.value)" (validationEvent)="validate($event)" (changedInput)="model.value=$event"></app-customers-terms-input>
-                  <!--<input class="form-control input-sm" type="text" [(ngModel)]="model.value">-->
+              <div class="form-group" (click)="editData(i, model.name, model.value)">
+                <!--<app-customers-terms-input [fieldName]="i"  [(value)]="model.value" [status]="model.status" (statusChange)="changeStatus($event,i)" (focused)="editData(i,model.name,model.value)" (validationEvent)="validate($event)" (changedInput)="model.value=$event"></app-customers-terms-input>-->
+
+                  <input [disabled]="!model.status || projectService.projectNew === false" class="form-control input-sm" type="text" [(ngModel)]="model.value">
+                  <span class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="disableDate(i)">{{model.status | buttonDate}}</span>
+
+
               </div>
             </td>
           </tr>
@@ -69,7 +73,7 @@
         </tbody>
       </table>
       <button [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
-      <button class="btn btn-primary" (click)="check()">Check</button>
+      <button  class="btn btn-primary" (click)="check()">Check</button>
     </div>
   </div>
 </div>
@@ -92,14 +96,14 @@
       <div class="form-group">
         <label for="documentDate" class="col-lg-2 control-label">Дата утверждения</label>
         <div class="col-lg-10">
-          <input appModalInputValidation [fieldName]="'documentDate'" [regExp]="fullYearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*мм/гггг">
+          <input appModalInputValidation [fieldName]="'documentDate'" [regExp]="fullYearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*дд/мм/гггг">
         </div>
       </div>
       <div class="form-group">
         <label for="reason" class="col-lg-2 control-label">Причина изменения</label>
         <div class="col-lg-10">
           <textarea appModalInputValidation [fieldName]="'reason'" [regExp]="fieldRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.description" [ngModelOptions]="{standalone: true}" class="form-control" rows="3" id="reason" placeholder="*причина изменения"></textarea>
-          <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+          <span class="help-block">После заполнения данные автоматически сохранятся.</span>
         </div>
       </div>
     </fieldset>

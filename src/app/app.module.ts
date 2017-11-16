@@ -28,7 +28,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
 import { ChangeBackgroundDirective } from './directives/change-background.directive';
-import { InputTextModule } from 'primeng/primeng';
+
 
 //Pipes
 import { RolePipe } from "./pipes/role.pipe";
@@ -37,6 +37,7 @@ import { GkntGuard } from "./guards/gknt.guard";
 import { CustomersTermsComponent } from './components/customers-forms-dir/customers-terms/customers-terms/customers-terms.component';
 import { CustomersTermsInputComponent } from "./components/customers-forms-dir/customers-terms/customers-terms/customers-terms-input/customers-terms-input.component";
 import { ModalInputValidationDirective } from './directives/modal-input-validation.directive';
+import { ButtonDatePipe } from './pipes/button-date.pipe';
 
 
 
@@ -62,7 +63,8 @@ import { ModalInputValidationDirective } from './directives/modal-input-validati
     CreateProjectComponent,
     CustomersTermsComponent,
     CustomersTermsInputComponent,
-    ModalInputValidationDirective
+    ModalInputValidationDirective,
+    ButtonDatePipe
 
   ],
   imports: [

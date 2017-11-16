@@ -1,4 +1,7 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {
+  Component, Input, Output, EventEmitter, OnInit
+
+} from "@angular/core";
 import { ProjectService } from "../../../../../services/project.service";
 
 @Component({
@@ -6,28 +9,35 @@ import { ProjectService } from "../../../../../services/project.service";
   templateUrl: './customers-terms-input.component.html',
   styleUrls: ['./customers-terms-input.component.css']
 })
-export class CustomersTermsInputComponent {
+export class CustomersTermsInputComponent implements OnInit{
 
   yearRegExp = /(0[1-9]|1[012])[/](19|20)\d{2}$/;
 
+  @Input() status;
   @Input() fieldName;
   @Input() value;
   @Output() changedInput = new  EventEmitter();
   @Output() validationEvent = new EventEmitter();
   @Output() focused = new EventEmitter();
-  /*@Output() clickEvent = new EventEmitter();*/
+  @Output() statusChange= new EventEmitter();
+
 
 
   disabled;
   name;
 
   constructor(private projectService: ProjectService){
-    if(this.value === 'Не Определен'){
+
+  }
+
+  ngOnInit(){
+    if(this.status === false){
       this.disabled = true;
-      this.name = 'Определено'
+      this.value = 'Не определено';
+      this.name = 'Определено';
     }else {
       this.disabled = false;
-      this.name = 'Не определено'
+      this.name = 'Не определено';
     }
   }
 
@@ -37,16 +47,17 @@ export class CustomersTermsInputComponent {
   }
 
   disableDate(){
-    console.log(this.projectService.projectNew);
     if(this.projectService.projectNew){
-      if(this.value === 'Не определено'){
+      if(this.status === false){
         this.disabled = false;
         this.name = 'Не определено';
-        this.value = '';
+        this.change('');
+        this.statusChange.emit(true);
       }else {
         this.disabled = true;
         this.name = 'Определено';
-        this.value = 'Не определено';
+        this.change('2');
+        this.statusChange.emit(false);
       }
     }
   }
@@ -60,8 +71,8 @@ export class CustomersTermsInputComponent {
     this.focused.emit()
   }
 
-  /*emitClick(){
-    this.clickEvent.emit();
-  }*/
+  check(){
+    console.log(this.status);
+  }
 
 }
