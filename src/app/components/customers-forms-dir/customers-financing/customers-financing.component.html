@@ -23,7 +23,7 @@
           <td>{{localModel.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
             <div class="form-group">
-              <input type="number" [disabled]="processing" *ngIf="localModel.controlType==='FLOAT' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
               <input *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
             </div>
           </td>

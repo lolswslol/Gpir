@@ -19,9 +19,10 @@ export class CustomersFinancingComponent implements OnInit {
   headerModel;
   model;
   validationMap = new Map();
-  regExp = /^[0-9]{1,11}(.[0-9]{0,1})?$/;
+  regExp = /^[0-9]{1,11}(.[0-9]?)?$/;
   valid = true;
   processing = false;
+  commentModel;
 
 
 
@@ -36,7 +37,8 @@ export class CustomersFinancingComponent implements OnInit {
     this.http.get(this.domain+'api/financing/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        this.model = data.financingFieldModels;
+        console.log(data);
+        this.model = data.fieldModels;
         this.headerModel = data.years;
       },
         (err)=>{
@@ -44,7 +46,19 @@ export class CustomersFinancingComponent implements OnInit {
           this.message = 'Не удалось получить данные с сервера';
           this.messageClass = 'alert alert-danger';
         },
-        ()=>{})
+        ()=>{});
+    this.http.get(this.domain+'/api/comments/FINANCING_COMMENTS/'+this.projectService.currentProjectId,this.authenticationService.options)
+      .map(res=>res.json())
+      .subscribe(data=>{
+        console.log(data);
+          this.commentModel = data.commentFieldModels;
+        },
+        (err)=>{
+          console.log('Произошла ошибка '+err);
+          this.message = 'Ошибка загрузки данных комментарий. Перезагрузите страницу';
+          this.messageClass = 'alert alert-danger';
+        },
+        ()=>{});
   }
 
   check($event){
