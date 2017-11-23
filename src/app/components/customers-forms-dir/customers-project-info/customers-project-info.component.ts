@@ -31,12 +31,16 @@ export class CustomersProjectInfoComponent implements OnInit {
     this.authenticationService.createAuthenticationHeaders();
     this.http.get(this.domain+'api/project_info/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
-      .subscribe((data)=>{this.model = data;
+      .subscribe((data)=>{
+                            this.model = data;
                             for(let key in data){
+                              //noinspection JSUnfilteredForInLoop
                               this.validationMap.set(key,true)
                             }
                           },
-                  (err)=>{this.message = 'Произошла ошибка загрузки проекта. Перезагрузите страницу.';
+                  (err)=>{
+                          console.log(err);
+                          this.message = 'Произошла ошибка загрузки проекта. Перезагрузите страницу.';
                           this.messageClass = 'alert alert-danger'},
                   ()=>{})
   }
@@ -45,7 +49,7 @@ export class CustomersProjectInfoComponent implements OnInit {
     this.processing = true;
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/project_info/'+this.model.id,this.model,this.authenticationService.options)
-      .subscribe(data=>{
+      .subscribe(()=>{
         this.message = 'Данные были успешно сохранены';
         this.messageClass = 'alert alert-success';
       },

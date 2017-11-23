@@ -22,6 +22,7 @@ import { CustomersPlannedDateComponent } from './components/customers-forms-dir/
 import { ProjectProfileComponent } from './components/project-profile/project-profile.component';
 import { EntryPointComponent } from './components/entry-point/entry-point.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { CustomersFinancingComponent } from './components/customers-forms-dir/customers-financing/customers-financing.component';
 //PrimeNG modules
 import { DialogModule } from 'primeng/primeng';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -37,6 +38,8 @@ import { GkntGuard } from "./guards/gknt.guard";
 import { CustomersTermsComponent } from './components/customers-forms-dir/customers-terms/customers-terms/customers-terms.component';
 import { ModalInputValidationDirective } from './directives/modal-input-validation.directive';
 import { ButtonDatePipe } from './pipes/button-date.pipe';
+import { DynamicValidationInputDirective } from './directives/dynamic-validation-input.directive';
+
 
 
 
@@ -62,7 +65,9 @@ import { ButtonDatePipe } from './pipes/button-date.pipe';
     CreateProjectComponent,
     CustomersTermsComponent,
     ModalInputValidationDirective,
-    ButtonDatePipe
+    ButtonDatePipe,
+    CustomersFinancingComponent,
+    DynamicValidationInputDirective
 
   ],
   imports: [
