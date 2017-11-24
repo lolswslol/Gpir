@@ -22,9 +22,12 @@ export class CustomersFinancingComponent implements OnInit {
   regExp = /^[0-9]{1,11}(.[0-9]?)?$/;
   valid = true;
   processing = false;
-  commentModel;
+  commentModel = [];
+  display = false;
 
-
+  //modal windows models
+  modalWindowObject: Object ={};
+  modalCommentObject: Object = {};
 
 
 
@@ -59,6 +62,11 @@ export class CustomersFinancingComponent implements OnInit {
           this.messageClass = 'alert alert-danger';
         },
         ()=>{});
+  }
+
+  show(){
+    console.log(this.projectService.writable);
+    console.log(this.projectService.projectNew);
   }
 
   check($event){
@@ -106,6 +114,26 @@ export class CustomersFinancingComponent implements OnInit {
         this.valid = false;
       }
     });
+  }
+
+  editData(i,k, name, year, value): void{
+    if(this.projectService.projectNew === false && this.projectService.writable === true && year !=0){
+      /*this.createModalValidationMap();*/
+      /*this.modalValid = false;*/
+      this.modalCommentObject = {
+        name: name,
+        oldVal: value,
+        nameIndex: i,
+        yearIndex: k,
+        year: year
+      };
+      console.log(this.modalCommentObject);
+      this.display = true;
+    }
+  }
+
+  rejectEditing(){
+    this.display = false;
   }
 
 

@@ -19,23 +19,24 @@
 
         </thead>
         <tbody>
-        <tr *ngFor="let localModel of model;let i = index">
+        <tr *ngFor="let localModel of model;let k = index">
           <td>{{localModel.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
-            <div class="form-group">
-              <input type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
-              <input *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+            <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
+              <input [disabled]="projectService.projectNew === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input [disabled]="projectService.projectNew === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
             </div>
           </td>
         </tr>
         </tbody>
       </table>
-      <!--<table *ngIf="commentModel.length > 0" class="table table-striped table-hover table-bordered">
+      <table *ngIf="commentModel.length > 0" class="table table-striped table-hover table-bordered">
         <thead>
         <tr>
           <th>Наименование этапа</th>
-          <th>Пред. дата(мм/гггг)</th>
-          <th>Новая дата(мм/гггг)</th>
+          <th>Год</th>
+          <th>Пред. значение</th>
+          <th>Новае значение(мм/гггг)</th>
           <th>Документ</th>
           <th>Дата утверждения</th>
           <th>Причина изменения</th>
@@ -45,6 +46,9 @@
         <tr *ngFor="let commentModel of commentModel">
           <td>
             {{commentModel.dictionaryName}}
+          </td>
+          <td>
+           {{commentModel.year}}
           </td>
           <td class="fixed-date">
             <div class="form-group">
@@ -73,11 +77,46 @@
           </td>
         </tr>
         </tbody>
-      </table>-->
+      </table>
       <button [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
-      <!--<button  class="btn btn-primary" (click)="submit()">Check</button>-->
-
-
+      <button  class="btn btn-primary" (click)="show()">Check</button>
     </div>
   </div>
 </div>
+
+<p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
+  <form class="form-horizontal">
+    <fieldset>
+      <legend>{{modalWindowObject.name}}</legend>
+      <div class="form-group">
+        <label for="newDate" class="col-lg-2 control-label">Новое значение</label>
+        <div class="col-lg-10">
+          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="yearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*мм/гггг">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="documentName" class="col-lg-2 control-label">Название документа</label>
+        <div class="col-lg-10">
+          <textarea appModalInputValidation [fieldName]="'documentName'" [regExp]="fieldRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.documentName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentName" placeholder="*название документа"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="documentDate" class="col-lg-2 control-label">Дата утверждения</label>
+        <div class="col-lg-10">
+          <input appModalInputValidation [fieldName]="'documentDate'" [regExp]="fullYearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*дд/мм/гггг">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reason" class="col-lg-2 control-label">Причина изменения</label>
+        <div class="col-lg-10">
+          <textarea appModalInputValidation [fieldName]="'reason'" [regExp]="fieldRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.description" [ngModelOptions]="{standalone: true}" class="form-control" rows="3" id="reason" placeholder="*причина изменения"></textarea>
+          <span class="help-block">После заполнения данные автоматически сохранятся.</span>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <p-footer>
+    <button class="btn btn-primary btn-sm" type="button" [disabled]="!modalValid" (click)="modalSave()">Да</button>
+    <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
+  </p-footer>
+</p-dialog>
