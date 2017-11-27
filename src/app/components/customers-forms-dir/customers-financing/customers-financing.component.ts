@@ -20,13 +20,16 @@ export class CustomersFinancingComponent implements OnInit {
   model;
   validationMap = new Map();
   regExp = /^[0-9]{1,11}(.[0-9]?)?$/;
+  fullYearRegExp: RegExp = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+  fieldRegExp: RegExp = /^[A-Za-zА-Яа-я0-9\-_/ ]{1,90}$/;
   valid = true;
   processing = false;
   commentModel = [];
   display = false;
+  modalValidationMap = new Map();
+  modalValid: boolean = false;
 
   //modal windows models
-  modalWindowObject: Object ={};
   modalCommentObject: Object = {};
 
 
@@ -65,8 +68,7 @@ export class CustomersFinancingComponent implements OnInit {
   }
 
   show(){
-    console.log(this.projectService.writable);
-    console.log(this.projectService.projectNew);
+    console.log(this.model);
   }
 
   check($event){
@@ -107,6 +109,13 @@ export class CustomersFinancingComponent implements OnInit {
     this.getColSum();
   }
 
+  createModalValidationMap(): void{
+    this.modalValidationMap.set('newDate',false);
+    this.modalValidationMap.set('documentName',false);
+    this.modalValidationMap.set('documentDate',false);
+    this.modalValidationMap.set('reason',false);
+  }
+
   checkValid(){
     this.valid = true;
     this.validationMap.forEach((s)=>{
@@ -116,12 +125,30 @@ export class CustomersFinancingComponent implements OnInit {
     });
   }
 
+  modalValidate($event): void{
+    this.modalValid = true;
+    if(!$event.value){
+      this.message = 'Не верный ввод данных в поле';
+      this.messageClass = 'alert alert-danger';
+    }else {
+      this.message = null;
+      this.messageClass = null;
+    }
+    this.modalValidationMap.delete($event.name);
+    this.modalValidationMap.set($event.name, $event.value);
+    this.modalValidationMap.forEach((s)=>{
+      if(!s){
+        this.modalValid = false;
+      }
+    });
+  }
+
   editData(i,k, name, year, value): void{
     if(this.projectService.projectNew === false && this.projectService.writable === true && year !=0){
-      /*this.createModalValidationMap();*/
-      /*this.modalValid = false;*/
+      this.createModalValidationMap();
+      this.modalValid = false;
       this.modalCommentObject = {
-        name: name,
+        dictionaryName: name,
         oldVal: value,
         nameIndex: i,
         yearIndex: k,
@@ -134,6 +161,37 @@ export class CustomersFinancingComponent implements OnInit {
 
   rejectEditing(){
     this.display = false;
+  }
+
+  static changeNewValue(model,obj): void{
+    model[obj.nameIndex].yearFieldModels[obj.yearIndex].value = +obj.newVal;
+  }
+
+  modalSave(){
+    let model = JSON.parse(JSON.stringify(this.model));
+    console.log(CustomersFinancingComponent.changeNewValue(model,this.modalCommentObject));
+    console.log(model);
+    let commentModel = this.commentModel.concat([]);
+    commentModel.push(this.modalCommentObject);
+    console.log({id: this.projectService.currentProjectId, stages: model, comments: commentModel});
+
+    this.http.post(this.domain+'api/financing/'+ this.projectService.currentProjectId, JSON.stringify({projectId: this.projectService.currentProjectId, fieldModels: model, comments: commentModel}), this.authenticationService.options)
+      .map(res=>res.json())
+      .subscribe((data)=>{
+          console.log(data);
+          commentModel=data;
+        },
+        (err)=>{
+          console.log(err);
+          this.message = 'Ошибка при сохранении. Перезагрузите страницу';
+          this.messageClass = 'alert alert-danger';
+        },
+        ()=>{
+          this.model = model;
+          this.commentModel = commentModel;
+          this.display = false;
+          this.onChange();
+        });
   }
 
 
@@ -161,6 +219,7 @@ export class CustomersFinancingComponent implements OnInit {
           },
           ()=>{
             this.processing = false;
+
           })
     }
 

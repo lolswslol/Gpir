@@ -91,7 +91,7 @@
       <div class="form-group">
         <label for="newDate" class="col-lg-2 control-label">Новое значение</label>
         <div class="col-lg-10">
-          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="yearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*мм/гггг">
+          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="regExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*новое значение">
         </div>
       </div>
       <div class="form-group">
