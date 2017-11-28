@@ -39,6 +39,7 @@ import { CustomersTermsComponent } from './components/customers-forms-dir/custom
 import { ModalInputValidationDirective } from './directives/modal-input-validation.directive';
 import { ButtonDatePipe } from './pipes/button-date.pipe';
 import { DynamicValidationInputDirective } from './directives/dynamic-validation-input.directive';
+import { CustomersCostInnovationComponent } from './components/customers-forms-dir/customers-cost-innovation/customers-cost-innovation.component';
 
 
 
@@ -67,7 +68,8 @@ import { DynamicValidationInputDirective } from './directives/dynamic-validation
     ModalInputValidationDirective,
     ButtonDatePipe,
     CustomersFinancingComponent,
-    DynamicValidationInputDirective
+    DynamicValidationInputDirective,
+    CustomersCostInnovationComponent
 
   ],
   imports: [

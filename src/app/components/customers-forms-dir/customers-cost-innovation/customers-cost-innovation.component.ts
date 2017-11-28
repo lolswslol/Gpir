@@ -7,11 +7,11 @@ import { Http } from "@angular/http";
 
 
 @Component({
-  selector: 'app-customers-financing',
-  templateUrl: './customers-financing.component.html',
-  styleUrls: ['./customers-financing.component.css']
+  selector: 'app-customers-cost-innovation',
+  templateUrl: './customers-cost-innovation.component.html',
+  styleUrls: ['./customers-cost-innovation.component.css']
 })
-export class CustomersFinancingComponent implements OnInit {
+export class CustomersCostInnovationComponent implements OnInit {
 
   //config params
   message;
@@ -45,13 +45,13 @@ export class CustomersFinancingComponent implements OnInit {
   ngOnInit() {
     //get Main table data
     this.authenticationService.createAuthenticationHeaders();
-    this.http.get(this.domain+'api/financing/'+this.projectService.currentProjectId,this.authenticationService.options)
+    this.http.get(this.domain+'api/cost_innovation/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log(data);
-        this.model = data.fieldModels;
-        this.headerModel = data.years;
-      },
+          console.log(data);
+          this.model = data.fieldModels;
+          this.headerModel = data.years;
+        },
         (err)=>{
           console.log(err);
           this.message = 'Не удалось получить данные с сервера';
@@ -60,10 +60,10 @@ export class CustomersFinancingComponent implements OnInit {
         ()=>{});
 
     //get comments data
-    this.http.get(this.domain+'/api/comments/FINANCING_COMMENTS/'+this.projectService.currentProjectId,this.authenticationService.options)
+    this.http.get(this.domain+'/api/comments/COST_INNOVATION_COMMENTS/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log(data);
+          console.log(data);
           this.commentModel = data.commentFieldModels;
         },
         (err)=>{
@@ -76,13 +76,13 @@ export class CustomersFinancingComponent implements OnInit {
 
   //Main table validation func
   check($event){
-     if(this.validationMap.has($event.status)){
-       this.validationMap.delete($event.status);
-       this.validationMap.set($event.status,$event.value);
-     }else {
-       this.validationMap.set($event.status,$event.value);
-     }
-     this.checkValid();
+    if(this.validationMap.has($event.status)){
+      this.validationMap.delete($event.status);
+      this.validationMap.set($event.status,$event.value);
+    }else {
+      this.validationMap.set($event.status,$event.value);
+    }
+    this.checkValid();
   }
 
   //calculate row values of the main table
@@ -181,13 +181,13 @@ export class CustomersFinancingComponent implements OnInit {
   //save modal window
   modalSave(){
     let model = JSON.parse(JSON.stringify(this.model));
-    console.log(CustomersFinancingComponent.changeNewValue(model,this.modalCommentObject));
+    console.log(CustomersCostInnovationComponent.changeNewValue(model,this.modalCommentObject));
     console.log(model);
     let commentModel = this.commentModel.concat([]);
     commentModel.push(this.modalCommentObject);
     console.log({id: this.projectService.currentProjectId, stages: model, comments: commentModel});
 
-    this.http.post(this.domain+'api/financing/'+ this.projectService.currentProjectId, JSON.stringify({projectId: this.projectService.currentProjectId, fieldModels: model, comments: commentModel}), this.authenticationService.options)
+    this.http.post(this.domain+'api/cost_innovation/'+ this.projectService.currentProjectId, JSON.stringify({projectId: this.projectService.currentProjectId, fieldModels: model, comments: commentModel}), this.authenticationService.options)
       .map(res=>res.json())
       .subscribe((data)=>{
           commentModel = data;
@@ -225,7 +225,7 @@ export class CustomersFinancingComponent implements OnInit {
             },4000)
           },
           (err)=>{
-          console.log(err);
+            console.log(err);
             this.message = 'Не возможно сохранить данные';
             this.messageClass = 'alert alert-danger';
           },
