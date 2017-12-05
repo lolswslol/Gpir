@@ -18,7 +18,7 @@ import { CustomersCostInnovationComponent } from "./components/customers-forms-d
 import { CustomersCountryYearsComponent } from "./components/customers-forms-dir/customers-country-years/customers-country-years.component";
 
 const appRoutes=[
-    {path:"",component: HomeComponent, canActivate: [AuthGuard]},
+    {path:"",component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full'},
     {path:"login",component: LoginComponent,},
     {path:"home",component: HomeComponent, canActivate: [AuthGuard]},
     {path:"entry-point",component: EntryPointComponent, canActivate: [AuthGuard]},
