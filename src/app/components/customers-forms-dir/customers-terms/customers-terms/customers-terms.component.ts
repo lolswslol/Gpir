@@ -58,6 +58,7 @@ export class CustomersTermsComponent implements OnInit {
     this.http.get(this.domain+'api/plan_stage/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
+        console.log(data.stages);
         data.stages.forEach((s)=>{
           if(s.value === null && s.status===false){
             s.value = 'Не определено'
@@ -94,6 +95,7 @@ export class CustomersTermsComponent implements OnInit {
   //--> MAIN TABLE METHODS
 //validate current input, check and change table validation in common
   validate($event): void{
+    console.log($event);
     this.valid = true;
     if(!$event.value){
       this.message = 'Не верный ввод данных в поле';
@@ -102,8 +104,9 @@ export class CustomersTermsComponent implements OnInit {
       this.message = null;
       this.messageClass = null;
     }
-    this.validationMap.delete($event.name);
-    this.validationMap.set($event.name, $event.value);
+    let name = $event.index.toString();
+    this.validationMap.delete(name);
+    this.validationMap.set(name, $event.value);
     this.validationMap.forEach((s)=>{
       if(!s){
         this.valid = false;
@@ -122,6 +125,17 @@ export class CustomersTermsComponent implements OnInit {
         console.log(this.model[index].status);
         this.model[index].status = false;
         this.model[index].value = 'Не определено';
+        let name = index.toString();
+        console.log(name);
+        this.validationMap.delete(name);
+        this.validationMap.set(name, true);
+        this.valid = true;
+        this.validationMap.forEach((s)=>{
+          if(!s){
+            console.log('s=',s);
+            this.valid = false;
+          }
+        });
       }
     }
   }

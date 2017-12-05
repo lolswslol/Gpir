@@ -15,6 +15,7 @@ import { GkntGuard } from "./guards/gknt.guard";
 import { CustomersTermsComponent } from "./components/customers-forms-dir/customers-terms/customers-terms/customers-terms.component";
 import { CustomersFinancingComponent } from "./components/customers-forms-dir/customers-financing/customers-financing.component";
 import { CustomersCostInnovationComponent } from "./components/customers-forms-dir/customers-cost-innovation/customers-cost-innovation.component";
+import { CustomersCountryYearsComponent } from "./components/customers-forms-dir/customers-country-years/customers-country-years.component";
 
 const appRoutes=[
     {path:"",component: HomeComponent, canActivate: [AuthGuard]},
@@ -28,6 +29,7 @@ const appRoutes=[
     {path:"customers-planned-date",component: CustomersPlannedDateComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"customers-financing",component: CustomersFinancingComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"customers-cost-innovation",component: CustomersCostInnovationComponent, canActivate: [AuthGuard,ProjectGuard]},
+    {path:"customers-country-years",component: CustomersCountryYearsComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"customers-terms",component: CustomersTermsComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"project-profile",component: ProjectProfileComponent, canActivate: [AuthGuard,ProjectGuard]},
     {path:"create-project",component: CreateProjectComponent, canActivate: [AuthGuard,GkntGuard]},

@@ -17,7 +17,7 @@
             <td>{{model.name}}</td>
             <td>
               <div class="form-group" (click)="editData(i, model.name, model.value)">
-                <input appInputValidation [fieldName]="fieldName" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="!model.status || projectService.projectNew === false" class="form-control input-sm" type="text" [(ngModel)]="model.value">
+                <input appInputValidation [fieldName]="fieldName" [regExp]="yearRegExp" [index]="i" (onValidation)="validate($event)" [disabled]="!model.status || projectService.projectNew === false" class="form-control input-sm" type="text" [(ngModel)]="model.value">
                 <span class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="disableDate(i)">{{model.status | buttonDate}}</span>
               </div>
             </td>
@@ -68,7 +68,7 @@
         </tr>
         </tbody>
       </table>
-      <button [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button [disabled]="valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
 
     </div>
   </div>

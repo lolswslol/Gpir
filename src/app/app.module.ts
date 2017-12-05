@@ -40,7 +40,9 @@ import { ModalInputValidationDirective } from './directives/modal-input-validati
 import { ButtonDatePipe } from './pipes/button-date.pipe';
 import { DynamicValidationInputDirective } from './directives/dynamic-validation-input.directive';
 import { CustomersCostInnovationComponent } from './components/customers-forms-dir/customers-cost-innovation/customers-cost-innovation.component';
-
+import { CustomersCountryYearsComponent } from './components/customers-forms-dir/customers-country-years/customers-country-years.component';
+import { AutoCompleteModule } from 'primeng/primeng';
+import { NotAvailableDirective } from './directives/not-available.directive';
 
 
 
@@ -69,7 +71,9 @@ import { CustomersCostInnovationComponent } from './components/customers-forms-d
     ButtonDatePipe,
     CustomersFinancingComponent,
     DynamicValidationInputDirective,
-    CustomersCostInnovationComponent
+    CustomersCostInnovationComponent,
+    CustomersCountryYearsComponent,
+    NotAvailableDirective
 
   ],
   imports: [
@@ -81,6 +85,7 @@ import { CustomersCostInnovationComponent } from './components/customers-forms-d
     DialogModule,
     BrowserAnimationsModule,
     AccordionModule,
+    AutoCompleteModule
 
   ],
   providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, GkntGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],

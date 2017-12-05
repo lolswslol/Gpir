@@ -212,8 +212,8 @@ export class CustomersCostInnovationComponent implements OnInit {
     if(this.valid){
       this.authenticationService.createAuthenticationHeaders();
       let body = {
-        financingFieldModels: this.model,
-        id: this.projectService.currentProjectId
+        fieldModels: this.model,
+        projectId: this.projectService.currentProjectId
       };
       this.http.post(this.domain+'api/financing/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
         .subscribe(()=>{
