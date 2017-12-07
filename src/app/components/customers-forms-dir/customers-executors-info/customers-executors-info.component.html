@@ -43,7 +43,7 @@
           </td>
           <td class="col-lg-8">
             <div class="form-group">
-              <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.shortName">
+              <input [disabled]="!projectService.writable || processing || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.shortName">
             </div>
           </td>
         </tr>
@@ -55,7 +55,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.addressJurid">
+                <input [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.addressJurid">
               </div>
             </td>
           </tr>
@@ -67,7 +67,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.addressFact">
+                <input [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.addressFact">
               </div>
             </td>
           </tr>
@@ -79,7 +79,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="model.responsibleOrg">
+                <input [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.responsibleOrg">
               </div>
             </td>
           </tr>
@@ -91,7 +91,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.okpo">
+                <input [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.okpo">
               </div>
             </td>
           </tr>
@@ -103,7 +103,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.okulp">
+                <input [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.okulp">
               </div>
             </td>
           </tr>
@@ -115,7 +115,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.unp">
+                <input [disabled]="!projectService.writable || processing || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.unp">
               </div>
             </td>
           </tr>
@@ -127,7 +127,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <input [disabled]="!projectService.writable || processing" class="form-control input-sm" type="text" [(ngModel)]="executorModel.oked">
+                <input [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="executorModel.oked">
               </div>
             </td>
           </tr>
@@ -139,7 +139,7 @@
             </td>
             <td class="col-lg-8">
               <div class="form-group">
-                <select [disabled]="!projectService.writable || processing" [(ngModel)]="model.okfsId" class="form-control input-sm">
+                <select [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" [(ngModel)]="model.okfsId" class="form-control input-sm">
                   <option *ngFor="let option of listOfOkfs" [ngValue]="option.id">{{option.name}}</option>
                 </select>
               </div>
@@ -152,7 +152,7 @@
             </div>
           </td>
           <td class="col-lg-8">
-            <select [disabled]="!projectService.writable || processing" [(ngModel)]="coExecutor.executorName" class="form-control " id="selectCoExecutor">
+            <select [disabled]="!projectService.writable || processing  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" [(ngModel)]="coExecutor.executorName" class="form-control " id="selectCoExecutor">
               <option *ngFor="let option of listOfExecutors" [ngValue]="option.id">{{option.fullName}}</option>
             </select>
             <span *ngIf="authenticationService.role === 'GKNT'" class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="removeCoExecutor(i)">Удалить</span>

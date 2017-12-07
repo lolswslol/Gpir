@@ -31,7 +31,8 @@ export class ProjectProfileComponent implements OnInit {
         console.log(data);
       },
         (err)=>{console.log(err)},
-        ()=>{})
+        ()=>{});
+    console.log(this.projectService.writable);
   }
 
   confirmProject(){

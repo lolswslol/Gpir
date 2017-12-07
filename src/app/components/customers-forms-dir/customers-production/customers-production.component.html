@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div [ngClass]="messageClass">{{message}}</div>
   <div class="panel panel-primary">
     <div class="panel-heading">
@@ -7,29 +7,36 @@
     <div class="panel-body" >
       <table class="table table-striped table-hover table-bordered">
         <thead>
-          <tr>
-            <th>Плановые этапы</th>
-            <th>Плановая дата(мм.гггг)</th>
-          </tr>
+        <tr>
+          <th>Название</th>
+          <th *ngFor="let headerModel of headerModel">
+            {{headerModel}}
+          </th>
+          <th>
+            Сумма
+          </th>
+        </tr>
+
         </thead>
         <tbody>
-          <tr *ngFor="let model of model;let i = index">
-            <td>{{model.name}}</td>
-            <td>
-              <div class="form-group" (click)="editData(i, model.name, model.value)">
-                <input appInputValidation [fieldName]="fieldName" [regExp]="yearRegExp" [index]="i" (onValidation)="validate($event)" [disabled]="!model.status || projectService.projectNew === false || projectService.writable===false" class="form-control input-sm" type="text" [(ngModel)]="model.value">
-                <span class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="disableDate(i)">{{model.status | buttonDate}}</span>
-              </div>
-            </td>
-          </tr>
+        <tr *ngFor="let localModel of model;let k = index">
+          <td><span *ngFor="let code of codeSeparated(localModel.code)">&nbsp;</span>{{localModel?.name}}</td>
+          <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
+            <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
+              <input [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input [disabled]="projectService.projectNew === false || projectService.writable === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
       <table *ngIf="commentModel.length > 0" class="table table-striped table-hover table-bordered">
         <thead>
         <tr>
           <th>Наименование этапа</th>
-          <th>Пред. дата(мм/гггг)</th>
-          <th>Новая дата(мм/гггг)</th>
+          <th>Год</th>
+          <th>Пред. значение</th>
+          <th>Новае значение(мм/гггг)</th>
           <th>Документ</th>
           <th>Дата утверждения</th>
           <th>Причина изменения</th>
@@ -38,7 +45,10 @@
         <tbody>
         <tr *ngFor="let commentModel of commentModel">
           <td>
-           {{commentModel.dictionaryName}}
+            {{commentModel.dictionaryName}}
+          </td>
+          <td>
+            {{commentModel.year}}
           </td>
           <td class="fixed-date">
             <div class="form-group">
@@ -68,19 +78,18 @@
         </tr>
         </tbody>
       </table>
-      <button [disabled]="valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
-
+      <button [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
     </div>
   </div>
 </div>
+
 <p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
   <form class="form-horizontal">
     <fieldset>
-      <legend>{{modalWindowObject.name}}</legend>
       <div class="form-group">
-        <label for="newDate" class="col-lg-2 control-label">Новая дата</label>
+        <label for="newDate" class="col-lg-2 control-label">Новое значение</label>
         <div class="col-lg-10">
-          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="yearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*мм/гггг">
+          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="regExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*новое значение">
         </div>
       </div>
       <div class="form-group">

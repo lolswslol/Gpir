@@ -22,20 +22,20 @@
           <td>{{model.oksmName}}</td>
           <td *ngFor="let firstYear of model.investmentDirectForeignModels;let i = index">
             <div class="form-group">
-              <input [disabled]="projectService.writable === false" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'investModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="firstYear.value">
+              <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'investModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="firstYear.value">
             </div>
           </td>
           <td *ngFor="let secondYear of model.investmentFullModels;let i = index">
             <div class="form-group">
-              <input [disabled]="projectService.writable === false" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'directModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="secondYear.value">
+              <input [disabled]="projectService.writable === false || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT') " appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'directModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="secondYear.value">
             </div>
           </td>
-          <td *ngIf="projectService.writable === true"><i class="fa fa-window-close" aria-hidden="true" (click)="deleteCountry(index)"></i></td>
+          <td *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"><i class="fa fa-window-close" aria-hidden="true" (click)="deleteCountry(index)"></i></td>
         </tr>
         </tbody>
       </table>
-      <button *ngIf="projectService.writable === true" [disabled]="!valid" class="btn btn-primary">Сохранить</button>
-      <button *ngIf="projectService.writable === true" class="btn btn-info" (click)="addCountry()">Добавить страну</button>
+      <button *ngIf="projectService.writable === true" [disabled]="!valid" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')" class="btn btn-info" (click)="addCountry()">Добавить страну</button>
     </div>
   </div>
 </div>
@@ -43,7 +43,7 @@
 <p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
   <div class="form-group">
     <label for="countryLabel" class="control-label">Страна</label>
-    <p-autoComplete (onKeyUp)="checkValid();countryMessage()" (onSelect)="checkValid();countryMessage();validateCountryInput()" id="countryLabel" [(ngModel)]="country" [suggestions]="filteredCountriesSingle" (completeMethod)="filterCountrySingle($event)" field="name" [size]="30"></p-autoComplete>
+    <p-autoComplete (onKeyUp)="checkValid();countryMessage()" (onSelect)="checkValid();countryMessage();validateCountryInput()" (onUnselect)="validateCountryInput()" id="countryLabel" [(ngModel)]="country" [suggestions]="filteredCountriesSingle" (completeMethod)="filterCountrySingle($event)" field="name" [size]="30"></p-autoComplete>
     <span class="text-danger">{{modalMessage}}</span>
   </div>
 
@@ -81,7 +81,6 @@
     </div>
   </div>
   <p-footer>
-    <button (click)="checkCountry()">Check</button>
     <button [disabled]="!modalValid" class="btn btn-primary btn-sm" type="button" (click)="saveNewCountry()">Добавить</button>
     <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
   </p-footer>

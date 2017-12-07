@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div [ngClass]="messageClass">{{message}}</div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">7.Наименование продукции, создаваемой в результате реализации проекта, и планы по выпуску</h3>
+    </div>
+    <div class="panel-body" >
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+          <th>Полное наименование продукции</th>
+          <th>Код по ТН ВЭД (6 знаков)</th>
+          <th>Проектная мощность(стоимостная выражение)</th>
+          <th>Проектная мощность(физический объем)</th>
+          <th>Еденица измерения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let model of model">
+          <td>
+            {{model.name}}
+          </td>
+          <td>
+            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.tnVed">
+          </td>
+          <td>
+            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.powerCost">
+          </td>
+          <td>
+            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.powerPhysical">
+          </td>
+          <td>
+            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.unitPhysical">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button *ngIf="projectService.writable === true" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"  class="btn btn-info" (click)="addProduct()">Добавить нименование</button>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
+  <div class="row">
+    <div class="col-lg-9">
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label for="name" class="col-lg-7 control-label">Плановое наименование продукции</label>
+            <div class="col-lg-5">
+              <div class="form-group-sm">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.name" type="number" class="form-control" id="name" placeholder="*новое значение">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tnVed" class="col-lg-7 control-label">Код по ТН ВЭД(6 знаков)</label>
+            <div class="col-lg-5">
+              <div class="form-group-sm">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.tnVed" type="number" class="form-control" id="tnVed" placeholder="*новое значение">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="power" class="col-lg-7 control-label">Проектная мощность(стоим. выражение)</label>
+            <div class="col-lg-5">
+              <div class="form-group-sm">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.powerCost" type="number" class="form-control" id="power" placeholder="*новое значение">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="projectPower" class="col-lg-7 control-label">Проектная мощность(физ. объем)</label>
+            <div class="col-lg-5">
+              <div class="form-group-sm">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.powerPhysical" type="number" class="form-control" id="projectPower" placeholder="*новое значение">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="unit" class="col-lg-7 control-label">Еденица измерения</label>
+            <div class="col-lg-5">
+              <div class="form-group-sm">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.unitPhysical" type="number" class="form-control" id="unit" placeholder="*новое значение">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <p-footer>
+    <button  class="btn btn-primary btn-sm" type="button" (click)="saveProduct()">Добавить</button>
+    <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
+  </p-footer>
+</p-dialog>

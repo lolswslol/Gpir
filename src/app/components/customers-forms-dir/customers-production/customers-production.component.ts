@@ -4,16 +4,13 @@ import { AuthenticationService } from "../../../services/authentication.service"
 import { ProjectService } from "../../../services/project.service";
 import { Http } from "@angular/http";
 
-
-
 @Component({
-  selector: 'app-customers-financing',
-  templateUrl: './customers-financing.component.html',
-  styleUrls: ['./customers-financing.component.css']
+  selector: 'app-customers-production',
+  templateUrl: './customers-production.component.html',
+  styleUrls: ['./customers-production.component.css']
 })
-export class CustomersFinancingComponent implements OnInit {
+export class CustomersProductionComponent implements OnInit {
 
-  //config params
   message;
   messageClass;
   domain = domain;
@@ -45,13 +42,13 @@ export class CustomersFinancingComponent implements OnInit {
   ngOnInit() {
     //get Main table data
     this.authenticationService.createAuthenticationHeaders();
-    this.http.get(this.domain+'api/financing/'+this.projectService.currentProjectId,this.authenticationService.options)
+    this.http.get(this.domain+'api/production/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log(data);
-        this.model = data.fieldModels;
-        this.headerModel = data.years;
-      },
+          console.log(data);
+          this.model = data.fieldModels;
+          this.headerModel = data.years;
+        },
         (err)=>{
           console.log(err);
           this.message = 'Не удалось получить данные с сервера';
@@ -60,10 +57,10 @@ export class CustomersFinancingComponent implements OnInit {
         ()=>{});
 
     //get comments data
-    this.http.get(this.domain+'/api/comments/FINANCING_COMMENTS/'+this.projectService.currentProjectId,this.authenticationService.options)
+    this.http.get(this.domain+'/api/comments/PRODUCTION_COMMENTS/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log(data);
+          console.log(data);
           this.commentModel = data.commentFieldModels;
         },
         (err)=>{
@@ -76,13 +73,13 @@ export class CustomersFinancingComponent implements OnInit {
 
   //Main table validation func
   check($event){
-     if(this.validationMap.has($event.status)){
-       this.validationMap.delete($event.status);
-       this.validationMap.set($event.status,$event.value);
-     }else {
-       this.validationMap.set($event.status,$event.value);
-     }
-     this.checkValid();
+    if(this.validationMap.has($event.status)){
+      this.validationMap.delete($event.status);
+      this.validationMap.set($event.status,$event.value);
+    }else {
+      this.validationMap.set($event.status,$event.value);
+    }
+    this.checkValid();
   }
 
   //calculate row values of the main table
@@ -112,7 +109,7 @@ export class CustomersFinancingComponent implements OnInit {
   //do calculation operations with every input
   onChange(){
     this.getRowSum();
-    this.getColSum();
+    /*this.getColSum();*/
   }
 
   //create a Map for validation Main table
@@ -181,13 +178,13 @@ export class CustomersFinancingComponent implements OnInit {
   //save modal window
   modalSave(){
     let model = JSON.parse(JSON.stringify(this.model));
-    console.log(CustomersFinancingComponent.changeNewValue(model,this.modalCommentObject));
+    console.log(CustomersProductionComponent.changeNewValue(model,this.modalCommentObject));
     console.log(model);
     let commentModel = this.commentModel.concat([]);
     commentModel.push(this.modalCommentObject);
     console.log({id: this.projectService.currentProjectId, stages: model, comments: commentModel});
 
-    this.http.post(this.domain+'api/financing/'+ this.projectService.currentProjectId, JSON.stringify({projectId: this.projectService.currentProjectId, fieldModels: model, comments: commentModel}), this.authenticationService.options)
+    this.http.post(this.domain+'api/production/'+ this.projectService.currentProjectId, JSON.stringify({projectId: this.projectService.currentProjectId, fieldModels: model, comments: commentModel}), this.authenticationService.options)
       .map(res=>res.json())
       .subscribe((data)=>{
           commentModel = data;
@@ -215,7 +212,7 @@ export class CustomersFinancingComponent implements OnInit {
         fieldModels: this.model,
         projectId: this.projectService.currentProjectId
       };
-      this.http.post(this.domain+'api/financing/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
+      this.http.post(this.domain+'api/production/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
         .subscribe(()=>{
             this.message = 'Данные были успешно сохранены';
             this.messageClass = 'alert alert-success';
@@ -225,10 +222,9 @@ export class CustomersFinancingComponent implements OnInit {
             },4000)
           },
           (err)=>{
-          console.log(err);
+            console.log(err);
             this.message = 'Не возможно сохранить данные';
             this.messageClass = 'alert alert-danger';
-            this.processing = false;
           },
           ()=>{
             this.processing = false;
@@ -237,4 +233,16 @@ export class CustomersFinancingComponent implements OnInit {
     }
 
   }
+
+  check1(){
+    console.log(this.codeSeparated(this.model[2].code))
+  }
+
+//test
+
+  codeSeparated(code:string){
+    return code.split('.')
+  }
+
+
 }

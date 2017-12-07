@@ -11,18 +11,18 @@
           <td>Наименование инновационного проекта</td>
           <td>
             <div class="form-group">
-            <input appInputValidation [fieldName]="'name'" [regExp]="anyRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable" class="form-control input-sm" type="text" [(ngModel)]="model.name">
+            <input appInputValidation [fieldName]="'name'" [regExp]="anyRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.name">
             </div>
           </td>
         </tr>
         <tr>
           <td>Регистрационный номер проекта</td>
-          <td><input appInputValidation [fieldName]="'shifr'" [regExp]="numbericRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable" class="form-control input-sm" type="text" [(ngModel)]="model.shifr"></td>
+          <td><input appInputValidation [fieldName]="'shifr'" [regExp]="numbericRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.shifr"></td>
         </tr>
         <tr>
           <td>Уровень проекта по технологическому укладу</td>
           <td>
-            <select [disabled]="processing || !projectService.writable" class="form-control input-sm" [(ngModel)]="model.tech">
+            <select [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.tech">
               <option *ngFor="let tech of model.teches" [ngValue]="tech.id">{{tech.name}}</option>
             </select>
           </td>
@@ -30,7 +30,7 @@
         <tr>
           <td>Уровень реализуемой продуктовой инновации</td>
           <td>
-            <select [disabled]="processing || !projectService.writable" class="form-control input-sm" [(ngModel)]="model.productInnovation">
+            <select [disabled]="processing || !projectService.writable  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.productInnovation">
               <option *ngFor="let product of model.productInnovations" [ngValue]="product.id">{{product.name}}</option>
             </select>
           </td>
@@ -38,19 +38,19 @@
         <tr>
           <td>Уровень реализуемой процессной инновации</td>
           <td>
-            <select [disabled]="processing || !projectService.writable" class="form-control input-sm" [(ngModel)]="model.processInnovation">
+            <select [disabled]="processing || !projectService.writable  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.processInnovation">
               <option *ngFor="let process of model.processInnovations" [ngValue]="process.id">{{process.name}}</option>
             </select>
           </td>
         </tr>
         <tr>
           <td>Год начала реализации проекта</td>
-          <td><input appInputValidation [fieldName]="'yearStart'" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable" class="form-control input-sm" type="text" [(ngModel)]="model.yearStart"></td>
+          <td><input appInputValidation [fieldName]="'yearStart'" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.yearStart"></td>
         </tr>
         <tr>
         <tr>
           <td>Год завершения реализации проекта</td>
-          <td><input appInputValidation [fieldName]="'yearEnd'" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable" class="form-control input-sm" type="text" [(ngModel)]="model.yearEnd"></td>
+          <td><input appInputValidation [fieldName]="'yearEnd'" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.yearEnd"></td>
         </tr>
         <tr>
         </tbody>

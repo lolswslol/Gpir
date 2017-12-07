@@ -15,6 +15,7 @@ export class CustomersCountryYearsComponent implements OnInit {
   domain = domain;
   message;
   messageClass;
+  processing = false;
 
   modalObject = {
     investmentFullModels: [],
@@ -154,6 +155,40 @@ export class CustomersCountryYearsComponent implements OnInit {
   }
 
 
+  submit(){
+    this.processing = true;
+    this.authenticationService.createAuthenticationHeaders();
+    this.http.post(this.domain+'api/investment/'+this.projectService.currentProjectId,JSON.stringify({countriesYears:this.model, projectId: this.projectService.currentProjectId}),this.authenticationService.options)
+      .subscribe(()=>{
+          this.message = 'Данные были успешно сохранены';
+          this.messageClass = 'alert alert-success';
+        },
+        (err)=>{
+          if(err.status === 401){
+            this.message = 'Ваш токен истек. Пожалуйста перелогиньтесь.';
+            this.messageClass = 'alert alert-danger';
+            setTimeout(()=>{
+              this.projectService.clearCurrentProject();
+              this.authenticationService.logout();
+            },4000)
+          }else {
+            this.message = 'Произошла ошибка сохранения данных';
+            this.messageClass = 'alert alert-danger';
+            this.processing = false;
+            setTimeout(()=>{
+              this.message = null;
+              this.messageClass = ''},4000)
+          }
+        },
+        ()=>{
+          this.processing = false;
+          setTimeout(()=>{
+            this.message = null;
+            this.messageClass = ''},4000)
+        })
+  }
+
+
   countryMessage(){
     if(typeof this.country.id === "number"){
       this.modalMessage = null;
@@ -204,7 +239,9 @@ export class CustomersCountryYearsComponent implements OnInit {
         (err)=>{},
         ()=>{
               this.model.push(body);
-              this.display = false;
+              this.rejectEditing();
+
+
     })
   }
 

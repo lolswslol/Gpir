@@ -43,6 +43,9 @@ export class CustomersProjectInfoComponent implements OnInit {
                           this.message = 'Произошла ошибка загрузки проекта. Перезагрузите страницу.';
                           this.messageClass = 'alert alert-danger'},
                   ()=>{})
+
+    console.log(this.projectService);
+    console.log(this.authenticationService);
   }
 
   submit(){

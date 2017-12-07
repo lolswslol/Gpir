@@ -43,6 +43,9 @@ import { CustomersCostInnovationComponent } from './components/customers-forms-d
 import { CustomersCountryYearsComponent } from './components/customers-forms-dir/customers-country-years/customers-country-years.component';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { NotAvailableDirective } from './directives/not-available.directive';
+import { CustomersProductComponent } from './components/customers-forms-dir/customers-product/customers-product.component';
+import { CustomersProductionComponent } from './components/customers-forms-dir/customers-production/customers-production.component';
+import { DynamicInputDirective } from './directives/dynamic-input.directive';
 
 
 
@@ -73,7 +76,10 @@ import { NotAvailableDirective } from './directives/not-available.directive';
     DynamicValidationInputDirective,
     CustomersCostInnovationComponent,
     CustomersCountryYearsComponent,
-    NotAvailableDirective
+    NotAvailableDirective,
+    CustomersProductComponent,
+    CustomersProductionComponent,
+    DynamicInputDirective
 
   ],
   imports: [
