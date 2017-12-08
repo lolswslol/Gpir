@@ -16,8 +16,10 @@
       </div>
       <div class="panel-body">
         <p appSelectProject [project]="project" class="text-primary" style="cursor: pointer" *ngFor="let project of projects; let i = index" (choose)="onCustomerChoose($event)" >
-          <small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong>
+         <small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong>
+        <span [style.color]="project.statusColor">&nbsp;&nbsp;&nbsp;[статус проекта]</span>
         </p>
+
       </div>
     </div>
   </div>

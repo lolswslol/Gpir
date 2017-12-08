@@ -46,6 +46,7 @@ import { NotAvailableDirective } from './directives/not-available.directive';
 import { CustomersProductComponent } from './components/customers-forms-dir/customers-product/customers-product.component';
 import { CustomersProductionComponent } from './components/customers-forms-dir/customers-production/customers-production.component';
 import { DynamicInputDirective } from './directives/dynamic-input.directive';
+import { ProjectColorPipe } from './pipes/project-color.pipe';
 
 
 
@@ -79,7 +80,8 @@ import { DynamicInputDirective } from './directives/dynamic-input.directive';
     NotAvailableDirective,
     CustomersProductComponent,
     CustomersProductionComponent,
-    DynamicInputDirective
+    DynamicInputDirective,
+    ProjectColorPipe
 
   ],
   imports: [
