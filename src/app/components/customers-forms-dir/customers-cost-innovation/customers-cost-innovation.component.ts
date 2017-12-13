@@ -3,6 +3,7 @@ import { domain } from '../../../config/config';
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ProjectService } from "../../../services/project.service";
 import { Http } from "@angular/http";
+import {Message} from "primeng/components/common/message";
 
 
 
@@ -38,6 +39,8 @@ export class CustomersCostInnovationComponent implements OnInit {
   modalValidationMap = new Map();
   modalValid: boolean = false;
 
+  msgs: Message[] = [];
+
   constructor(private authenticationService: AuthenticationService,
               private projectService: ProjectService,
               private http: Http) { }
@@ -48,12 +51,12 @@ export class CustomersCostInnovationComponent implements OnInit {
     this.http.get(this.domain+'api/cost_innovation/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-          console.log(data);
           this.model = data.fieldModels;
           this.headerModel = data.years;
         },
         (err)=>{
           console.log(err);
+          this.showError(null,'Не удалось получить данные с сервера');
           this.message = 'Не удалось получить данные с сервера';
           this.messageClass = 'alert alert-danger';
         },
@@ -68,6 +71,7 @@ export class CustomersCostInnovationComponent implements OnInit {
         },
         (err)=>{
           console.log('Произошла ошибка '+err);
+          this.showError(null,'Ошибка загрузки данных комментарий. Перезагрузите страницу');
           this.message = 'Ошибка загрузки данных комментарий. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
@@ -137,6 +141,7 @@ export class CustomersCostInnovationComponent implements OnInit {
   modalValidate($event): void{
     this.modalValid = true;
     if(!$event.value){
+      this.showError(null,'Не верный ввод данных в поле');
       this.message = 'Не верный ввод данных в поле';
       this.messageClass = 'alert alert-danger';
     }else {
@@ -191,9 +196,11 @@ export class CustomersCostInnovationComponent implements OnInit {
       .map(res=>res.json())
       .subscribe((data)=>{
           commentModel = data;
+          this.showSuccess(null,'Данные успешно сохранены');
         },
         (err)=>{
           console.log(err);
+          this.showError(null,'Ошибка при сохранении. Перезагрузите страницу');
           this.message = 'Ошибка при сохранении. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
@@ -217,6 +224,7 @@ export class CustomersCostInnovationComponent implements OnInit {
       };
       this.http.post(this.domain+'api/financing/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
         .subscribe(()=>{
+        this.showSuccess(null,'Данные были успешно сохранены');
             this.message = 'Данные были успешно сохранены';
             this.messageClass = 'alert alert-success';
             setTimeout(()=>{
@@ -226,6 +234,7 @@ export class CustomersCostInnovationComponent implements OnInit {
           },
           (err)=>{
             console.log(err);
+            this.showError(null,'Не возможно сохранить данные');
             this.message = 'Не возможно сохранить данные';
             this.messageClass = 'alert alert-danger';
           },
@@ -235,5 +244,17 @@ export class CustomersCostInnovationComponent implements OnInit {
           })
     }
 
+  }
+
+  //Messages
+  showSuccess(summary,message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:summary, detail:message});
+  }
+
+  //Error
+  showError(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
   }
 }

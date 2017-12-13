@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div [ngClass]="messageClass">{{message}}</div>
+  <!--<div [ngClass]="messageClass">{{message}}</div>-->
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">Плановые сроки завершения этапов(стадий) прохождения инновационного проекта</h3>
@@ -118,3 +118,4 @@
     <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
   </p-footer>
 </p-dialog>
+<p-growl [(value)]="msgs"></p-growl>

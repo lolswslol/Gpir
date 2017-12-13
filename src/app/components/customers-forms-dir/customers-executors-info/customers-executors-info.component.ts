@@ -3,6 +3,7 @@ import {Http} from "@angular/http";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { domain } from "../../../config/config";
 import { ProjectService } from "../../../services/project.service";
+import {Message} from "primeng/components/common/message";
 
 @Component({
   selector: 'app-customers-executors-info',
@@ -37,6 +38,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
   listOfOkfs;
   id;
   processing = false;
+  msgs: Message[] = [];
 
 
 
@@ -136,8 +138,11 @@ export class CustomersExecutorsInfoComponent implements OnInit {
     };
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/executors_info/'+this.projectService.currentProjectId,JSON.stringify(body),this.authenticationService.options)
-      .subscribe(data=>{},
+      .subscribe(data=>{
+          this.showSuccess(null,'Данные были успешно сохранены');
+        },
         (err)=>{
+        this.showError('Ошибка','Не возможно сохранить данные. Ошибка серверной части');
         this.message = 'Не возможно сохранить данные. Ошибка серверной части';
         this.messageClass = 'alert alert-danger';
         this.processing = false;
@@ -157,5 +162,16 @@ export class CustomersExecutorsInfoComponent implements OnInit {
     this.model.coExecutors.splice(index,1);
   }
 
+  //Messages
+  showSuccess(summary,message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:summary, detail:message});
+  }
+
+  //Error
+  showError(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
+  }
 
 }

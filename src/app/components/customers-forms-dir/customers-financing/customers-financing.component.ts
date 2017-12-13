@@ -3,6 +3,7 @@ import { domain } from '../../../config/config';
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ProjectService } from "../../../services/project.service";
 import { Http } from "@angular/http";
+import {Message} from "primeng/components/common/message";
 
 
 
@@ -38,6 +39,8 @@ export class CustomersFinancingComponent implements OnInit {
   modalValidationMap = new Map();
   modalValid: boolean = false;
 
+  msgs: Message[] = [];
+
   constructor(private authenticationService: AuthenticationService,
               private projectService: ProjectService,
               private http: Http) { }
@@ -54,6 +57,7 @@ export class CustomersFinancingComponent implements OnInit {
       },
         (err)=>{
           console.log(err);
+          this.showError('Ошибка загрузки данных','Не удалось получить данные с сервера');
           this.message = 'Не удалось получить данные с сервера';
           this.messageClass = 'alert alert-danger';
         },
@@ -68,6 +72,7 @@ export class CustomersFinancingComponent implements OnInit {
         },
         (err)=>{
           console.log('Произошла ошибка '+err);
+          this.showError('Ошибка загрузки данных','Не удалось получить данные с сервера');
           this.message = 'Ошибка загрузки данных комментарий. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
@@ -137,6 +142,7 @@ export class CustomersFinancingComponent implements OnInit {
   modalValidate($event): void{
     this.modalValid = true;
     if(!$event.value){
+      this.showError('Ошибка валидации','Не верный ввод данных в поле');
       this.message = 'Не верный ввод данных в поле';
       this.messageClass = 'alert alert-danger';
     }else {
@@ -194,10 +200,12 @@ export class CustomersFinancingComponent implements OnInit {
         },
         (err)=>{
           console.log(err);
+          this.showError('Ошибка при сохранении','Перезагрузите страницу');
           this.message = 'Ошибка при сохранении. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
         ()=>{
+      this.showSuccess(null,'Сохранение прошло успешно');
           this.model = model;
           this.commentModel = commentModel;
           this.display = false;
@@ -217,6 +225,7 @@ export class CustomersFinancingComponent implements OnInit {
       };
       this.http.post(this.domain+'api/financing/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
         .subscribe(()=>{
+            this.showSuccess(null,'Данные были успешно сохранены');
             this.message = 'Данные были успешно сохранены';
             this.messageClass = 'alert alert-success';
             setTimeout(()=>{
@@ -226,6 +235,7 @@ export class CustomersFinancingComponent implements OnInit {
           },
           (err)=>{
           console.log(err);
+            this.showError('Ошибка сохранения','Не возможно сохранить данные');
             this.message = 'Не возможно сохранить данные';
             this.messageClass = 'alert alert-danger';
             this.processing = false;
@@ -236,5 +246,17 @@ export class CustomersFinancingComponent implements OnInit {
           })
     }
 
+  }
+
+  //Messages
+  showSuccess(summary,message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:summary, detail:message});
+  }
+
+  //Error
+  showError(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
   }
 }

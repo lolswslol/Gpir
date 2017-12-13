@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "../../services/authentication.service";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import {Message} from 'primeng/components/common/api';
+
 
 @Component({
   selector: 'app-login',
@@ -12,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   processing: boolean = false;
-  message: String;
-  messageClass: String;
+  msgs: Message[]=[];
 
 
 
@@ -52,25 +53,36 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(user)
         .subscribe((data)=>{
           if(data===true){
-            this.message = 'Вы успешно вошли под своим аккаунтом';
-            this.messageClass = 'alert alert-success';
             setTimeout(()=>{
               this.router.navigate(['/entry-point'])
-            },3000)
+            },1000)
           }
         },
             (error)=>{
-            this.message = 'Не правильное имя пользователя или пароль';
-            this.messageClass = 'alert alert-danger';
             this.enableForm();
             this.processing = false;
+            this.showError();
             },
-            ()=>{})
+            ()=>{
+            this.showSuccess();
+            })
 
   }
 
   logout(){
     this.authenticationService.logout();
+  }
+
+  //Messages
+  showSuccess() {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:'Вы удачно вошли в систему', detail:'сейчас вы будете перенаправлены'});
+  }
+
+  //Error
+  showError(){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:'Ошибка авторизации', detail:'Не правильный логин или пароль'});
   }
 
 }

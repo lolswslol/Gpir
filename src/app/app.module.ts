@@ -29,6 +29,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
 import { ChangeBackgroundDirective } from './directives/change-background.directive';
+import { GrowlModule } from 'primeng/primeng';
 
 
 //Pipes
@@ -47,6 +48,7 @@ import { CustomersProductComponent } from './components/customers-forms-dir/cust
 import { CustomersProductionComponent } from './components/customers-forms-dir/customers-production/customers-production.component';
 import { DynamicInputDirective } from './directives/dynamic-input.directive';
 import { ProjectColorPipe } from './pipes/project-color.pipe';
+import {CustomMessageService} from "./services/custom-message.service";
 
 
 
@@ -93,10 +95,11 @@ import { ProjectColorPipe } from './pipes/project-color.pipe';
     DialogModule,
     BrowserAnimationsModule,
     AccordionModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    GrowlModule
 
   ],
-  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, GkntGuard, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, GkntGuard, CustomMessageService, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

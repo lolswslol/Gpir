@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../../services/authentication.service"
 import { ProjectService } from "../../../services/project.service";
 import { Http } from "@angular/http";
 import { Observable } from "rxjs";
+import {Message} from "primeng/components/common/message";
 
 @Component({
   selector: 'app-customers-country-years',
@@ -38,7 +39,7 @@ export class CustomersCountryYearsComponent implements OnInit {
   modalValid = false;
   modalMessage = 'Выберите из списка страну';
 
-
+  msgs: Message[] = [];
 
 
 
@@ -51,10 +52,13 @@ export class CustomersCountryYearsComponent implements OnInit {
     this.http.get(this.domain+'/api/investment/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log('obtained data',data);
         this.headerModel = data.years;
         this.model = data.countriesYears;
-      })
+      },
+        ()=>{
+        this.showError('Ошибка','Ошибка загрузки данных')
+        },
+        ()=>{})
   }
 
   deleteCountry(index){
@@ -98,6 +102,7 @@ export class CustomersCountryYearsComponent implements OnInit {
         this.model.forEach(s=>{
           if(s.oksmId === i){
             this.modalValid = false;
+            this.showInfo(null,'Такая страна уже есть');
             this.modalMessage = 'Такая страна уже есть'
           }
         })
@@ -160,11 +165,13 @@ export class CustomersCountryYearsComponent implements OnInit {
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/investment/'+this.projectService.currentProjectId,JSON.stringify({countriesYears:this.model, projectId: this.projectService.currentProjectId}),this.authenticationService.options)
       .subscribe(()=>{
+      this.showSuccess(null,'Данные были успешно сохранены');
           this.message = 'Данные были успешно сохранены';
           this.messageClass = 'alert alert-success';
         },
         (err)=>{
           if(err.status === 401){
+            this.showError(null,'Ваш токен истек. Пожалуйста перелогиньтесь.');
             this.message = 'Ваш токен истек. Пожалуйста перелогиньтесь.';
             this.messageClass = 'alert alert-danger';
             setTimeout(()=>{
@@ -172,6 +179,7 @@ export class CustomersCountryYearsComponent implements OnInit {
               this.authenticationService.logout();
             },4000)
           }else {
+            this.showError(null,'Произошла ошибка сохранения данных');
             this.message = 'Произошла ошибка сохранения данных';
             this.messageClass = 'alert alert-danger';
             this.processing = false;
@@ -234,9 +242,11 @@ export class CustomersCountryYearsComponent implements OnInit {
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'/api/investment/'+this.projectService.currentProjectId,JSON.stringify({countriesYears:editedModel,projectId: this.projectService.currentProjectId}),this.authenticationService.options)
       .subscribe((data)=>{
-        console.log(data);
+        this.showSuccess(null,'Данные были успешно сохранены');
       },
-        (err)=>{},
+        (err)=>{
+      this.showError(null,'Не возможно сохранить данные. Перезагрузите страницу')
+        },
         ()=>{
               this.model.push(body);
               this.rejectEditing();
@@ -254,5 +264,21 @@ export class CustomersCountryYearsComponent implements OnInit {
     console.log(this.modalObject);
     }
 
+//Messages
+  showSuccess(summary,message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:summary, detail:message});
+  }
+
+  //Error
+  showError(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
+  }
+
+  showInfo(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
+  }
 
 }

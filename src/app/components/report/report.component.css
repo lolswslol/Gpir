@@ -1,8 +1,8 @@
 
-/* MARKETING CONTENT
--------------------------------------------------- */
+/*!* MARKETING CONTENT
+-------------------------------------------------- *!
 
-/* Center align the text within the three columns below the carousel */
+!* Center align the text within the three columns below the carousel *!
 .marketing .col-lg-4 {
   margin-bottom: 1.5rem;
   text-align: center;
@@ -27,9 +27,9 @@ a{
   color: inherit;
   text-decoration: none;
 }
-/*a:hover{
+!*a:hover{
   color: cadetblue;
-}*/
+}*!
 
 .confirmation-block{
 
@@ -47,9 +47,9 @@ a{
   margin: 0;
   padding: 0;
 }
-/*aed6d1
+!*aed6d1
 
-6c869b */
+6c869b *!
 .text{
   display: inline-block;
   margin: 0 0.1em 0.5em;
@@ -261,7 +261,7 @@ ul.report_forms li.report_forms9 {
     background-repeat: no-repeat;
 
   }
-}
+}*/
 
 
 

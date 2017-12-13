@@ -15,11 +15,10 @@
         <h3 class="panel-title">Список проектов</h3>
       </div>
       <div class="panel-body">
-        <p appSelectProject [project]="project" class="text-primary" style="cursor: pointer" *ngFor="let project of projects; let i = index" (choose)="onCustomerChoose($event)" >
+        <p appSelectProject [project]="project" class="text-primary" style="cursor: pointer" *ngFor="let project of projects; let i = index" (choose)="onCustomerChoose($event)"  >
          <small>{{i+1}})</small>&nbsp;<strong>{{project.nameProject}}</strong>
         <span [style.color]="project.statusColor">&nbsp;&nbsp;&nbsp;[статус проекта]</span>
         </p>
-
       </div>
     </div>
   </div>
@@ -62,19 +61,15 @@
       <a class="list-group-item active" (click)="selectCustomer(i)" >{{customer.customer}}<span appChangeBackground [color]="customer.statusColor" class="badge fa fa-check"> </span></a>
       <div [@enterAnimation] *ngIf="i===customersListIndex">
         <div *ngFor="let project of customer.projectModels">
-          <a (click)="onChoose(project)"  class="list-group-item">
+          <a (click)="onChoose(project);showSuccess('Перейдити к отчетам')"  class="list-group-item">
           {{project.nameProject}}<span appChangeBackground [color]="project.statusColor" class="badge badge fa fa-check"> </span>
           </a>
         </div>
-
-
       </div>
     </div>
   </div>
 </div>
-
-
-
+<p-growl [life]="7000" [(value)]="msgs"></p-growl>
 
 <div *ngIf="projectService.currentProjectId" class="container">
   <div class="row">

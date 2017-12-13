@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from "../../services/project.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import {trigger, transition, style, animate} from "@angular/animations";
+import {Message} from "primeng/components/common/message";
 
 
 
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit {
   message;
   messageClass;
   customersListIndex = null;
+  msgs: Message[]=[];
 
 
 
@@ -60,7 +62,7 @@ export class HomeComponent implements OnInit {
   }
 
   onCustomerChoose($event){
-
+   this.showSuccess($event)
   }
 
   selectCustomer(i){
@@ -72,6 +74,17 @@ export class HomeComponent implements OnInit {
 
   }
 
+  //Messages
+  showSuccess(message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:'Проект выбран', detail:message});
+  }
+
+  //Error
+  showError(){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:'Ошибка авторизации', detail:'Не правильный логин или пароль'});
+  }
 
 
 }

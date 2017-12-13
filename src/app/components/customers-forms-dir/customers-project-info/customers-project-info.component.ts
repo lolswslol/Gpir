@@ -3,6 +3,7 @@ import {Http} from "@angular/http";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { domain } from '../../../config/config';
 import {ProjectService} from "../../../services/project.service";
+import {Message} from "primeng/components/common/message";
 
 @Component({
   selector: 'app-customers-project-info',
@@ -23,6 +24,9 @@ export class CustomersProjectInfoComponent implements OnInit {
   numbericRegExp = /^\d+$/;
   yearRegExp = /^(19|20)\d{2}$/;
 
+  //Messages
+  msgs: Message[]=[];
+
 
 
   constructor(private http: Http, private authenticationService: AuthenticationService, private projectService: ProjectService) { }
@@ -34,18 +38,19 @@ export class CustomersProjectInfoComponent implements OnInit {
       .subscribe((data)=>{
                             this.model = data;
                             for(let key in data){
-                              //noinspection JSUnfilteredForInLoop
+
                               this.validationMap.set(key,true)
                             }
                           },
                   (err)=>{
                           console.log(err);
                           this.message = 'Произошла ошибка загрузки проекта. Перезагрузите страницу.';
-                          this.messageClass = 'alert alert-danger'},
-                  ()=>{})
+                          this.messageClass = 'alert alert-danger';
+                          this.showError('Ошибка','Произошла ошибка загрузки проекта. Перезагрузите страницу.')},
 
-    console.log(this.projectService);
-    console.log(this.authenticationService);
+                  ()=>{});
+
+
   }
 
   submit(){
@@ -53,6 +58,7 @@ export class CustomersProjectInfoComponent implements OnInit {
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/project_info/'+this.model.id,this.model,this.authenticationService.options)
       .subscribe(()=>{
+        this.showSuccess(null,'Данные были успешно сохранены');
         this.message = 'Данные были успешно сохранены';
         this.messageClass = 'alert alert-success';
       },
@@ -65,9 +71,10 @@ export class CustomersProjectInfoComponent implements OnInit {
            this.authenticationService.logout();
          },4000)
         }else {
-        this.message = 'Произошла ошибка сохранения данных';
-        this.messageClass = 'alert alert-danger';
-        this.processing = false;
+          this.showError('Ошибка','Произошла ошибка загрузки проекта. Перезагрузите страницу.');
+          this.message = 'Произошла ошибка сохранения данных';
+          this.messageClass = 'alert alert-danger';
+          this.processing = false;
         setTimeout(()=>{
             this.message = null;
             this.messageClass = ''},4000)
@@ -84,9 +91,11 @@ export class CustomersProjectInfoComponent implements OnInit {
   validate($event){
     this.valid = true;
     if(!$event.value){
+      this.showError('Ошибка валидации','Не правильный ввод данных в поле');
       this.message = 'Не верный ввод данных в поле';
       this.messageClass = 'alert alert-danger';
     }else {
+      this.msgs = [];
       this.message = null;
       this.messageClass = null;
     }
@@ -97,5 +106,17 @@ export class CustomersProjectInfoComponent implements OnInit {
         this.valid = false;
       }
     });
+  }
+
+  //Messages
+  showSuccess(summary,message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:summary, detail:message});
+  }
+
+  //Error
+  showError(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
   }
 }

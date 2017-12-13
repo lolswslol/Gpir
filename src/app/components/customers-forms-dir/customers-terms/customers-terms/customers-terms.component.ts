@@ -3,6 +3,7 @@ import { Http } from "@angular/http";
 import { domain } from '../../../../config/config';
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { ProjectService } from "../../../../services/project.service";
+import {Message} from "primeng/components/common/message";
 
 
 
@@ -48,6 +49,8 @@ export class CustomersTermsComponent implements OnInit {
   fullYearRegExp: RegExp = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
   fieldRegExp: RegExp = /^[A-Za-zА-Яа-я0-9\-_/ ]{1,90}$/;
 
+  msgs: Message[]=[];
+
   //-->LIFECYCLE HOOKS
 
   ngOnInit() {
@@ -71,6 +74,7 @@ export class CustomersTermsComponent implements OnInit {
       },
         (err)=>{
           console.log('Произошла ошибка '+err);
+          this.showError(null,'Ошибка загрузки данных таблицы. Перезагрузите страницу');
           this.message = 'Ошибка загрузки данных таблицы. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
@@ -84,6 +88,7 @@ export class CustomersTermsComponent implements OnInit {
       },
         (err)=>{
           console.log('Произошла ошибка '+err);
+          this.showError(null,'Ошибка загрузки данных комментарий. Перезагрузите страницу');
           this.message = 'Ошибка загрузки данных комментарий. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
@@ -98,6 +103,7 @@ export class CustomersTermsComponent implements OnInit {
     console.log($event);
     this.valid = true;
     if(!$event.value){
+      this.showError('Ошибка валидации','Не верный ввод данных в поле');
       this.message = 'Не верный ввод данных в поле';
       this.messageClass = 'alert alert-danger';
     }else {
@@ -144,11 +150,13 @@ export class CustomersTermsComponent implements OnInit {
   submit(): void{
     this.http.post(this.domain+'api/plan_stage/'+ this.projectService.currentProjectId, JSON.stringify({id: this.projectService.currentProjectId, stages: this.model, comments: this.commentModel}), this.authenticationService.options)
       .subscribe(()=>{
+      this.showSuccess(null,'Данные успешно были сохранены');
           this.message = 'Данные успешно сохранены';
           this.messageClass = 'alert alert-success';
         },
         (err)=>{
           console.log(err);
+          this.showError('Ошибка','Ошибка при сохранении. Перезагрузите страницу');
           this.message = 'Ошибка при сохранении. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
@@ -190,6 +198,7 @@ export class CustomersTermsComponent implements OnInit {
   modalValidate($event): void{
     this.modalValid = true;
     if(!$event.value){
+      this.showError('Ошибка валидации','Не верные данные в поле');
       this.message = 'Не верный ввод данных в поле';
       this.messageClass = 'alert alert-danger';
     }else {
@@ -229,10 +238,12 @@ export class CustomersTermsComponent implements OnInit {
         },
         (err)=>{
           console.log(err);
+          this.showError('Ошибка при сохранении','Перезагрузите страницу');
           this.message = 'Ошибка при сохранении. Перезагрузите страницу';
           this.messageClass = 'alert alert-danger';
         },
         ()=>{
+        this.showSuccess(null,'Успешно сохранено');
         this.model = model;
         this.commentModel = commentModel;
         this.display = false;
@@ -241,4 +252,15 @@ export class CustomersTermsComponent implements OnInit {
   }
   //--> END OF MODAL WINDOW METHODS
 
+  //Messages
+  showSuccess(summary,message) {
+    this.msgs = [];
+    this.msgs.push({severity:'success', summary:summary, detail:message});
+  }
+
+  //Error
+  showError(summary,message){
+    this.msgs = [];
+    this.msgs.push({severity:'error', summary:summary, detail:message});
+  }
 }
