@@ -20,14 +20,14 @@
         <tbody>
         <tr *ngFor="let model of model;let index = index">
           <td>{{model.oksmName}}</td>
-          <td *ngFor="let firstYear of model.investmentDirectForeignModels;let i = index">
-            <div class="form-group">
-              <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'investModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="firstYear.value">
-            </div>
-          </td>
           <td *ngFor="let secondYear of model.investmentFullModels;let i = index">
             <div class="form-group">
               <input [disabled]="projectService.writable === false || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT') " appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'directModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="secondYear.value">
+            </div>
+          </td>
+          <td *ngFor="let firstYear of model.investmentDirectForeignModels;let i = index">
+            <div class="form-group">
+              <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'investModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="firstYear.value">
             </div>
           </td>
           <td *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"><i class="fa fa-window-close" aria-hidden="true" (click)="deleteCountry(index)"></i></td>
@@ -72,7 +72,7 @@
             <label for="newDate" class="col-lg-2 control-label">{{invest.year}}</label>
             <div class="col-lg-10">
               <div class="form-group-sm">
-              <input appInputValidation [index]="i" [fieldName]="'direct'+ i" (onValidation)="show($event)" [(ngModel)]="invest.value" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="newDate" placeholder="*новое значение">
+                <input appInputValidation [index]="i" [fieldName]="'direct'+ i" (onValidation)="show($event)" [(ngModel)]="invest.value" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="newDate" placeholder="*новое значение">
               </div>
             </div>
           </div>
@@ -80,6 +80,7 @@
       </form>
     </div>
   </div>
+
   <p-footer>
     <button [disabled]="!modalValid" class="btn btn-primary btn-sm" type="button" (click)="saveNewCountry()">Добавить</button>
     <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>

@@ -52,6 +52,7 @@ export class CustomersCountryYearsComponent implements OnInit {
     this.http.get(this.domain+'/api/investment/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
+        console.log(data);
         this.headerModel = data.years;
         this.model = data.countriesYears;
       },
@@ -62,7 +63,14 @@ export class CustomersCountryYearsComponent implements OnInit {
   }
 
   deleteCountry(index){
-    this.model.splice(index,1);
+    console.log(this.model);
+    this.authenticationService.createAuthenticationHeaders();
+    this.http.post(this.domain+'api/investment_delete/'+this.projectService.currentProjectId+'/'+this.model[index].oksmId,null,this.authenticationService.options)
+      .subscribe(data=>{
+        this.showInfo(null,'Страна была удалена');
+        this.model.splice(index,1);
+      });
+
   }
 
   addCountry(){
@@ -163,6 +171,7 @@ export class CustomersCountryYearsComponent implements OnInit {
   submit(){
     this.processing = true;
     this.authenticationService.createAuthenticationHeaders();
+    console.log(this.model);
     this.http.post(this.domain+'api/investment/'+this.projectService.currentProjectId,JSON.stringify({countriesYears:this.model, projectId: this.projectService.currentProjectId}),this.authenticationService.options)
       .subscribe(()=>{
       this.showSuccess(null,'Данные были успешно сохранены');
@@ -231,14 +240,18 @@ export class CustomersCountryYearsComponent implements OnInit {
   }
 
   saveNewCountry(){
+    console.log(this.modalObject);
     let body = {
       oksmId: this.country.id,
       oksmName: this.country.name,
       investmentDirectForeignModels: this.modalObject.investmentDirectForeignModels,
       investmentFullModels: this.modalObject.investmentFullModels
     };
+    console.log(body);
     let editedModel = JSON.parse(JSON.stringify(this.model));
+    console.log(editedModel);
     editedModel.push(body);
+    console.log('last one',editedModel);
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'/api/investment/'+this.projectService.currentProjectId,JSON.stringify({countriesYears:editedModel,projectId: this.projectService.currentProjectId}),this.authenticationService.options)
       .subscribe((data)=>{
@@ -278,7 +291,7 @@ export class CustomersCountryYearsComponent implements OnInit {
 
   showInfo(summary,message){
     this.msgs = [];
-    this.msgs.push({severity:'error', summary:summary, detail:message});
+    this.msgs.push({severity:'info', summary:summary, detail:message});
   }
 
 }

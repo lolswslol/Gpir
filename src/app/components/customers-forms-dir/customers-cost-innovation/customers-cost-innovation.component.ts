@@ -51,6 +51,7 @@ export class CustomersCostInnovationComponent implements OnInit {
     this.http.get(this.domain+'api/cost_innovation/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
+          console.log(data);
           this.model = data.fieldModels;
           this.headerModel = data.years;
         },
@@ -222,7 +223,7 @@ export class CustomersCostInnovationComponent implements OnInit {
         fieldModels: this.model,
         projectId: this.projectService.currentProjectId
       };
-      this.http.post(this.domain+'api/financing/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
+      this.http.post(this.domain+'api/cost_innovation/'+this.projectService.currentProjectId, JSON.stringify(body),this.authenticationService.options)
         .subscribe(()=>{
         this.showSuccess(null,'Данные были успешно сохранены');
             this.message = 'Данные были успешно сохранены';

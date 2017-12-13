@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let model of model">
+        <tr *ngFor="let model of model;let index = index">
           <td>
             {{model.name}}
           </td>
@@ -32,6 +32,7 @@
           <td>
             <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.unitPhysical">
           </td>
+          <td *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"><i class="fa fa-window-close" aria-hidden="true" (click)="deleteProduct(index)"></i></td>
         </tr>
         </tbody>
       </table>
@@ -50,7 +51,7 @@
             <label for="name" class="col-lg-7 control-label">Плановое наименование продукции</label>
             <div class="col-lg-5">
               <div class="form-group-sm">
-                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.name" type="number" class="form-control" id="name" placeholder="*новое значение">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.name" type="text" class="form-control" id="name" placeholder="*новое значение">
               </div>
             </div>
           </div>
@@ -82,7 +83,7 @@
             <label for="unit" class="col-lg-7 control-label">Еденица измерения</label>
             <div class="col-lg-5">
               <div class="form-group-sm">
-                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.unitPhysical" type="number" class="form-control" id="unit" placeholder="*новое значение">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="modalObject.unitPhysical" type="text" class="form-control" id="unit" placeholder="*новое значение">
               </div>
             </div>
           </div>
@@ -95,3 +96,4 @@
     <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
   </p-footer>
 </p-dialog>
+<p-growl [(value)]="msgs"></p-growl>
