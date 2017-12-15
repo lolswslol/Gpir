@@ -21,7 +21,7 @@ export class CreateProjectComponent implements OnInit {
   listOfCustomers;
   coExecutors = Array<Object>();
   processing = false;
-  anyRegExp = /^[а-яА-ЯёЁa-zA-Z0-9\s]+$/;
+  anyRegExp = /.*\S.*/g;
   dateRegExp = /^(19|20)\d{2}$/;
   validationMap;
   valid = false;

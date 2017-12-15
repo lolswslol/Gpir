@@ -47,7 +47,7 @@ export class CustomersTermsComponent implements OnInit {
   modalValidationMap = new Map();
   modalValid: boolean = false;
   fullYearRegExp: RegExp = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
-  fieldRegExp: RegExp = /^[A-Za-zА-Яа-я0-9\-_/ ]{1,90}$/;
+  fieldRegExp: RegExp = /.*\S.*/g;
 
   msgs: Message[]=[];
 

@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <td>Регистрационный номер проекта</td>
-          <td><input appInputValidation [fieldName]="'shifr'" [regExp]="numbericRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.shifr"></td>
+          <td><input appInputValidation [fieldName]="'shifr'" [regExp]="anyRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.shifr"></td>
         </tr>
         <tr>
           <td>Уровень проекта по технологическому укладу</td>

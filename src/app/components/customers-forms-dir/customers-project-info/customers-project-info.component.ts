@@ -20,9 +20,11 @@ export class CustomersProjectInfoComponent implements OnInit {
   valid = true;
   validationMap = new Map();
   //RegExp for custom validation directives
-  anyRegExp = /^[а-яА-ЯёЁa-zA-Z0-9\s]+$/;
+  /*anyRegExp = /^[а-яА-ЯёЁa-zA-Z0-9\s]+$/;*/
+  anyRegExp = /.*\S.*/g;
   numbericRegExp = /^\d+$/;
   yearRegExp = /^(19|20)\d{2}$/;
+
 
   //Messages
   msgs: Message[]=[];
