@@ -30,7 +30,7 @@ export class CustomersCountryYearsComponent implements OnInit {
 
 
 
-  model;
+  model=[];
   valid = true;
   mainModelValidationMap = new Map();
   headerModel;

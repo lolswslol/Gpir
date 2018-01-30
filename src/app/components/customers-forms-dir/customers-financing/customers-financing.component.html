@@ -2,7 +2,7 @@
   <!--<div [ngClass]="messageClass">{{message}}</div>-->
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title">4.Плановые объемы и источники финансирования инновационного проекта, руб</h3>
+      <h3 class="panel-title">4.Плановые объемы и источники финансирования инновационного проекта, тыс.руб</h3>
     </div>
     <div class="panel-body" >
       <table class="table table-striped table-hover table-bordered">
@@ -20,11 +20,11 @@
         </thead>
         <tbody>
         <tr *ngFor="let localModel of model;let k = index">
-          <td>{{localModel?.name}}</td>
+          <td><span *ngIf="setTab(localModel.code)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</span>{{localModel?.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
             <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
-              <input [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
-              <input [disabled]="projectService.projectNew === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" disabled (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input appDeleteZero  [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input appDeleteZero  [disabled]="projectService.projectNew === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" disabled (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
             </div>
           </td>
         </tr>

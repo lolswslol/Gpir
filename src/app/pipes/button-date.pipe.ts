@@ -7,8 +7,8 @@ export class ButtonDatePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     if(value === true){
-      return 'Не определено'
-    }else return 'Определено'
+      return 'Не предусмотрена'
+    }else return 'Предусмотрена'
   }
 
 }

@@ -30,6 +30,7 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AccordionModule } from 'primeng/primeng';
 import { ChangeBackgroundDirective } from './directives/change-background.directive';
 import { GrowlModule } from 'primeng/primeng';
+import { SpinnerModule } from 'primeng/primeng';
 
 
 //Pipes
@@ -48,7 +49,8 @@ import { CustomersProductComponent } from './components/customers-forms-dir/cust
 import { CustomersProductionComponent } from './components/customers-forms-dir/customers-production/customers-production.component';
 import { DynamicInputDirective } from './directives/dynamic-input.directive';
 import { ProjectColorPipe } from './pipes/project-color.pipe';
-import {CustomMessageService} from "./services/custom-message.service";
+import { CustomMessageService } from "./services/custom-message.service";
+import { DeleteZeroDirective } from './directives/delete-zero.directive';
 
 
 
@@ -83,7 +85,9 @@ import {CustomMessageService} from "./services/custom-message.service";
     CustomersProductComponent,
     CustomersProductionComponent,
     DynamicInputDirective,
-    ProjectColorPipe
+    ProjectColorPipe,
+    DeleteZeroDirective,
+
 
   ],
   imports: [
@@ -96,7 +100,8 @@ import {CustomMessageService} from "./services/custom-message.service";
     BrowserAnimationsModule,
     AccordionModule,
     AutoCompleteModule,
-    GrowlModule
+    GrowlModule,
+    SpinnerModule,
 
   ],
   providers: [AuthenticationService, ProjectService, AuthGuard, NoAuthGuard, GkntGuard, CustomMessageService, ProjectGuard,{ provide: LocationStrategy, useClass: HashLocationStrategy}],

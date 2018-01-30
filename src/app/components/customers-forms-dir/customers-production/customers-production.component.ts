@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { domain } from '../../../config/config';
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ProjectService } from "../../../services/project.service";
@@ -8,9 +8,11 @@ import {Message} from "primeng/components/common/message";
 @Component({
   selector: 'app-customers-production',
   templateUrl: './customers-production.component.html',
-  styleUrls: ['./customers-production.component.css']
+  styleUrls: ['./customers-production.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CustomersProductionComponent implements OnInit {
+
 
   message;
   messageClass;
@@ -35,6 +37,8 @@ export class CustomersProductionComponent implements OnInit {
   commentModel = [];
   modalValidationMap = new Map();
   modalValid: boolean = false;
+
+  test='test';
 
   msgs: Message[] = [];
 
@@ -74,6 +78,10 @@ export class CustomersProductionComponent implements OnInit {
           this.messageClass = 'alert alert-danger';
         },
         ()=>{});
+  }
+
+  check11(){
+    console.log(this.model);
   }
 
   //Main table validation func

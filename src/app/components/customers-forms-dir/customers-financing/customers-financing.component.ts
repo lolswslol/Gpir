@@ -63,6 +63,8 @@ export class CustomersFinancingComponent implements OnInit {
         },
         ()=>{});
 
+
+
     //get comments data
     this.http.get(this.domain+'/api/comments/FINANCING_COMMENTS/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
@@ -88,6 +90,18 @@ export class CustomersFinancingComponent implements OnInit {
        this.validationMap.set($event.status,$event.value);
      }
      this.checkValid();
+  }
+
+  //Setting tab for main table
+  setTab(code){
+    if(code.split('.').length>1){
+      return true
+    }else false
+  }
+
+  //Delete zeroes
+  deleteZero(){
+
   }
 
   //calculate row values of the main table

@@ -2,7 +2,7 @@
   <!--<div [ngClass]="messageClass">{{message}}</div>-->
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title">Плановые общие инвестиционные затраты по инновационному проекту, руб</h3>
+      <h3 class="panel-title">6.Плановые общие инвестиционные затраты по инновационному проекту, тыс.руб</h3>
     </div>
     <div class="panel-body" >
       <table class="table table-striped table-hover table-bordered">
@@ -23,8 +23,8 @@
           <td>{{localModel?.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
             <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
-              <input [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
-              <input [disabled]="projectService.projectNew === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" disabled (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input appDeleteZero [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input appDeleteZero [disabled]="projectService.projectNew === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" disabled (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
             </div>
           </td>
         </tr>
@@ -52,12 +52,12 @@
           </td>
           <td class="fixed-date">
             <div class="form-group">
-              <input disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.oldVal">
+              <input appDeleteZero disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.oldVal">
             </div>
           </td>
           <td class="fixed-date">
             <div class="form-group">
-              <input disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.newVal">
+              <input appDeleteZero disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.newVal">
             </div>
           </td>
           <td>
@@ -67,7 +67,7 @@
           </td>
           <td class="fixed-date">
             <div class="form-group">
-              <input disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.date">
+              <input appDeleteZero disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.date">
             </div>
           </td>
           <td>
@@ -89,7 +89,7 @@
       <div class="form-group">
         <label for="newDate" class="col-lg-2 control-label">Новое значение</label>
         <div class="col-lg-10">
-          <input appModalInputValidation [fieldName]="'newDate'" [regExp]="regExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*новое значение">
+          <input appDeleteZero appModalInputValidation [fieldName]="'newDate'" [regExp]="regExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.newVal" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="newDate" placeholder="*новое значение">
         </div>
       </div>
       <div class="form-group">
@@ -101,7 +101,7 @@
       <div class="form-group">
         <label for="documentDate" class="col-lg-2 control-label">Дата утверждения</label>
         <div class="col-lg-10">
-          <input appModalInputValidation [fieldName]="'documentDate'" [regExp]="fullYearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*дд/мм/гггг">
+          <input appDeleteZero appModalInputValidation [fieldName]="'documentDate'" [regExp]="fullYearRegExp" (onValidation)="modalValidate($event)" [(ngModel)]="modalCommentObject.date" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="documentDate" placeholder="*дд/мм/гггг">
         </div>
       </div>
       <div class="form-group">

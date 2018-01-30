@@ -5,7 +5,7 @@
       <h3 class="panel-title">5.Плановые объемы финансирования проекта за счетсредств иностранных инвесторов</h3>
     </div>
     <div class="panel-body" >
-      <table class="table table-striped table-hover table-bordered">
+      <table *ngIf="model.length>0" class="table table-striped table-hover table-bordered">
         <thead>
         <tr>
           <th rowspan="2">Страна происхождения инвестиций</th>
@@ -22,12 +22,12 @@
           <td>{{model.oksmName}}</td>
           <td *ngFor="let secondYear of model.investmentFullModels;let i = index">
             <div class="form-group">
-              <input [disabled]="projectService.writable === false || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT') " appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'directModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="secondYear.value">
+              <input appDeleteZero [disabled]="projectService.writable === false || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT') " appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'directModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="secondYear.value">
             </div>
           </td>
           <td *ngFor="let firstYear of model.investmentDirectForeignModels;let i = index">
             <div class="form-group">
-              <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'investModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="firstYear.value">
+              <input appDeleteZero [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" appInputValidation [index]="i" [regExp]="regExp" [fieldName]="'investModel'+ i" (onValidation)="validateMainModel($event)" (change)="checkValidInput()" class="form-control input-sm" type="number" [(ngModel)]="firstYear.value">
             </div>
           </td>
           <td *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"><i class="fa fa-window-close" aria-hidden="true" (click)="deleteCountry(index)"></i></td>
@@ -56,7 +56,7 @@
             <label for="invest" class="col-lg-2 control-label">{{invest.year}}</label>
             <div class="col-lg-10">
               <div class="form-group-sm">
-                <input appInputValidation [index]="i" [fieldName]="'invest'+ i" [regExp]="regExp" (onValidation)="show($event)" [(ngModel)]="invest.value" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="invest" placeholder="*новое значение">
+                <input appDeleteZero appInputValidation [index]="i" [fieldName]="'invest'+ i" [regExp]="regExp" (onValidation)="show($event)" [(ngModel)]="invest.value" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="invest" placeholder="*новое значение">
 
               </div>
             </div>
@@ -72,7 +72,7 @@
             <label for="newDate" class="col-lg-2 control-label">{{invest.year}}</label>
             <div class="col-lg-10">
               <div class="form-group-sm">
-                <input appInputValidation [index]="i" [fieldName]="'direct'+ i" (onValidation)="show($event)" [(ngModel)]="invest.value" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="newDate" placeholder="*новое значение">
+                <input appDeleteZero appInputValidation [index]="i" [fieldName]="'direct'+ i" (onValidation)="show($event)" [(ngModel)]="invest.value" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="newDate" placeholder="*новое значение">
               </div>
             </div>
           </div>

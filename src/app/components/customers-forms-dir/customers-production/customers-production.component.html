@@ -1,5 +1,5 @@
-<div class="container-fluid">
-  <!--<div [ngClass]="messageClass">{{message}}</div>-->
+<!--<div class="container-fluid">
+  &lt;!&ndash;<div [ngClass]="messageClass">{{message}}</div>&ndash;&gt;
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">Плановые сроки завершения этапов(стадий) прохождения инновационного проекта</h3>
@@ -79,9 +79,22 @@
         </tbody>
       </table>
       <button *ngIf="projectService.writable" [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button class="btn btn-primary" (click)="check11()">Check()</button>
+
+      &lt;!&ndash;<p-accordion [multiple]="true">&ndash;&gt;
+        &lt;!&ndash;<p-accordionTab *ngFor="let year of headerModel;let k = index" [header]="year">&ndash;&gt;
+         &lt;!&ndash;<div *ngFor="let localModel of model;let i = index">&ndash;&gt;
+           &lt;!&ndash;{{localModel.name}}<input [(ngModel)]="model[k].yearFieldModels[i].value">&ndash;&gt;
+         &lt;!&ndash;</div>&ndash;&gt;
+        &lt;!&ndash;</p-accordionTab>&ndash;&gt;
+      &lt;!&ndash;</p-accordion>&ndash;&gt;
+
+      <p-spinner size="30" [(ngModel)]="test" thousandSeparator = " " decimalSeparator=","></p-spinner>
+      <input type="text" pInputText placeholder="Username" decimalSeparator="'.'">
+
     </div>
   </div>
-</div>
+</div>-->
 
 <p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
   <form class="form-horizontal">
@@ -118,4 +131,103 @@
     <button class="btn btn-danger btn-sm" type="button" (click)="rejectEditing()">Нет</button>
   </p-footer>
 </p-dialog>
+
 <p-growl [(value)]="msgs"></p-growl>
+
+<div class="container-fluid">
+  <!--<div [ngClass]="messageClass">{{message}}</div>-->
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Плановые сроки завершения этапов(стадий) прохождения инновационного проекта</h3>
+    </div>
+    <div class="panel-body" >
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+          <th>Название</th>
+          <th *ngFor="let headerModel of headerModel">
+            {{headerModel}}
+          </th>
+          <th>
+            Сумма
+          </th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr *ngFor="let localModel of model;let k = index">
+          <td><span *ngFor="let code of codeSeparated(localModel.code)">&nbsp;</span>{{localModel?.name}}</td>
+          <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
+            <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
+              <p-spinner (onChange)="getRowSum()" type="text" thousandSeparator = " " decimalSeparator="," step="0.1" [disabled]="projectService.projectNew === false || projectService.writable === false"   [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" [(ngModel)]="year.value"></p-spinner>
+              <p-spinner (onChange)="getRowSum()" type="text" thousandSeparator = " " decimalSeparator="," step="0.1" [disabled]="projectService.projectNew === false || projectService.writable === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" [(ngModel)]="year.value"></p-spinner>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <table *ngIf="commentModel.length > 0" class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+          <th>Наименование этапа</th>
+          <th>Год</th>
+          <th>Пред. значение</th>
+          <th>Новае значение(мм/гггг)</th>
+          <th>Документ</th>
+          <th>Дата утверждения</th>
+          <th>Причина изменения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let commentModel of commentModel">
+          <td>
+            {{commentModel.dictionaryName}}
+          </td>
+          <td>
+            {{commentModel.year}}
+          </td>
+          <td class="fixed-date">
+            <div class="form-group">
+              <p-spinner disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.oldVal"></p-spinner>
+            </div>
+          </td>
+          <td class="fixed-date">
+            <div class="form-group">
+              <p-spinner disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.newVal"></p-spinner>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <textarea disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.documentName"></textarea>
+            </div>
+          </td>
+          <td class="fixed-date">
+            <div class="form-group">
+              <p-spinner disabled class="form-control input-sm" type="text" [(ngModel)]="commentModel.date"></p-spinner>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <textarea disabled class="form-control input-sm" [(ngModel)]="commentModel.description"></textarea>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button *ngIf="projectService.writable" [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button class="btn btn-primary" (click)="check11()">Check()</button>
+
+      <!--<p-accordion [multiple]="true">-->
+      <!--<p-accordionTab *ngFor="let year of headerModel;let k = index" [header]="year">-->
+      <!--<div *ngFor="let localModel of model;let i = index">-->
+      <!--{{localModel.name}}<input [(ngModel)]="model[k].yearFieldModels[i].value">-->
+      <!--</div>-->
+      <!--</p-accordionTab>-->
+      <!--</p-accordion>-->
+
+      <p-spinner size="30" [(ngModel)]="test" thousandSeparator = " " decimalSeparator=","></p-spinner>
+      <input type="text" pInputText placeholder="Username" decimalSeparator="'.'">
+
+    </div>
+  </div>
+</div>
