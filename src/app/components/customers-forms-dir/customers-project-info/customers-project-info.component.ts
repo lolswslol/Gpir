@@ -24,6 +24,7 @@ export class CustomersProjectInfoComponent implements OnInit {
   anyRegExp = /.*\S.*/g;
   numbericRegExp = /^\d+$/;
   yearRegExp = /^(19|20)\d{2}$/;
+  dateProgramRegExp = /(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d/
 
 
   //Messages
@@ -38,6 +39,7 @@ export class CustomersProjectInfoComponent implements OnInit {
     this.http.get(this.domain+'api/project_info/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe((data)=>{
+      console.log(data);
                             this.model = data;
                             for(let key in data){
 

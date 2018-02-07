@@ -9,18 +9,18 @@
         <thead>
         <tr>
           <th>Название</th>
+          <th>
+           Всего
+          </th>
           <th *ngFor="let headerModel of headerModel">
             {{headerModel}}
-          </th>
-          <th>
-            Сумма
           </th>
         </tr>
 
         </thead>
         <tbody>
         <tr *ngFor="let localModel of model;let k = index">
-          <td>{{localModel?.name}}</td>
+          <td><span *ngIf="setTab(localModel.code)"><span *ngFor="let code of codeSeparated(localModel.code).slice(1)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-</span>{{localModel?.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
             <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
               <input appDeleteZero [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicValidationInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">

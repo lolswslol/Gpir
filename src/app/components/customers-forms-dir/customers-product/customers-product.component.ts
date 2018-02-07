@@ -14,7 +14,7 @@ export class CustomersProductComponent implements OnInit {
 
 
   domain = domain;
-  model;
+  model = [];
   msgs: Message[]=[];
   display = false;
   modalObject = {

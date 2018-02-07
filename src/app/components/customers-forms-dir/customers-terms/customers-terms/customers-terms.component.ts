@@ -41,7 +41,7 @@ export class CustomersTermsComponent implements OnInit {
   valid: boolean = true;
   processing: boolean = false;
   validationMap = new Map();
-  yearRegExp: RegExp = /(0[1-9]|1[012])[/](19|20)\d{2}$/;
+  yearRegExp: RegExp = /(0[1-9]|1[012])[.](19|20)\d{2}$/;
 
 //modal window validation
   modalValidationMap = new Map();
@@ -130,7 +130,7 @@ export class CustomersTermsComponent implements OnInit {
       }else {
         console.log(this.model[index].status);
         this.model[index].status = false;
-        this.model[index].value = 'Не определено';
+        this.model[index].value = 'Не предусмотрена';
         let name = index.toString();
         console.log(name);
         this.validationMap.delete(name);

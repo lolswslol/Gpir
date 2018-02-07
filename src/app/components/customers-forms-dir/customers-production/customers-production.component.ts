@@ -38,7 +38,7 @@ export class CustomersProductionComponent implements OnInit {
   modalValidationMap = new Map();
   modalValid: boolean = false;
 
-  test='test';
+  test=1;
 
   msgs: Message[] = [];
 
@@ -80,8 +80,63 @@ export class CustomersProductionComponent implements OnInit {
         ()=>{});
   }
 
-  check11(){
+  showModel(){
     console.log(this.model);
+  }
+
+  check11($event,localModel,i){
+    /*console.log($event);
+    console.log(localModel);
+    console.log(i);*/
+    let a = localModel.code + 'y' +i;
+    console.log(a);
+   /* if(this.validationMap.has(a)){
+      this.validationMap.delete(a);
+      this.validationMap.set(a,$event.target.value);
+    }else {
+      this.validationMap.set($event.status,$event.value);
+    }*/
+    this.checkValidInput(a);
+  }
+
+  checkValidInput(string){
+    let code = string.split('y')[0];
+    let year = string.split('y')[1];
+    let sum = 0;
+    let parent = 0;
+    if(code.length>1){
+    this.model.forEach(s=>{
+      if(s.code.slice(0,-1) === code.slice(0,-1)){
+        sum = sum + Number(s.yearFieldModels[year].value);
+      }
+      if(s.code === code.slice(0,-2)){
+        parent = s.yearFieldModels[year].value;
+      }
+    });
+    if(sum<=parent){
+      console.log('correct');
+    }else console.log('incorrect');
+    }else {
+      console.log('else');
+    }
+
+
+  }
+
+  deleteZero($event){
+    if($event.target.value === '0')
+    $event.target.value='';
+  }
+
+  returnZero($event){
+    if($event.target.value === '')
+      $event.target.value='0';
+  }
+
+  setTab(code){
+    if(code.split('.').length>1){
+      return true
+    }else false
   }
 
   //Main table validation func
@@ -100,9 +155,9 @@ export class CustomersProductionComponent implements OnInit {
     this.model.forEach(s=>{
       let sum : number = 0;
       for(let i=0;i<s.yearFieldModels.length-1;i++){
-        sum = sum + Number(s.yearFieldModels[i].value);
+        sum = sum + Number(s.yearFieldModels[i+1].value);
       }
-      s.yearFieldModels[s.yearFieldModels.length-1].value = sum.toFixed(1);
+      s.yearFieldModels[0].value = sum.toFixed(1);
     })
   }
 

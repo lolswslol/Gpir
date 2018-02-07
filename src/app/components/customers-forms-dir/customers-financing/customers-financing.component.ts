@@ -109,14 +109,26 @@ export class CustomersFinancingComponent implements OnInit {
     this.model.forEach(s=>{
       let sum : number = 0;
       for(let i=0;i<s.yearFieldModels.length-1;i++){
-        sum = sum + Number(s.yearFieldModels[i].value);
+        sum = sum + Number(s.yearFieldModels[i+1].value);
       }
-      s.yearFieldModels[s.yearFieldModels.length-1].value = sum.toFixed(1);
+      s.yearFieldModels[0].value = sum.toFixed(1);
     })
   }
 
   //calculate column values of the main table
   getColSum(){
+    for(let k=1;k<=this.model[0].yearFieldModels.length-1;k++){
+      let summa:number = 0;
+      for(let i=1;i<this.model.length-2;i++){
+        if(this.model[i].code.indexOf('.',0) === -1 && this.model[i].yearFieldModels[k].value){
+          summa = summa + Number(this.model[i].yearFieldModels[k].value);
+        }
+      }
+      this.model[0].yearFieldModels[k].value = summa;
+    }
+  }
+
+ /* getColSum(){
     for(let k=0;k<=this.model[0].yearFieldModels.length-1;k++){
       let summa:number = 0;
       for(let i=0;i<this.model.length-1;i++){
@@ -126,7 +138,7 @@ export class CustomersFinancingComponent implements OnInit {
       }
       this.model[this.model.length-1].yearFieldModels[k].value = summa;
     }
-  }
+  }*/
 
   //do calculation operations with every input
   onChange(){

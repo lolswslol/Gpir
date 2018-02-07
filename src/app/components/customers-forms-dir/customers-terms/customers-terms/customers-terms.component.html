@@ -69,6 +69,10 @@
         </tbody>
       </table>
       <button *ngIf="projectService.writable" [disabled]="valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <div style="float: right">
+        <a routerLink="/customers-executors-info"><button type="button" class="btn btn-info">Назад</button></a>
+        <a routerLink="/customers-financing"><button type="button" class="btn btn-info">Далее</button></a>
+      </div>
 
     </div>
   </div>

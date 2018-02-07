@@ -1,5 +1,5 @@
-<!--<div class="container-fluid">
-  &lt;!&ndash;<div [ngClass]="messageClass">{{message}}</div>&ndash;&gt;
+<div class="container-fluid">
+  <!--<div [ngClass]="messageClass">{{message}}</div>-->
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">Плановые сроки завершения этапов(стадий) прохождения инновационного проекта</h3>
@@ -9,22 +9,22 @@
         <thead>
         <tr>
           <th>Название</th>
+          <th>
+            Всего
+          </th>
           <th *ngFor="let headerModel of headerModel">
             {{headerModel}}
-          </th>
-          <th>
-            Сумма
           </th>
         </tr>
 
         </thead>
         <tbody>
         <tr *ngFor="let localModel of model;let k = index">
-          <td><span *ngFor="let code of codeSeparated(localModel.code)">&nbsp;</span>{{localModel?.name}}</td>
+          <td><span *ngIf="setTab(localModel.code)"><span *ngFor="let code of codeSeparated(localModel.code).slice(1)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-</span>{{localModel?.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
             <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
               <input [disabled]="projectService.projectNew === false || projectService.writable === false"   type="number" [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" appDynamicInput [regExp]="regExp" [model]="model" [code]="localModel.code" [index]="i" (setValidationStatus)="check($event)" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
-              <input [disabled]="projectService.projectNew === false || projectService.writable === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
+              <input *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" (change)="onChange()" class="form-control input-sm input-min-width" [(ngModel)]="year.value">
             </div>
           </td>
         </tr>
@@ -79,22 +79,19 @@
         </tbody>
       </table>
       <button *ngIf="projectService.writable" [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
-      <button class="btn btn-primary" (click)="check11()">Check()</button>
 
-      &lt;!&ndash;<p-accordion [multiple]="true">&ndash;&gt;
-        &lt;!&ndash;<p-accordionTab *ngFor="let year of headerModel;let k = index" [header]="year">&ndash;&gt;
-         &lt;!&ndash;<div *ngFor="let localModel of model;let i = index">&ndash;&gt;
-           &lt;!&ndash;{{localModel.name}}<input [(ngModel)]="model[k].yearFieldModels[i].value">&ndash;&gt;
-         &lt;!&ndash;</div>&ndash;&gt;
-        &lt;!&ndash;</p-accordionTab>&ndash;&gt;
-      &lt;!&ndash;</p-accordion>&ndash;&gt;
 
-      <p-spinner size="30" [(ngModel)]="test" thousandSeparator = " " decimalSeparator=","></p-spinner>
-      <input type="text" pInputText placeholder="Username" decimalSeparator="'.'">
+      <!--<p-accordion [multiple]="true">-->
+        <!--<p-accordionTab *ngFor="let year of headerModel;let k = index" [header]="year">-->
+         <!--<div *ngFor="let localModel of model;let i = index">-->
+           <!--{{localModel.name}}<input [(ngModel)]="model[k].yearFieldModels[i].value">-->
+         <!--</div>-->
+        <!--</p-accordionTab>-->
+      <!--</p-accordion>-->
 
     </div>
   </div>
-</div>-->
+</div>
 
 <p-dialog header="Внесение изменений плановых отчетов" [closable]="false" [(visible)]="display" modal="modal" width="700" [responsive]="true">
   <form class="form-horizontal">
@@ -134,33 +131,32 @@
 
 <p-growl [(value)]="msgs"></p-growl>
 
-<div class="container-fluid">
-  <!--<div [ngClass]="messageClass">{{message}}</div>-->
+<!--<div class="container-fluid">
+  &lt;!&ndash;<div [ngClass]="messageClass">{{message}}</div>&ndash;&gt;
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title">Плановые сроки завершения этапов(стадий) прохождения инновационного проекта</h3>
+      <h3 class="panel-title">8.Плановый объем продукции, созданной в результате реализации инновационного проекта</h3>
     </div>
     <div class="panel-body" >
       <table class="table table-striped table-hover table-bordered">
         <thead>
         <tr>
           <th>Название</th>
+          <th>
+            Всего
+          </th>
           <th *ngFor="let headerModel of headerModel">
             {{headerModel}}
           </th>
-          <th>
-            Сумма
-          </th>
         </tr>
-
         </thead>
         <tbody>
         <tr *ngFor="let localModel of model;let k = index">
-          <td><span *ngFor="let code of codeSeparated(localModel.code)">&nbsp;</span>{{localModel?.name}}</td>
+          <td><span *ngIf="setTab(localModel.code)"><span *ngFor="let code of codeSeparated(localModel.code).slice(1)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-</span>{{localModel?.name}}</td>
           <td *ngFor = "let year of localModel.yearFieldModels;let i = index">
             <div (click)="editData(k,i,localModel.name,year.year,year.value)" class="form-group">
-              <p-spinner (onChange)="getRowSum()" type="text" thousandSeparator = " " decimalSeparator="," step="0.1" [disabled]="projectService.projectNew === false || projectService.writable === false"   [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" [(ngModel)]="year.value"></p-spinner>
-              <p-spinner (onChange)="getRowSum()" type="text" thousandSeparator = " " decimalSeparator="," step="0.1" [disabled]="projectService.projectNew === false || projectService.writable === false"   *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" [(ngModel)]="year.value"></p-spinner>
+              <p-spinner (onBlur)="returnZero($event)" (onFocus)="deleteZero($event)" (onChange)="getRowSum();check11($event,localModel,i)" type="text" thousandSeparator = " " decimalSeparator="," step="0.1" [disabled]="projectService.projectNew === false || projectService.writable === false"   [disabled]="processing" *ngIf="localModel.controlType==='float' && year.year != 0" [(ngModel)]="year.value"></p-spinner>
+              <p-spinner (onBlur)="returnZero($event)" (onFocus)="deleteZero($event)" (onChange)="getRowSum();check11($event,localModel,i)" type="text" thousandSeparator = " " decimalSeparator="," step="0.1" *ngIf="localModel.controlType==='sum' || year.year === 0" [disabled]="true" [(ngModel)]="year.value"></p-spinner>
             </div>
           </td>
         </tr>
@@ -217,17 +213,7 @@
       <button *ngIf="projectService.writable" [disabled]="processing || valid === false" class="btn btn-primary" (click)="submit()">Сохранить</button>
       <button class="btn btn-primary" (click)="check11()">Check()</button>
 
-      <!--<p-accordion [multiple]="true">-->
-      <!--<p-accordionTab *ngFor="let year of headerModel;let k = index" [header]="year">-->
-      <!--<div *ngFor="let localModel of model;let i = index">-->
-      <!--{{localModel.name}}<input [(ngModel)]="model[k].yearFieldModels[i].value">-->
-      <!--</div>-->
-      <!--</p-accordionTab>-->
-      <!--</p-accordion>-->
-
-      <p-spinner size="30" [(ngModel)]="test" thousandSeparator = " " decimalSeparator=","></p-spinner>
-      <input type="text" pInputText placeholder="Username" decimalSeparator="'.'">
-
     </div>
   </div>
-</div>
+</div>-->
+

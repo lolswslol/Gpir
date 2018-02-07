@@ -166,6 +166,13 @@
         </div>
       </div>
       <button *ngIf="projectService.writable" [disabled]="processing" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <div style="float: right">
+        <a routerLink="/customers-project-info"><button type="button" class="btn btn-info">Назад</button></a>
+        <a routerLink="/customers-terms"><button type="button" class="btn btn-info">Далее</button></a>
+      </div>
+
+
+
     </div>
   </div>
 </div>
