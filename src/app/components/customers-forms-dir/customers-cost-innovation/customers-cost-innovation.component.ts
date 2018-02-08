@@ -3,7 +3,7 @@ import { domain } from '../../../config/config';
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ProjectService } from "../../../services/project.service";
 import { Http } from "@angular/http";
-import {Message} from "primeng/components/common/message";
+import { Message } from "primeng/components/common/message";
 
 
 
@@ -38,7 +38,6 @@ export class CustomersCostInnovationComponent implements OnInit {
   commentModel = [];
   modalValidationMap = new Map();
   modalValid: boolean = false;
-
   msgs: Message[] = [];
 
   constructor(private authenticationService: AuthenticationService,
@@ -51,7 +50,6 @@ export class CustomersCostInnovationComponent implements OnInit {
     this.http.get(this.domain+'api/cost_innovation/'+this.projectService.currentProjectId,this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
-          console.log(data);
           this.model = data.fieldModels;
           this.headerModel = data.years;
         },
@@ -114,6 +112,7 @@ export class CustomersCostInnovationComponent implements OnInit {
     }
   }
 
+  //Methods to separate parent code and set Tabs
   codeSeparated(code:string){
     return code.split('.')
   }
@@ -201,7 +200,6 @@ export class CustomersCostInnovationComponent implements OnInit {
     console.log(model);
     let commentModel = this.commentModel.concat([]);
     commentModel.push(this.modalCommentObject);
-    console.log({id: this.projectService.currentProjectId, stages: model, comments: commentModel});
 
     this.http.post(this.domain+'api/cost_innovation/'+ this.projectService.currentProjectId, JSON.stringify({projectId: this.projectService.currentProjectId, fieldModels: model, comments: commentModel}), this.authenticationService.options)
       .map(res=>res.json())

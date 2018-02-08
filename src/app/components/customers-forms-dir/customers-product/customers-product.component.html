@@ -21,22 +21,23 @@
             {{model.name}}
           </td>
           <td>
-            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.tnVed">
+            <input appInputValidation [fieldName]="'tnVed'" [index]="index" [regExp]="tnVedRegExp" (onValidation)="validate($event)" [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.tnVed">
           </td>
           <td>
-            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.powerCost">
+            <input appInputValidation [fieldName]="'powerCost'" [index]="index" [regExp]="powerCostRegExp" (onValidation)="validate($event)" [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.powerCost">
           </td>
           <td>
-            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.powerPhysical">
+            <input appInputValidation [fieldName]="'powerPhysical'" [index]="index" [regExp]="powerPhysical" (onValidation)="validate($event)" [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.powerPhysical">
           </td>
           <td>
-            <input [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.unitPhysical">
+            <input appInputValidation [fieldName]="'unitPhysical'" [index]="index" [regExp]="anyRegExp" (onValidation)="validate($event)" [disabled]="projectService.writable === false  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" [(ngModel)]="model.unitPhysical">
           </td>
           <td *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"><i class="fa fa-window-close" aria-hidden="true" (click)="deleteProduct(index)"></i></td>
         </tr>
         </tbody>
       </table>
       <button *ngIf="projectService.writable === true" class="btn btn-primary" (click)="submit()">Сохранить</button>
+      <button (click)="check()">Check</button>
       <button *ngIf="(projectService.writable === true && projectService.projectNew === true) || (projectService.writable === true && projectService.projectNew === false && authenticationService.role === 'GKNT')"  class="btn btn-info" (click)="addProduct()">Добавить наименование</button>
     </div>
   </div>

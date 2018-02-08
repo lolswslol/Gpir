@@ -1,7 +1,4 @@
-import {
-  Directive, ElementRef, Input, Output, EventEmitter, DoCheck, OnChanges,SimpleChanges
-
-} from '@angular/core';
+import { Directive, ElementRef, Input, Output, EventEmitter, DoCheck } from '@angular/core';
 
 @Directive({
   selector: '[appNotAvailable]'

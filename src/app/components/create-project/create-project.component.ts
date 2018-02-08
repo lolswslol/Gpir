@@ -42,7 +42,7 @@ export class CreateProjectComponent implements OnInit {
       .subscribe(data=>{
         this.listOfExecutors = data;
       },
-        (err)=>{
+        ()=>{
           this.message = 'Произошла ошибка загрузки списка Исполнителей. Перезагрузите страницу.';
           this.messageClass = 'alert alert-danger'
         },
@@ -52,7 +52,7 @@ export class CreateProjectComponent implements OnInit {
       .subscribe(data=>{
         this.listOfCustomers = data;
       },
-        (err)=>{
+        ()=>{
           this.message = 'Произошла ошибка загрузки Списка Заказчиков. Перезагрузите страницу.';
           this.messageClass = 'alert alert-danger'
         },
@@ -67,14 +67,14 @@ export class CreateProjectComponent implements OnInit {
     };
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/project/new',JSON.stringify(model),this.authenticationService.options)
-      .subscribe(data=>{
+      .subscribe(()=>{
         this.message = 'Проект успешно создан.Через пару секунд вы будете перенаправлены';
         this.messageClass = 'alert alert-success';
         setTimeout(()=>{
           this.router.navigate(['/home']);
         },3000)
       },
-        (err)=>{
+        ()=>{
           this.message = 'Не возможно создать проект. Попробуйте позже.';
           this.messageClass = 'alert alert-danger';
           this.processing = false;

@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
          this.projects = data;
         }
       },
-        (err)=>{
+        ()=>{
         this.message = 'Произошла ошибка загрузки проектов, попробуйте перезагрузить страницу';
         this.messageClass = 'alert alert-danger';
         },

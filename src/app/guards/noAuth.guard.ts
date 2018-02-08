@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { AuthenticationService } from "../services/authentication.service";
 
 
@@ -14,7 +14,7 @@ export class NoAuthGuard implements CanActivate {
         if(!this.authenticationService.isLogged && !localStorage.getItem('currentUser')){
             return true
         }else {
-            this.router.navigate(['/'])
+            this.router.navigate(['/']);
             return false
         }
 

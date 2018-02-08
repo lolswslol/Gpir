@@ -52,7 +52,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
       .subscribe(data=>{
           this.listOfExecutors = data;
         },
-        (err)=>{
+        ()=>{
           this.message = 'Произошла ошибка загрузки списка Исполнителей. Перезагрузите страницу.';
           this.messageClass = 'alert alert-danger'
         },
@@ -62,7 +62,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
       .subscribe(data=>{
           this.listOfOkfs = data;
         },
-        (err)=>{
+        ()=>{
           this.message = 'Произошла ошибка загрузки списка Исполнителей. Перезагрузите страницу.';
           this.messageClass = 'alert alert-danger'
         },
@@ -72,7 +72,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
       .subscribe(data=>{
           this.listOfCustomers = data;
         },
-        (err)=>{
+        ()=>{
           this.message = 'Произошла ошибка загрузки Списка Заказчиков. Перезагрузите страницу.';
           this.messageClass = 'alert alert-danger'
         },
@@ -83,7 +83,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
         this.model = data;
         this.id = data.id;
       },
-        (err)=>{
+        ()=>{
         this.message = 'Произошла ошибка загрузки списка Исполнителей. Перезагрузите страницу.';
         this.messageClass = 'alert alert-danger'
       },
@@ -92,7 +92,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
           .subscribe((data)=>{
           this.executorModel = data;
           },
-            (err)=>{
+            ()=>{
               this.message = 'Произошла ошибка. Перезагрузите страницу.';
               this.messageClass = 'alert alert-danger'
             },
@@ -108,7 +108,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
       .subscribe((data)=>{
         this.executorModel = data;
       },
-        (err)=>{
+        ()=>{
       this.message = 'Произошла ошибка выбора исполнителя. Попробуйте выбрать сново.';
       this.messageClass = 'alert alert-danger';
       this.processing = false;
@@ -138,10 +138,10 @@ export class CustomersExecutorsInfoComponent implements OnInit {
     };
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/executors_info/'+this.projectService.currentProjectId,JSON.stringify(body),this.authenticationService.options)
-      .subscribe(data=>{
+      .subscribe(()=>{
           this.showSuccess(null,'Данные были успешно сохранены');
         },
-        (err)=>{
+        ()=>{
         this.showError('Ошибка','Не возможно сохранить данные. Ошибка серверной части');
         this.message = 'Не возможно сохранить данные. Ошибка серверной части';
         this.messageClass = 'alert alert-danger';

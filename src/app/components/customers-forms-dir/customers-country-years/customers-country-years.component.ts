@@ -4,7 +4,7 @@ import { AuthenticationService } from "../../../services/authentication.service"
 import { ProjectService } from "../../../services/project.service";
 import { Http } from "@angular/http";
 import { Observable } from "rxjs";
-import {Message} from "primeng/components/common/message";
+import { Message } from "primeng/components/common/message";
 
 @Component({
   selector: 'app-customers-country-years',
@@ -26,7 +26,10 @@ export class CustomersCountryYearsComponent implements OnInit {
   display = false;
 
   filteredCountriesSingle: string[];
-  country={id:null,name:null};
+  country={
+    id:null,
+    name:null
+  };
 
 
 
@@ -62,17 +65,18 @@ export class CustomersCountryYearsComponent implements OnInit {
         ()=>{})
   }
 
+  //Delete current country from main table
   deleteCountry(index){
-    console.log(this.model);
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/investment_delete/'+this.projectService.currentProjectId+'/'+this.model[index].oksmId,null,this.authenticationService.options)
-      .subscribe(data=>{
+      .subscribe(()=>{
         this.showInfo(null,'Страна была удалена');
         this.model.splice(index,1);
       });
 
   }
 
+  //Add new country in the list
   addCountry(){
     this.modalObject = {
       investmentFullModels: [],
@@ -82,6 +86,7 @@ export class CustomersCountryYearsComponent implements OnInit {
     this.display = true;
   }
 
+  //get list of countries
   getCountries():Observable<any>{
     this.authenticationService.createAuthenticationHeaders();
     return this.http.get('http://192.168.11.93:9966/api/countries',this.authenticationService.options)
@@ -89,37 +94,14 @@ export class CustomersCountryYearsComponent implements OnInit {
 
   }
 
+  //filter country in input field
   filterCountrySingle($event) {
     let query = $event.query;
     this.getCountries()
       .subscribe(countries => {
-        console.log('countries', countries);
         this.filteredCountriesSingle = this.filterCountry(query, countries);
-        console.log(this.filteredCountriesSingle);
-
 
       });
-  }
-
-  validateCountryInput(){
-    let i = this.country.id;
-    console.log('текущая ид',i);
-    this.getCountries()
-      .subscribe(countries => {
-        console.log(countries);
-        this.model.forEach(s=>{
-          if(s.oksmId === i){
-            this.modalValid = false;
-            this.showInfo(null,'Такая страна уже есть');
-            this.modalMessage = 'Такая страна уже есть'
-          }
-        })
-      });
-  }
-
-  rejectEditing(){
-    this.display = false;
-    this.country={id:null,name:null};
   }
 
   filterCountry(query, countries: any[]):any[] {
@@ -137,6 +119,37 @@ export class CustomersCountryYearsComponent implements OnInit {
     return filtered;
   }
 
+  //Validate country input
+  validateCountryInput(){
+    let i = this.country.id;
+    this.getCountries()
+      .subscribe(countries => {
+        console.log(countries);
+        this.model.forEach(s=>{
+          if(s.oksmId === i){
+            this.modalValid = false;
+            this.showInfo(null,'Такая страна уже есть');
+            this.modalMessage = 'Такая страна уже есть'
+          }
+        })
+      });
+  }
+
+  countryMessage(){
+    if(typeof this.country.id === "number"){
+      this.modalMessage = null;
+    }else this.modalMessage = 'Выберите из списка страну'
+  }
+
+  //Reject creating new country and close the modal window
+  rejectEditing(){
+    this.display = false;
+    this.country={id:null,name:null};
+  }
+
+
+
+  //Validate methods from directives
   show($event){
     this.modalValid = false;
     if(this.validationMap.has($event.name)){
@@ -168,6 +181,7 @@ export class CustomersCountryYearsComponent implements OnInit {
   }
 
 
+  //Save the main table
   submit(){
     this.processing = true;
     this.authenticationService.createAuthenticationHeaders();
@@ -206,15 +220,7 @@ export class CustomersCountryYearsComponent implements OnInit {
   }
 
 
-  countryMessage(){
-    if(typeof this.country.id === "number"){
-      this.modalMessage = null;
-    }else this.modalMessage = 'Выберите из списка страну'
-  }
-
-  checkCountry(){
-    console.log(this.projectService);
-  }
+  //Validate Main table
 
   validateMainModel($event){
     console.log($event);
@@ -254,10 +260,10 @@ export class CustomersCountryYearsComponent implements OnInit {
     console.log('last one',editedModel);
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'/api/investment/'+this.projectService.currentProjectId,JSON.stringify({countriesYears:editedModel,projectId: this.projectService.currentProjectId}),this.authenticationService.options)
-      .subscribe((data)=>{
+      .subscribe(()=>{
         this.showSuccess(null,'Данные были успешно сохранены');
       },
-        (err)=>{
+        ()=>{
       this.showError(null,'Не возможно сохранить данные. Перезагрузите страницу')
         },
         ()=>{
@@ -274,7 +280,6 @@ export class CustomersCountryYearsComponent implements OnInit {
       this.modalObject.investmentFullModels.push({year:s,value:0});
       this.modalObject.investmentDirectForeignModels.push({year:s,value: 0});
     });
-    console.log(this.modalObject);
     }
 
 //Messages

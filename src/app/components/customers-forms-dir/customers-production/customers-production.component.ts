@@ -80,57 +80,10 @@ export class CustomersProductionComponent implements OnInit {
         ()=>{});
   }
 
-  showModel(){
-    console.log(this.model);
-  }
+  //Setting tabs for main table
 
-  check11($event,localModel,i){
-    /*console.log($event);
-    console.log(localModel);
-    console.log(i);*/
-    let a = localModel.code + 'y' +i;
-    console.log(a);
-   /* if(this.validationMap.has(a)){
-      this.validationMap.delete(a);
-      this.validationMap.set(a,$event.target.value);
-    }else {
-      this.validationMap.set($event.status,$event.value);
-    }*/
-    this.checkValidInput(a);
-  }
-
-  checkValidInput(string){
-    let code = string.split('y')[0];
-    let year = string.split('y')[1];
-    let sum = 0;
-    let parent = 0;
-    if(code.length>1){
-    this.model.forEach(s=>{
-      if(s.code.slice(0,-1) === code.slice(0,-1)){
-        sum = sum + Number(s.yearFieldModels[year].value);
-      }
-      if(s.code === code.slice(0,-2)){
-        parent = s.yearFieldModels[year].value;
-      }
-    });
-    if(sum<=parent){
-      console.log('correct');
-    }else console.log('incorrect');
-    }else {
-      console.log('else');
-    }
-
-
-  }
-
-  deleteZero($event){
-    if($event.target.value === '0')
-    $event.target.value='';
-  }
-
-  returnZero($event){
-    if($event.target.value === '')
-      $event.target.value='0';
+  codeSeparated(code:string){
+    return code.split('.')
   }
 
   setTab(code){
@@ -161,18 +114,6 @@ export class CustomersProductionComponent implements OnInit {
     })
   }
 
-  //calculate column values of the main table
-  getColSum(){
-    for(let k=0;k<=this.model[0].yearFieldModels.length-1;k++){
-      let summa:number = 0;
-      for(let i=0;i<this.model.length-1;i++){
-        if(this.model[i].code.indexOf('.',0) === -1 && this.model[i].yearFieldModels[k].value){
-          summa = summa + Number(this.model[i].yearFieldModels[k].value);
-        }
-      }
-      this.model[this.model.length-1].yearFieldModels[k].value = summa;
-    }
-  }
 
   //do calculation operations with every input
   onChange(){
@@ -304,18 +245,12 @@ export class CustomersProductionComponent implements OnInit {
 
           })
     }
-
   }
 
-  check1(){
-    console.log(this.codeSeparated(this.model[2].code))
-  }
 
 //test
 
-  codeSeparated(code:string){
-    return code.split('.')
-  }
+
 
   //Messages
   showSuccess(summary,message) {

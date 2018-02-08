@@ -56,25 +56,6 @@ export class DynamicInputDirective implements DoCheck{
     }
   }
 
-  showParent2(){
-    let parent:number = 0;
-    this.model.forEach(s=>{
-      if(s.code!=null && this.code.split('.')[0] === s.code && this.code.split('.').length > 0){
-        parent = Number(s.yearFieldModels[this.index].value);
-      }
-    });
-
-    let sum: number = 0;
-    this.model.forEach(s=>{
-      if(s.code!=null && this.code.split('.')[0] === s.code.split('.')[0] &&  s.code.split('.').length > 1){
-        sum += Number(s.yearFieldModels[this.index].value);
-      }
-    });
-    if(parent<sum){
-      return false;
-    }else return true;
-  }
-
   showParent(){
     if(this.code.split('.').length>1){
       let arr = this.code.split('.');

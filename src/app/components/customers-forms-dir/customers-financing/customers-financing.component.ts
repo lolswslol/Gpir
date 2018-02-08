@@ -99,11 +99,6 @@ export class CustomersFinancingComponent implements OnInit {
     }else false
   }
 
-  //Delete zeroes
-  deleteZero(){
-
-  }
-
   //calculate row values of the main table
   getRowSum(){
     this.model.forEach(s=>{
@@ -128,17 +123,6 @@ export class CustomersFinancingComponent implements OnInit {
     }
   }
 
- /* getColSum(){
-    for(let k=0;k<=this.model[0].yearFieldModels.length-1;k++){
-      let summa:number = 0;
-      for(let i=0;i<this.model.length-1;i++){
-        if(this.model[i].code.indexOf('.',0) === -1 && this.model[i].yearFieldModels[k].value){
-          summa = summa + Number(this.model[i].yearFieldModels[k].value);
-        }
-      }
-      this.model[this.model.length-1].yearFieldModels[k].value = summa;
-    }
-  }*/
 
   //do calculation operations with every input
   onChange(){

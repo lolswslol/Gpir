@@ -59,13 +59,13 @@ export class ProjectProfileComponent implements OnInit {
   rejectProject(){
     this.authenticationService.createAuthenticationHeaders();
     this.http.post(this.domain+'api/return_project/'+this.id,null,this.authenticationService.options)
-      .subscribe(data=>{
+      .subscribe(()=>{
           this.message = 'Проект отправлен на доработку';
           this.messageClass = 'alert alert-warning';
           this.confirmed = true;
           this.processing = false;
         },
-        (err)=>{
+        ()=>{
           this.message = 'Проект не удалось сохранить';
           this.messageClass = 'alert alert-danger';
           this.processing = true;
