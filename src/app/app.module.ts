@@ -32,6 +32,7 @@ import { CustomersCostInnovationComponent } from './components/customers-forms-d
 import { CustomersCountryYearsComponent } from './components/customers-forms-dir/customers-country-years/customers-country-years.component';
 import { CustomersProductComponent } from './components/customers-forms-dir/customers-product/customers-product.component';
 import { CustomersProductionComponent } from './components/customers-forms-dir/customers-production/customers-production.component';
+import { CustomersWorkPlaceComponent } from './components/customers-forms-dir/customers-work-place/customers-work-place.component';
 
 //Services
 import { ProjectService } from "./services/project.service";
@@ -60,6 +61,7 @@ import { AutoCompleteModule } from 'primeng/primeng';
 import { RolePipe } from "./pipes/role.pipe";
 import { ButtonDatePipe } from './pipes/button-date.pipe';
 import { ProjectColorPipe } from './pipes/project-color.pipe';
+
 
 
 
@@ -94,6 +96,7 @@ import { ProjectColorPipe } from './pipes/project-color.pipe';
     DynamicInputDirective,
     ProjectColorPipe,
     DeleteZeroDirective,
+    CustomersWorkPlaceComponent,
 
 
   ],

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ProjectService } from "../services/project.service";
+import { CanActivate } from "@angular/router";
 
 @Injectable()
 export class ProjectGuard implements CanActivate {
