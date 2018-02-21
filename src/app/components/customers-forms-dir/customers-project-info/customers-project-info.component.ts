@@ -22,7 +22,7 @@ export class CustomersProjectInfoComponent implements OnInit {
   //RegExp for custom validation directives
   anyRegExp = /.*\S.*/g;
   numbericRegExp = /^\d+$/;
-  yearRegExp = /^(19|20)\d{2}$/;
+  yearRegExp = /^(20)\d{2}$/;
   dateProgramRegExp = /(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d/;
 
 

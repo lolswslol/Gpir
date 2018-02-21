@@ -11,13 +11,9 @@
           <td>Наименование инновационного проекта</td>
           <td>
             <div class="form-group">
-            <input appInputValidation [fieldName]="'name'" [regExp]="anyRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.name">
+            <input appInputValidation [fieldName]="'name'" [regExp]="anyRegExp" [length]="1000" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.name">
             </div>
           </td>
-        </tr>
-        <tr>
-          <td>Регистрационный номер проекта</td>
-          <td><input appInputValidation [fieldName]="'shifr'" [regExp]="anyRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.shifr"></td>
         </tr>
         <tr>
           <td>Уровень проекта по технологическому укладу</td>
@@ -47,7 +43,6 @@
           <td>Год начала реализации проекта</td>
           <td><input appInputValidation [fieldName]="'yearStart'" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.yearStart"></td>
         </tr>
-        <tr>
         <tr>
           <td>Год завершения реализации проекта</td>
           <td><input appInputValidation [fieldName]="'yearEnd'" [regExp]="yearRegExp" (onValidation)="validate($event)" [disabled]="processing || !projectService.writable  || (projectService.writable === true && projectService.projectNew === false && authenticationService.role !== 'GKNT')" class="form-control input-sm" type="text" [(ngModel)]="model.yearEnd"></td>

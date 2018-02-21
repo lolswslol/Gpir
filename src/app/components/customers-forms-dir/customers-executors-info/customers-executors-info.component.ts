@@ -60,6 +60,7 @@ export class CustomersExecutorsInfoComponent implements OnInit {
     this.http.get(this.domain+'api/okfs',this.authenticationService.options)
       .map(res=>res.json())
       .subscribe(data=>{
+        console.log(data);
           this.listOfOkfs = data;
         },
         ()=>{

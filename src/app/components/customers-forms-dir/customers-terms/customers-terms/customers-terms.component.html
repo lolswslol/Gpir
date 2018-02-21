@@ -18,7 +18,7 @@
             <td>
               <div class="form-group" (click)="editData(i, model.name, model.value)">
                 <input appInputValidation [fieldName]="fieldName" [regExp]="yearRegExp" [index]="i" (onValidation)="validate($event)" [disabled]="!model.status || projectService.projectNew === false || projectService.writable===false" class="form-control input-sm" type="text" [(ngModel)]="model.value">
-                <span class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="disableDate(i)">{{model.status | buttonDate}}</span>
+                <span *ngIf="projectService.projectNew === false || projectService.writable===true" class="fa fa-user-times cursor alignment-right"  aria-hidden="true" (click)="disableDate(i)">{{model.status | buttonDate}}</span>
               </div>
             </td>
           </tr>
